@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "quantum-bridge-lab"
 version = "0.1.0"
-description = "Offline engineering preflight for a preregistered qubit-control comparison"
+description = "Offline engineering preflight for a planned qubit-control comparison"
 requires-python = ">=3.11,<3.12"
 dependencies = ["numpy>=2.3,<3", "scipy>=1.16,<2", "cma>=4.4,<5"]
 

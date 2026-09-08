@@ -4,7 +4,7 @@
 
 This repository contains the research plan, Python software and review history for answering that question. It is a small, deliberately limited experiment: one simulated qubit, one language model, one conventional optimizer and a random-search reference.
 
-**Current status:** the first offline engineering milestone is complete: 174 tests and eight check groups passed. The experiment itself has **not run**. The final execution plan is not frozen, and no AI performance advantage has been demonstrated.
+**Current status:** 233 tests pass, including the new offline budget calculator. The first engineering milestone also passed all eight offline check groups. The experiment itself has **not run**. The final execution plan is not frozen, and no AI performance advantage has been demonstrated.
 
 ## The idea in everyday terms
 
@@ -53,6 +53,8 @@ The process executor requires a single-threaded POSIX caller, and callbacks must
 
 ## What comes next
 
-The next milestone is provider feasibility and full-run cost planning. A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
+The [provider review](research/PROVIDER_DECISION.md) identifies the next step: establish a usable model-identity and token-counting contract before choosing a provider. An [offline budget calculator](research/BUDGET_PLANNING.md) now shows how input limits, prices, retries and preflight calls affect a conditional cost ceiling. Its inputs still need verification before a spending decision.
+
+A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
 
 Scientific changes must be recorded prospectively. Historical reviews and synchronization receipts describe their own point in time; current status is stated above and in the readiness record. Study transcripts, results and private comparison mappings must stay out of public engineering artifacts.

@@ -1,0 +1,686 @@
+{
+  "blocks": [
+    {
+      "block": 0,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1452845289,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        0
+      ]
+    },
+    {
+      "block": 1,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1381377398,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        1
+      ]
+    },
+    {
+      "block": 2,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 681475413,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        2
+      ]
+    },
+    {
+      "block": 3,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 761068659,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        3
+      ]
+    },
+    {
+      "block": 4,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 319789520,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        4
+      ]
+    },
+    {
+      "block": 5,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1638800638,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        5
+      ]
+    },
+    {
+      "block": 6,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1855681162,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        6
+      ]
+    },
+    {
+      "block": 7,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 445472093,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        7
+      ]
+    },
+    {
+      "block": 8,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1560092876,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        8
+      ]
+    },
+    {
+      "block": 9,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1247781423,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        9
+      ]
+    },
+    {
+      "block": 10,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1301602361,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        10
+      ]
+    },
+    {
+      "block": 11,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1546590582,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        11
+      ]
+    },
+    {
+      "block": 12,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 85085445,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        12
+      ]
+    },
+    {
+      "block": 13,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1849518981,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        13
+      ]
+    },
+    {
+      "block": 14,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1555098238,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        14
+      ]
+    },
+    {
+      "block": 15,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 627554513,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        15
+      ]
+    },
+    {
+      "block": 16,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 553223411,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        16
+      ]
+    },
+    {
+      "block": 17,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1800094729,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        17
+      ]
+    },
+    {
+      "block": 18,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1788401145,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        18
+      ]
+    },
+    {
+      "block": 19,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 21302194,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        19
+      ]
+    },
+    {
+      "block": 20,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1684727397,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        20
+      ]
+    },
+    {
+      "block": 21,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 51666882,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        21
+      ]
+    },
+    {
+      "block": 22,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 2012317214,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        22
+      ]
+    },
+    {
+      "block": 23,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 875875990,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        23
+      ]
+    },
+    {
+      "block": 24,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 102569064,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        24
+      ]
+    },
+    {
+      "block": 25,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1367104674,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        25
+      ]
+    },
+    {
+      "block": 26,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1228060558,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        26
+      ]
+    },
+    {
+      "block": 27,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 114405440,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        27
+      ]
+    },
+    {
+      "block": 28,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 692584572,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        28
+      ]
+    },
+    {
+      "block": 29,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 255601738,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        29
+      ]
+    },
+    {
+      "block": 30,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 359928464,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        30
+      ]
+    },
+    {
+      "block": 31,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 914326734,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        31
+      ]
+    },
+    {
+      "block": 32,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 174945163,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        32
+      ]
+    },
+    {
+      "block": 33,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 2088108889,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        33
+      ]
+    },
+    {
+      "block": 34,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1188690614,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        34
+      ]
+    },
+    {
+      "block": 35,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1290720331,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        35
+      ]
+    },
+    {
+      "block": 36,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 461992567,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        36
+      ]
+    },
+    {
+      "block": 37,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1315293920,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        37
+      ]
+    },
+    {
+      "block": 38,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 487832328,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        38
+      ]
+    },
+    {
+      "block": 39,
+      "children": {
+        "cma": 2,
+        "init": 0,
+        "rs": 1
+      },
+      "cma_seed": 1774680903,
+      "cma_seed_call": "int(generator.integers(1, 2**31))",
+      "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+      "entropy": 20260908,
+      "generator": "PCG64",
+      "llm_seed_sent": false,
+      "spawn_key": [
+        39
+      ]
+    }
+  ],
+  "frozen": false,
+  "source_commit": "b89297cfbbca1a922110ef22c9c157e3f63f7fa7"
+}

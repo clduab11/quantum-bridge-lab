@@ -1,0 +1,16 @@
+{
+  "frozen": false,
+  "lock_sha256": "d30ab3ce22db8d9ca770944504cb956d84b70bdb152a6b415f98be77d565aaba",
+  "note": "Existing Codex candidate runtime; Claude Science must record its actual chosen runtime separately.",
+  "packages": {
+    "cma": "4.4.4",
+    "numpy": "2.4.6",
+    "pytest": "9.1.1",
+    "ruff": "0.16.6",
+    "scipy": "1.17.1"
+  },
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 21.0.0 (clang-2100.0.123.102)]",
+  "selected_for_study": false,
+  "source_commit": "b89297cfbbca1a922110ef22c9c157e3f63f7fa7"
+}

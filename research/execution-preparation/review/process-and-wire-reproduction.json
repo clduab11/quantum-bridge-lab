@@ -1,0 +1,18 @@
+{
+  "scope": "synthetic HTTP only; no provider or objective call",
+  "source_sha256": {
+    "sol_chat_adapter.py": "eb47c78937df8b85a766db6b6caa0e58756330453923cff8b5117f5b648abc5d",
+    "study_coordinator.py": "aef10d19e2fe31de7d202236e327ddf83625b9957365e2148c1df7d65fde56e0"
+  },
+  "halt_lost_across_fork": {
+    "first_reported_halt": "model_mismatch",
+    "second_http_status": 200,
+    "mock_dispatches": 2
+  },
+  "modified_wire_accepted": {
+    "reported_sent_bytes_violation": false,
+    "mock_efforts": [
+      "low"
+    ]
+  }
+}

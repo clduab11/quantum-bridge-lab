@@ -1,0 +1,60 @@
+{
+  "baseline_27_hashes_unchanged": true,
+  "baseline_source_commit": "b89297cfbbca1a922110ef22c9c157e3f63f7fa7",
+  "candidate_lock_sha256": "c952932a0052c9deda40709665995155ea5054dc9a98286804f3d32d9ed01bcc",
+  "candidate_pyproject_sha256": "21a0da34426e661999546ebeedc78658e7494bbb265d47e92d048b67b04baff9",
+  "candidate_source_sha256": {
+    "protocol/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+    "qbridge_ext/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/e9_fixtures.py": "16c89cc2cb8f86b7443e8648c9ed80457427b02e91e86c83d1533df18d4c06d5",
+    "qbridge_ext/sol_chat_adapter.py": "f1534a106f51f4eb0d6d2f14e08a5072461f71a410f7108b132f09722b736740",
+    "qbridge_ext/study_coordinator.py": "4e557812fa32bae462a69130729d24c35267c7fb78074f4f5997ebb3dbd9cbf6",
+    "qbridge_ext/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/tests/test_ext.py": "08f474d4805ae60a60d9ade772e703e63e75016a1ef70ffcfc5efa2c392d78c2"
+  },
+  "dependency_audit": {
+    "known_vulnerabilities": 0,
+    "not_audited_on_pypi": [
+      "local quantum-bridge-lab 0.1.0"
+    ],
+    "packages": 51
+  },
+  "experimental_generation_calls": 0,
+  "frozen": false,
+  "kind": "independent_offline_candidate_verification",
+  "provider_contract_verified": false,
+  "provider_token_count_calls": 0,
+  "recorded_at": "2026-09-08T22:42:59.728346+00:00",
+  "ruff": {
+    "candidate_format": "passed",
+    "candidate_lint": "passed",
+    "version": "0.16.6"
+  },
+  "runtime": {
+    "machine": "arm64",
+    "packages": {
+      "cma": "4.4.4",
+      "httpx": "0.28.1",
+      "numpy": "2.4.6",
+      "openai": "3.9.0",
+      "pip-audit": "2.10.1",
+      "pytest": "9.1.1",
+      "ruff": "0.16.6",
+      "scipy": "1.17.1"
+    },
+    "python": "3.11.15 (main, Mar  3 2026, 00:52:57) [Clang 21.0.0 (clang-2100.0.123.102)]",
+    "system": "Darwin"
+  },
+  "scope": "Analytic core tests and fabricated/mocked candidate tests only; independent fixtures reproduced fork-persistent halt and pre-send rejection. No experimental performance sample.",
+  "study_launcher_complete": false,
+  "study_objective_evaluations": 0,
+  "tests": {
+    "candidate": 53,
+    "claude_environment_seconds": 88.74,
+    "core": 233,
+    "locked_environment_seconds": 91.58,
+    "total_passed": 286,
+    "warning": "pycma optional plotting dependency unavailable; no plotting required",
+    "warnings": 1
+  }
+}

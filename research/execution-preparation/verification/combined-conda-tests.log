@@ -1,0 +1,11 @@
+........................................................................ [ 25%]
+........................................................................ [ 50%]
+........................................................................ [ 75%]
+......................................................................   [100%]
+=============================== warnings summary ===============================
+tests/test_runner.py::test_installed_pycma_ask_tell_continues_after_a_stop_condition
+  /Users/chrisdukes/.claude-science/conda/envs/qbridge/lib/python3.11/site-packages/cma/s.py:16: UserWarning: Could not import matplotlib.pyplot, therefore ``cma.plot()`` etc. is not available
+    _warnings.warn('Could not import matplotlib.pyplot, therefore'
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+286 passed, 1 warning in 88.74s (0:01:28)

@@ -1,0 +1,30 @@
+{
+  "claude_frame": "579e4a68-d84c-4903-b99a-96c94646cab9",
+  "claude_import_checksums_match_saved_artifacts": true,
+  "claude_verified_published_files": 4,
+  "frozen": false,
+  "github_branch": "research/execution-readiness",
+  "kind": "cross_system_synchronization_record",
+  "linear_readbacks_verified": [
+    "ADV-36",
+    "quantum-bridge-lab project description",
+    "Pursuit decision and implementation readiness \u2014 2026-09-08"
+  ],
+  "linear_verified_claims": [
+    "source commit",
+    "286 passing tests",
+    "proposal not adopted",
+    "historical milestones retained",
+    "execution still gated"
+  ],
+  "pr_state": "open draft",
+  "project_context_updated": false,
+  "pull_request": "https://github.com/clduab11/quantum-bridge-lab/pull/4",
+  "receipt_count_clarification": "The original receipt says 51 checked packages. The audit enumerated 51 dependencies, of which 50 were auditable and the local quantum-bridge-lab package was skipped; zero known vulnerabilities were found in the auditable set. The original receipt remains unedited.",
+  "receipt_original_bytes_preserved": true,
+  "receipt_path": "research/execution-preparation/claude-science/synchronization_receipt_2026-09-08_pr4_8cb9acb.md",
+  "receipt_sha256": "3f3b76284ac50a6955f0132614b8f517a1d52ce92c4d9fd44976cce1f9db14c5",
+  "recorded_at": "2026-09-08T22:54:38.389816+00:00",
+  "technical_state_changed_by_synchronization": false,
+  "verified_source_commit": "8cb9acb920dd1f7691e5539830d410319cb98967"
+}

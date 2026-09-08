@@ -35,8 +35,7 @@ def calculate_budget(
     output_usd_per_million: str,
     extra_usd_reserve: str,
     max_e9_attempts: int,
-) -> dict:
-    ...
+) -> dict: ...
 ```
 
 - [x] Write literal hand-calculation tests before implementation. At 1,000 input tokens, input rate USD 2/million, output rate USD 3/million, two E9 attempts and USD 0.001 reserve: one attempt costs USD 0.026576; 760 scheduled attempts cost USD 20.197760; 4,560 attempts cost USD 121.186560; E9 costs USD 0.053152. Rounded combined totals are USD 20.26 and USD 121.25.

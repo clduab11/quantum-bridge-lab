@@ -1,0 +1,29 @@
+{
+  "source_sha256": "0f2674bb4dcd4e68da7df38d3858f69fd68c16a25a44ab1ce5fc47303ce3f492",
+  "first_schedule_units": [
+    [
+      1,
+      0,
+      "AI"
+    ],
+    [
+      1,
+      0,
+      "CMA"
+    ],
+    [
+      1,
+      0,
+      "RS"
+    ]
+  ],
+  "reported_usage_fixture": {
+    "prompt_tokens": 20000,
+    "completion_tokens": 9000,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "priced_usd": "0.008202",
+  "actual_known_token_charge_usd": "0.029",
+  "scope": "synthetic ledger arithmetic only; no model or study objective"
+}

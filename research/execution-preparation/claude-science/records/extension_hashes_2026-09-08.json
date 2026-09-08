@@ -1,0 +1,44 @@
+{
+  "bundles": {
+    "e9_fixtures_2026-09-08.tar.gz": "befdc15f209145b2198e8f225390327d098153bdf8fd04439c1e928f55516648",
+    "openai_docs_sources_2026-09-08.tar.gz": "47043a98afdbeee3051152d008dd1cff807b648a8b7bced6ba6996df2ca97009",
+    "qbridge_ext_2026-09-08.tar.gz": "4ec36e8aff88fe1f317d8ee3f939dd8fbe8c45d4fe7f7400b53ba67dac4db738"
+  },
+  "code": {
+    "qbridge_ext/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/e9_fixtures.py": "16c89cc2cb8f86b7443e8648c9ed80457427b02e91e86c83d1533df18d4c06d5",
+    "qbridge_ext/sol_chat_adapter.py": "f1534a106f51f4eb0d6d2f14e08a5072461f71a410f7108b132f09722b736740",
+    "qbridge_ext/study_coordinator.py": "4e557812fa32bae462a69130729d24c35267c7fb78074f4f5997ebb3dbd9cbf6",
+    "qbridge_ext/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/tests/test_ext.py": "08f474d4805ae60a60d9ade772e703e63e75016a1ef70ffcfc5efa2c392d78c2"
+  },
+  "documentation_added_this_round": {
+    "input_tokens_count.html": "daeb6076b8a25e294560bdb03e22c8e2b99897da2af96d3d6026ac410caf93d3",
+    "responses_create.html": "558be3cd24191f97ff18e801b84aac7bf943e5b5f58ba24e6440fd60788466b4"
+  },
+  "fixtures": {
+    "fixtures/F1_short.request.json": "9da05de0c1516a3e4bba7987e9309527c710a32703eb05e2595fb03f4e2f9cf6",
+    "fixtures/F1_short.user.txt": "da2c0216a17d25c5e71a12cf0966a333ea664d3869dc60b2f3a238ffff290097",
+    "fixtures/F2_maximal_renderer.request.json": "7aea7dd9ff0470d048fc9565b06e827f9607f03445df22c5ead12c5104fe2384",
+    "fixtures/F2_maximal_renderer.user.txt": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c",
+    "fixtures/F3_repeat_of_F2.request.json": "7aea7dd9ff0470d048fc9565b06e827f9607f03445df22c5ead12c5104fe2384",
+    "fixtures/F3_repeat_of_F2.user.txt": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c",
+    "fixtures/F4_correction_no_valid_vectors.request.json": "c2d0a6690565274ef2f490fd79704c36ddf66ed6845b5aaf22e84e870d7084c1",
+    "fixtures/F4_correction_no_valid_vectors.user.txt": "52c2d206cdd286a8ff8ceb230647beccc8ddccfc1780c0a31985e2523c01bf1a",
+    "fixtures/fixtures_summary.json": "6473d07196165300fc2cb85299027205c39d0dc3632c736ff63b5a3dff98f09b",
+    "fixtures/system_v0.3.txt": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e"
+  },
+  "method": "shasum -a 256 over file bytes in the workspace after the final edits; tarball members extracted and byte-compared (cmp) with workspace files; no cached values",
+  "protocol_copy": {
+    "protocol/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5"
+  },
+  "recorded_at_utc": "2026-09-08T22:37:16+00:00",
+  "standalone_copies_identical_to_package": {
+    "e9_fixtures.py": "16c89cc2cb8f86b7443e8648c9ed80457427b02e91e86c83d1533df18d4c06d5",
+    "sol_chat_adapter.py": "f1534a106f51f4eb0d6d2f14e08a5072461f71a410f7108b132f09722b736740",
+    "study_coordinator.py": "4e557812fa32bae462a69130729d24c35267c7fb78074f4f5997ebb3dbd9cbf6",
+    "test_ext.py": "08f474d4805ae60a60d9ade772e703e63e75016a1ef70ffcfc5efa2c392d78c2"
+  },
+  "supersedes": "earlier extension_hashes_2026-09-08.json that listed pre-review hashes (coordinator 0f2674bb..., adapter 1e9ed2c0..., tests 7a251a8d..., fixtures generator cdb694dc...)",
+  "tarball_members_apple_double": 0
+}

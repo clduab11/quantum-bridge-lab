@@ -1,0 +1,404 @@
+{
+  "A_documented_max_input_922000_long_context_rates": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 922000,
+      "input_usd_per_million": "10",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "30"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 922000,
+        "input_usd_per_million": "10",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "30"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "43277.46",
+        "scheduled_plus_e9_and_reserve": "7307.57"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 11064000,
+        "input_usd": "110.64",
+        "output_tokens": 98304,
+        "output_usd": "2.94912",
+        "token_usd": "113.58912"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 4204320000,
+        "input_usd": "42043.2",
+        "output_tokens": 37355520,
+        "output_usd": "1120.6656",
+        "token_usd": "43163.8656"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 700720000,
+        "input_usd": "7007.2",
+        "output_tokens": 6225920,
+        "output_usd": "186.7776",
+        "token_usd": "7193.9776"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  },
+  "B_regional_uplift_272000_5.5_22": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 272000,
+      "input_usd_per_million": "5.5",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "22"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 272000,
+        "input_usd_per_million": "5.5",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "22"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "7663.70",
+        "scheduled_plus_e9_and_reserve": "1294.05"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 3264000,
+        "input_usd": "17.952",
+        "output_tokens": 98304,
+        "output_usd": "2.162688",
+        "token_usd": "20.114688"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 1240320000,
+        "input_usd": "6821.76",
+        "output_tokens": 37355520,
+        "output_usd": "821.82144",
+        "token_usd": "7643.58144"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 206720000,
+        "input_usd": "1136.96",
+        "output_tokens": 6225920,
+        "output_usd": "136.97024",
+        "token_usd": "1273.93024"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  },
+  "B_stress_272000_post_promo_stress_6.25_30": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 272000,
+      "input_usd_per_million": "6.25",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "30"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 272000,
+        "input_usd_per_million": "6.25",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "30"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "8896.02",
+        "scheduled_plus_e9_and_reserve": "1502.13"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 3264000,
+        "input_usd": "20.40",
+        "output_tokens": 98304,
+        "output_usd": "2.94912",
+        "token_usd": "23.34912"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 1240320000,
+        "input_usd": "7752.00",
+        "output_tokens": 37355520,
+        "output_usd": "1120.6656",
+        "token_usd": "8872.6656"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 206720000,
+        "input_usd": "1292.00",
+        "output_tokens": 6225920,
+        "output_usd": "186.7776",
+        "token_usd": "1478.7776"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  },
+  "B_threshold_272000_promo_rates_cachewrite_input": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 272000,
+      "input_usd_per_million": "5",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "20"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 272000,
+        "input_usd_per_million": "5",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "20"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "6967.00",
+        "scheduled_plus_e9_and_reserve": "1176.41"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 3264000,
+        "input_usd": "16.32",
+        "output_tokens": 98304,
+        "output_usd": "1.96608",
+        "token_usd": "18.28608"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 1240320000,
+        "input_usd": "6201.6",
+        "output_tokens": 37355520,
+        "output_usd": "747.1104",
+        "token_usd": "6948.7104"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 206720000,
+        "input_usd": "1033.6",
+        "output_tokens": 6225920,
+        "output_usd": "124.5184",
+        "token_usd": "1158.1184"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  },
+  "C_inference_110000_promo_rates_cachewrite_input": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 110000,
+      "input_usd_per_million": "5",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "20"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 110000,
+        "input_usd_per_million": "5",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "20"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "3263.68",
+        "scheduled_plus_e9_and_reserve": "551.09"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 1320000,
+        "input_usd": "6.6",
+        "output_tokens": 98304,
+        "output_usd": "1.96608",
+        "token_usd": "8.56608"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 501600000,
+        "input_usd": "2508",
+        "output_tokens": 37355520,
+        "output_usd": "747.1104",
+        "token_usd": "3255.1104"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 83600000,
+        "input_usd": "418",
+        "output_tokens": 6225920,
+        "output_usd": "124.5184",
+        "token_usd": "542.5184"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  },
+  "C_stress_110000_6.25_30": {
+    "inputs": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 110000,
+      "input_usd_per_million": "6.25",
+      "max_e9_attempts": 12,
+      "output_usd_per_million": "30"
+    },
+    "result": {
+      "assumptions": {
+        "extra_usd_reserve": "0",
+        "input_token_ceiling": 110000,
+        "input_usd_per_million": "6.25",
+        "max_e9_attempts": 12,
+        "output_token_ceiling": 8192,
+        "output_usd_per_million": "30"
+      },
+      "billing_complete": false,
+      "combined_totals_usd": {
+        "retry_correction_plus_e9_and_reserve": "4266.87",
+        "scheduled_plus_e9_and_reserve": "720.48"
+      },
+      "conditions": [
+        "Conditional scenario only, not expected spending or spending authorization. The tokenizer cap, prices, billing completeness and cap enforcement are not verified.",
+        "Externally verify a conservative combined input rate including every applicable additive input/cache cost.",
+        "Externally verify that the output rate covers all billable output categories and that the 8192-token cap includes them all, including reasoning where applicable.",
+        "E9 uses the same per-attempt input/output caps and rates as the study; its supplied count is already a transport-attempt ceiling, not a logical-call count.",
+        "Unpriced costs require a sufficient explicit reserve. Zero reserve does not establish that additional costs are absent. Objective slots are counts, not priced evaluations."
+      ],
+      "currency": "USD",
+      "e9": {
+        "attempts": 12,
+        "input_tokens": 1320000,
+        "input_usd": "8.25",
+        "output_tokens": 98304,
+        "output_usd": "2.94912",
+        "token_usd": "11.19912"
+      },
+      "kind": "conditional_budget_scenario",
+      "protocol": {
+        "all_arms_allotted_objective_slots": 24000,
+        "blocks": 40,
+        "logical_call_ceiling": 1520,
+        "scheduled_calls": 760,
+        "stages": 2,
+        "transport_attempt_ceiling": 4560
+      },
+      "retry_correction_ceiling": {
+        "attempts": 4560,
+        "input_tokens": 501600000,
+        "input_usd": "3135.00",
+        "output_tokens": 37355520,
+        "output_usd": "1120.6656",
+        "token_usd": "4255.6656"
+      },
+      "scheduled_no_retry": {
+        "attempts": 760,
+        "input_tokens": 83600000,
+        "input_usd": "522.50",
+        "output_tokens": 6225920,
+        "output_usd": "186.7776",
+        "token_usd": "709.2776"
+      },
+      "spending_authorized": false,
+      "tokenizer_cap_verified": false
+    }
+  }
+}

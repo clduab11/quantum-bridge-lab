@@ -1,38 +1,58 @@
 # quantum-bridge-lab
 
-Research preparation for a small, falsifiable comparison of an AI proposer, one conventional optimizer and random search on a simulated qubit-control problem.
+**Can a language model suggest better settings for a simulated quantum system when every method gets the same trial budget?**
 
-**Status: protocol v0.4 reviewed; offline components implemented; full execution readiness pending. Not frozen. No experimental result.**
+This repository contains the research plan, Python software and review history for answering that question. It is a small, deliberately limited experiment: one simulated qubit, one language model, one conventional optimizer and a random-search reference.
 
-- [Reviewed protocol v0.4](specification/ai_quantum_control_protocol_v0.4.md): complete design, failure contract, inference and readiness requirements.
-- [Evidence and adversarial review](specification/PREIMPLEMENTATION_REVIEW.md): source IDs, supported claims, limitations and required corrections.
-- [Protocol and provenance register](specification/PROTOCOL_REGISTER.md): originals, authority and phase gates as of the completed design review; current implementation status is recorded below.
-- [Original Claude Science design v0.1](sources/original/ai_quantum_control_minimal_experiment_v0.1.md): unchanged historical source containing issues identified in the review.
-- [Linear project](https://linear.app/cld-maindev/project/quantum-bridge-lab-cc3b6e3fff04) and [correction work ADV-35](https://linear.app/cld-maindev/issue/ADV-35/reconcile-evidence-and-close-r1-r10-before-protocol-freeze).
+**Current status:** the first offline engineering milestone is complete: 174 tests and eight check groups passed. The experiment itself has **not run**. The final execution plan is not frozen, and no AI performance advantage has been demonstrated.
 
-The first experiment is restricted to one system, joint noise model, objective and fixed budget contract. Independent seed replication uses the same procedure. Findings will be specific to the recorded simulation, configurations and budget; performance alone will not identify a reasoning mechanism or establish hardware or commercial benefits.
+## The idea in everyday terms
 
-[Historical design-review synchronization record](research/SYNCHRONIZATION_RECEIPT.md).
+Imagine tuning a radio with several connected knobs. Each set of settings gets a score, and you can use earlier scores to choose the next settings. Here, the “knobs” describe a sequence of control pulses for a simulated qubit—the basic unit of a quantum computer. The score measures how closely those pulses perform a desired operation across a fixed set of calibration errors.
 
-## Is this worth pursuing?
+The language model receives the previous settings and scores, then proposes ten new settings at a time. A conventional optimizer called CMA-ES and random search work under the same trial budget. Each method gets 200 evaluation slots per run. The plan includes two sets of 20 paired runs, both completed before the final comparison is revealed.
 
-[Current pursuit decision](research/PURSUIT_DECISION.md): finish the bounded offline engineering milestone; decide separately whether a fully costed two-stage experiment earns further investment. The software and learning have value. An LLM performance advantage, publication novelty and commercial value remain unproven. The decision includes Claude Science's adversarial review, retained disagreements, and prospective actions for every outcome category.
+The test asks whether the language model delivers a prespecified improvement in the final error. Equal trial budgets do not mean equal time or cost: model calls, retries, failures and other resources must also be counted.
 
-## Offline engineering checks
+## Why this matters
 
-Use Python 3.11 and the checked-in `uv.lock`:
+AI is often proposed as a scientific assistant. A useful next step is to test a precise claim against an established method, with the rules written down before results are available.
+
+This project makes that comparison inspectable. The code preserves failed attempts, enforces budgets and fixes the analysis in advance. A negative or inconclusive answer is useful too: an honest record of what the test could resolve helps guide further investment.
+
+Our present judgment is that a bounded research effort is worth pursuing. Funding the actual model experiment is a separate decision, based on its full cost and the value of the answer. This simulation alone cannot establish savings on quantum hardware, a commercial product, or an explanation of how a model reasons. Related research already exists; we make no blanket novelty claim. See the [pursuit decision and retained reviewer disagreements](research/PURSUIT_DECISION.md).
+
+## What is here
+
+| Part | What it provides |
+| --- | --- |
+| [Research protocol](specification/ai_quantum_control_protocol_v0.4.md) | The question, fixed comparison, failure rules and analysis requirements |
+| [Python components](src/qbridge/) | Numerical building blocks, proposal parsing, trial accounting and locked analysis |
+| [Tests](tests/) and [verification evidence](research/preflight/VERIFICATION.md) | Analytic and fabricated-data checks, with their scope and limitations |
+| [Research and reviews](research/) | Evidence, decisions, remaining work and synchronization records |
+| [Original sources](sources/original/) | Earlier designs and Claude Science reviews, preserved unchanged |
+
+Codex and Claude Science develop and challenge the work under Chris Dukes's direction. Agreement between assistants is review input; experimental evidence must come from the recorded study. The [Linear project](https://linear.app/cld-maindev/project/quantum-bridge-lab-cc3b6e3fff04) tracks progress; the repository contains the research record for readers without Linear access.
+
+## Try the offline checks
+
+Use macOS or Linux, Python 3.11 and [uv](https://docs.astral.sh/uv/). From a source checkout:
 
 ```sh
+git clone https://github.com/clduab11/quantum-bridge-lab.git
+cd quantum-bridge-lab
 uv sync --frozen
 PYTHONPATH=src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 uv run --frozen pytest -q
 uv run --frozen ruff check src tests analysis
 PYTHONPATH=src uv run --frozen python -m qbridge.preflight --output-dir preflight-output
 ```
 
-The last command requires a new directory and preserves exact source/fixture bytes, test logs, component timings, package versions, effective CMA options and a durable engineering exposure log. It executes the archived source snapshot. It runs analytic identities and synthetic contracts, including constant-stub optimizer characterization; it evaluates no control candidate on the study objective and calls no experimental model. It requires this source checkout and the development dependencies. The command provides no network sandbox; the inspected tests use fabricated inputs and injected mock transports.
+These checks need no model API key. The final command requires a new output directory and saves the exact tested inputs, logs and engineering report. It runs analytic identities and fabricated-data checks, including a constant-score optimizer fixture. It evaluates no candidate on the study objective and calls no experimental model. It provides no network sandbox.
 
-[Recorded verification](research/preflight/VERIFICATION.md): 174 integrated tests and all eight offline check groups passed. Runtime limitations and the distinction from full study readiness are documented alongside the evidence.
+The process executor requires a single-threaded POSIX caller, and callbacks must not detach into new sessions. Its local cancellation cannot cancel work already accepted by a remote provider. `InlineExecutor` is for synthetic timing fixtures only.
 
-The Python modules cover numerical components, strict JSON proposals and literal prompts, deterministic seeds, durable reservations and failure accounting, killable POSIX execution, locked all-pairs inference and temporary custody fixtures. The process executor requires a single-threaded POSIX caller; callbacks must not detach into new sessions. `InlineExecutor` is solely for synthetic clocks and does not enforce hard cancellation.
+## What comes next
 
-There is no provider adapter or full-study command. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) records what remains before the model/cost decisions, complete manifest and protocol freeze. Study logs and mappings belong in protected private storage, never in public preflight artifacts.
+The next milestone is provider feasibility and full-run cost planning. A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
+
+Scientific changes must be recorded prospectively. Historical reviews and synchronization receipts describe their own point in time; current status is stated above and in the readiness record. Study transcripts, results and private comparison mappings must stay out of public engineering artifacts.

@@ -1,0 +1,12 @@
+{
+  "source_workspace_frame": "579e4a68-d84c-4903-b99a-96c94646cab9",
+  "source_sha256": {
+    "qbridge_ext/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/e9_fixtures.py": "16c89cc2cb8f86b7443e8648c9ed80457427b02e91e86c83d1533df18d4c06d5",
+    "qbridge_ext/sol_chat_adapter.py": "f1534a106f51f4eb0d6d2f14e08a5072461f71a410f7108b132f09722b736740",
+    "qbridge_ext/study_coordinator.py": "4e557812fa32bae462a69130729d24c35267c7fb78074f4f5997ebb3dbd9cbf6",
+    "qbridge_ext/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "qbridge_ext/tests/test_ext.py": "08f474d4805ae60a60d9ade772e703e63e75016a1ef70ffcfc5efa2c392d78c2",
+    "protocol/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5"
+  }
+}

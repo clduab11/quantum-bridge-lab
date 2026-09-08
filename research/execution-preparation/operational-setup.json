@@ -1,0 +1,35 @@
+{
+  "kind": "actual_storage_setup_and_delegated_role_selection",
+  "recorded_at": "2026-09-08T22:25:04.806717+00:00",
+  "recorded_by": "Codex under existing user delegation",
+  "private_path": "/Users/chrisdukes/.local/share/quantum-bridge-lab/execution-2026-09-08",
+  "owner_account": "chrisdukes",
+  "owner_uid": 502,
+  "mode": "0700",
+  "outside_public_repository": true,
+  "subdirectories": {
+    "raw": "0700; empty",
+    "journals": "0700; empty",
+    "custody": "0700; empty",
+    "sealed-analysis": "0700; empty"
+  },
+  "role_assignments": {
+    "operator": "Automated study launcher under chrisdukes; integration is not yet implemented or running",
+    "analyst": "Locked analysis/locked_analysis.py process under chrisdukes; no study analysis run",
+    "custody_process_owner": "chrisdukes OS account; automated custody implementation under delegated Codex setup",
+    "implementers_and_reviewers": [
+      "Codex",
+      "Claude Science"
+    ]
+  },
+  "independent_evaluator_blinding": false,
+  "real_mapping_created": false,
+  "study_objective_calls": 0,
+  "experimental_generation_calls": 0,
+  "token_count_calls": 0,
+  "limits": [
+    "Permissions distinguish OS accounts, not agents sharing the same account.",
+    "No running launcher, complete custody sequence, analysis freeze, or whole-workflow readiness is implied.",
+    "Reverify this location on the selected execution machine before use."
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "F1_short": {
+    "batch": 1,
+    "combined_text_bytes": 4609,
+    "history_rows": 10,
+    "local_token_estimate": null,
+    "request_body_canonical_bytes": 4931,
+    "request_body_canonical_sha256": "9da05de0c1516a3e4bba7987e9309527c710a32703eb05e2595fb03f4e2f9cf6",
+    "system_bytes": 1258,
+    "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "token_note": "No local or provider token count exists for these fixtures. The gpt-5.6-sol tokenizer and per-message formatting overhead are not documented; usage.prompt_tokens can only be observed by an authorized E9 call.",
+    "user_bytes": 3351,
+    "user_sha256": "da2c0216a17d25c5e71a12cf0966a333ea664d3869dc60b2f3a238ffff290097"
+  },
+  "F2_maximal_renderer": {
+    "batch": 19,
+    "combined_text_bytes": 103146,
+    "history_rows": 190,
+    "local_token_estimate": null,
+    "request_body_canonical_bytes": 103648,
+    "request_body_canonical_sha256": "7aea7dd9ff0470d048fc9565b06e827f9607f03445df22c5ead12c5104fe2384",
+    "system_bytes": 1258,
+    "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "token_note": "No local or provider token count exists for these fixtures. The gpt-5.6-sol tokenizer and per-message formatting overhead are not documented; usage.prompt_tokens can only be observed by an authorized E9 call.",
+    "user_bytes": 101888,
+    "user_sha256": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c"
+  },
+  "F3_repeat_of_F2": {
+    "batch": 19,
+    "combined_text_bytes": 103146,
+    "history_rows": 190,
+    "local_token_estimate": null,
+    "request_body_canonical_bytes": 103648,
+    "request_body_canonical_sha256": "7aea7dd9ff0470d048fc9565b06e827f9607f03445df22c5ead12c5104fe2384",
+    "system_bytes": 1258,
+    "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "token_note": "No local or provider token count exists for these fixtures. The gpt-5.6-sol tokenizer and per-message formatting overhead are not documented; usage.prompt_tokens can only be observed by an authorized E9 call.",
+    "user_bytes": 101888,
+    "user_sha256": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c"
+  },
+  "F4_correction_no_valid_vectors": {
+    "batch": 19,
+    "combined_text_bytes": 103242,
+    "history_rows": 190,
+    "local_token_estimate": null,
+    "request_body_canonical_bytes": 103745,
+    "request_body_canonical_sha256": "c2d0a6690565274ef2f490fd79704c36ddf66ed6845b5aaf22e84e870d7084c1",
+    "system_bytes": 1258,
+    "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "token_note": "No local or provider token count exists for these fixtures. The gpt-5.6-sol tokenizer and per-message formatting overhead are not documented; usage.prompt_tokens can only be observed by an authorized E9 call.",
+    "user_bytes": 101984,
+    "user_sha256": "52c2d206cdd286a8ff8ceb230647beccc8ddccfc1780c0a31985e2523c01bf1a"
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "files": {
+    "advanced_usage.md": {
+      "bytes": 11061,
+      "sha256": "83ab62ea9f48844a3a2ca9738eb7330733585bebed9bfa367b41590da398f93f"
+    },
+    "chat_create.html": {
+      "bytes": 1628592,
+      "sha256": "57cc9112113cbb07fecec69f818a9ec8230ab14074b5ac279a9bda8dfc36b93c"
+    },
+    "data_residency.md": {
+      "bytes": 71686,
+      "sha256": "87e998eef3eb815414d677ed0f09c462c744bc51c46f240d2aa4b6986ec4d6fb"
+    },
+    "input_tokens_count.html": {
+      "bytes": 4125801,
+      "retrieved_at_utc": "2026-09-08T22:37:16+00:00",
+      "sha256": "daeb6076b8a25e294560bdb03e22c8e2b99897da2af96d3d6026ac410caf93d3",
+      "url": "https://developers.openai.com/api/reference/resources/responses/subresources/input_tokens/methods/count"
+    },
+    "latest_model_gpt56.md": {
+      "bytes": 18924,
+      "sha256": "21ba6bdb6c2b127319a5db20849fdbc06b701cb885418a8ccbcffa9c9fef317a"
+    },
+    "latest_model_sol.html": {
+      "bytes": 404490,
+      "sha256": "597fabcf1a8127eb66b9495c00a7585f7eabaa77d6b485ebd5442990bcbde9c2"
+    },
+    "latest_model_sol.md": {
+      "bytes": 16564,
+      "sha256": "2a59b26078e001a4e4e3da10693e80ad5ee1c02cbe472afa6b682308f27b8b22"
+    },
+    "llms.txt": {
+      "bytes": 5853,
+      "sha256": "d62a1e8e62eef9098fe2a120bf1b0413b7b014b2f1fa3e0109e63f32140bd5be"
+    },
+    "openai_python_pin.txt": {
+      "bytes": 420,
+      "sha256": "269586adba35ef54914689266005116da77fb1d99f4ed971caaaba415e25e39a"
+    },
+    "pricing.html": {
+      "bytes": 564288,
+      "sha256": "c096c61107b474aa33e3b1a2e024bc70810108be93107f91816b622d64adce8c"
+    },
+    "pricing.md": {
+      "bytes": 21646,
+      "sha256": "244b537c06fb94e4d7214ba7f076f2bd18cace4ad165d30ad5da77cbaaad36c6"
+    },
+    "prompt_caching.md": {
+      "bytes": 45072,
+      "sha256": "116afe3d8639c788318605d870229b178bdb8f4d7369062e13fcfc7d457d1837"
+    },
+    "rate_limits.md": {
+      "bytes": 20170,
+      "sha256": "4a10e75768a5c246a1f9ea942b7547d0e72e8d555e36d8997ddb8282107c4f35"
+    },
+    "reasoning.md": {
+      "bytes": 70155,
+      "sha256": "24fea701de256cde7aa544bd0aac5b387bae06d6f8e68b5b6ed168a01a6d49bd"
+    },
+    "responses_create.html": {
+      "bytes": 11704045,
+      "retrieved_at_utc": "2026-09-08T22:37:16+00:00",
+      "sha256": "558be3cd24191f97ff18e801b84aac7bf943e5b5f58ba24e6440fd60788466b4",
+      "url": "https://developers.openai.com/api/reference/resources/responses/methods/create"
+    },
+    "sdk__constants.py": {
+      "bytes": 414,
+      "sha256": "eeccbc82822f0e4372f42f666afd1d1e1fe80cb2ef71357018a0170ac6b9ce32"
+    },
+    "sdk_chat_completion.py": {
+      "bytes": 8723,
+      "sha256": "ba016e84df4d9232dfab10c9e3699096fa33ccd5faacabdf892b91bcb94ceb96"
+    },
+    "sdk_completion_create_params.py": {
+      "bytes": 22634,
+      "sha256": "eceb8cbb71c845057898f185168db9280854f12121bbf3028402be7bc8e89d73"
+    },
+    "sdk_completion_usage.py": {
+      "bytes": 2281,
+      "sha256": "505975694e13d13a3cac7e9b2eff707ef8b125f0de91e32ccc89fc4b7c2161a2"
+    },
+    "sol_migration.md": {
+      "bytes": 24243,
+      "sha256": "d4d2494240bc124bde81d96a9a389f3ed7122deabc4b508c18d26a3ebd20c74f"
+    },
+    "sol_model.html": {
+      "bytes": 418566,
+      "sha256": "226615c5fc25b96df962fe5934ecf2d2c5435dd5b4dde7ac0fa5e580994d024a"
+    },
+    "sol_model.md": {
+      "bytes": 3945,
+      "sha256": "6aaf0b7116c48f427f3bbcd1d3f908d140ae3bfa44ea060bec3d007678b9c5df"
+    },
+    "token_counting.md": {
+      "bytes": 22604,
+      "sha256": "c60315cf603d0cdd6ec1e7dd27ff00fb1196c180db90c3a052a02d3afb5ecd05"
+    }
+  },
+  "retrieved_at_utc_approx": "2026-09-08T22:09:48+00:00",
+  "retrieved_from": "developers.openai.com (mutable documentation) and raw.githubusercontent.com openai/openai-python tag v3.9.0 commit 182af73b39998d51ad672bbd9c200ee3f4121fad"
+}

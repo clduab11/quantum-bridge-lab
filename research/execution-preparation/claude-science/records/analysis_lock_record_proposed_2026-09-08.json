@@ -1,0 +1,35 @@
+{
+  "e8_evidence": "tests/test_analysis.py + tests/test_custody.py passed in the 233-test rerun of this session (fabricated D fixtures only)",
+  "files_sha256": {
+    "analysis/locked_analysis.py": "a81a909c25fff5cc25523e255da1787e5802de7622c358db0c48a6ade0cdd989",
+    "pyproject.toml": "b06423a5feaa8ae3fb4fb51678a3aae049b8a1bf75bdcc8ec7e136c3d5da0c22",
+    "specification/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+    "src/qbridge/__init__.py": "b7471ee6e7514616f51eb3f6fcf163b8cfe20c27d3c216b398b809a561ec3ab0",
+    "src/qbridge/analysis.py": "44225d19a94a81fc769f90a88251509608bf2a6700b8a0d179580b96f929a166",
+    "src/qbridge/custody.py": "9a7c5154165f3a5a5615aeca80107f1c97ada136da369b931c0fbdac882784e0",
+    "src/qbridge/journal.py": "4381e014a53bb3c3a7e432c1e84626560621dcfbba33ee32f8417d062f0338e4",
+    "uv.lock": "d30ab3ce22db8d9ca770944504cb956d84b70bdb152a6b415f98be77d565aaba"
+  },
+  "input_schema": "{\"rows\": [{\"label\": A|B|C, \"block\": 0..39, \"y\": float|null}], \"svf\": bool, \"ivf\": bool}",
+  "invocation": "PYTHONPATH=src python analysis/locked_analysis.py <masked_rows.json> <sealed_output.json>",
+  "kind": "proposed_analysis_lock_record",
+  "recorded_at_utc": "2026-09-08T22:09:48+00:00",
+  "remaining_for_G_LOCK": [
+    "Codex adds openai/httpx pins to uv.lock or records they are excluded from the analysis environment",
+    "freeze manifest entry citing these hashes at the freeze commit",
+    "analysis must be run from the frozen commit, not a worktree"
+  ],
+  "repository_commit": "b89297cfbbca1a922110ef22c9c157e3f63f7fa7",
+  "runtime_observed_in_this_session": {
+    "cma": "4.4.4",
+    "httpx": "0.28.1",
+    "numpy": "2.4.6",
+    "openai": "3.9.0 (NOT in uv.lock; adding it is a repo change for Codex)",
+    "pip-audit": "2.10.1",
+    "pytest": "9.1.1",
+    "python": "3.11.16 (conda; repo pin is 3.11.15 via uv.lock \u2014 NOT identical)",
+    "ruff": "0.16.6",
+    "scipy": "1.17.1"
+  },
+  "status": "PROPOSED content for the freeze manifest; NOT a freeze; protocol v0.4 unfrozen"
+}

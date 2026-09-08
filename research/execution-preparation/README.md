@@ -1,5 +1,7 @@
 # Execution preparation — 2026-09-08
 
+**Current reconciliation:** see [STATUS.md](STATUS.md) for the completed candidate review, 286-test verification, actual storage setup and remaining contract work. The package below is the original fixed-input preparation at `448c4f4`; it did not itself add the separately preserved Claude candidate.
+
 Chris instructed Codex to perform the provider-contract, budget/preflight and gated study steps in the Claude Science project. This is new proceed authority, superseding the earlier phase's offline-only scope. It does not supply a numerical spending ceiling or turn unmeasured provider behavior into evidence. Claude Science is working in **Sol Chat Request Contract & Budget Proposal** from the published source commit `b89297cfbbca1a922110ef22c9c157e3f63f7fa7`.
 
 This package contains work actually performed by Codex: four fixed fabricated E9 request payloads, their history inputs and hashes, three conditional budget calculations, all 40 deterministic seed records, and the existing candidate Python environment's version capture. The accompanying [contract check](CURRENT_CONTRACT_CHECK.md) and [gate audit](GATE_AUDIT.md) record independent source and protocol checks. No provider SDK or dispatch function is added here. No real mapping, model request, token-count request or study-objective evaluation was performed by this preparation script. The candidate environment is not automatically the study environment.

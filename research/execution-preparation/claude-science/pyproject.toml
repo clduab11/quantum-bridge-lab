@@ -1,0 +1,22 @@
+[project]
+name = "qbridge-offline-provider-review"
+version = "0.0.0"
+description = "Isolated dependencies for reviewing the preserved Claude Science candidate"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "quantum-bridge-lab",
+  "numpy==2.4.6",
+  "scipy==1.17.1",
+  "cma==4.4.4",
+  "openai==3.9.0",
+  "httpx==0.28.1",
+  "pytest==9.1.1",
+  "ruff==0.16.6",
+  "pip-audit==2.10.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+quantum-bridge-lab = { path = "../../..", editable = true }

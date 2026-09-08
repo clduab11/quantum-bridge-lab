@@ -1,0 +1,41 @@
+OBJECTIVE DESCRIPTION
+A single qubit evolves under the rotating-frame Hamiltonian
+  H(t) = 0.5 * [ (1+eps) * ( ux(t)*sigma_x + uy(t)*sigma_y ) + delta * sigma_z ]
+with units hbar = 1 and Rabi scale Omega_max = 1. The controls ux(t), uy(t) are
+piecewise constant over N = 10 equal segments of duration dt = 0.4*pi (total T = 4*pi).
+The 20 parameters are ordered segment-major: p[2k] = ux of segment k, p[2k+1] = uy of
+segment k, for k = 0..9; segment 0 acts first.
+
+Feasibility mapping applied before evaluation: for each segment, if
+sqrt(ux^2 + uy^2) > 1 the pair (ux, uy) is rescaled to unit length; otherwise it is
+unchanged. The table below lists the MAPPED vectors that were actually evaluated.
+
+Error ensemble: 25 equally weighted nodes (eps, delta) with
+  eps   in {-0.10, -0.05, 0.00, 0.05, 0.10}   (relative amplitude error)
+  delta in {-0.20, -0.10, 0.00, 0.10, 0.20}   (detuning, units of Omega_max).
+For each node, the total propagator U is the ordered product of the 10 segment
+propagators exp(-i * H_k * dt). Target gate: sigma_x (an X gate).
+
+Objective to MINIMIZE:
+  I(p) = 1 - (1/25) * sum over nodes of | Tr( sigma_x^dagger * U ) / 2 |^2
+This is the mean process infidelity over the 25 nodes. It lies in [0, 1]. A value of
+0 would mean a perfect X gate at every node. The objective is deterministic.
+
+HISTORY (all valid evaluations so far, sorted by objective ascending;
+         columns: index, I, then p[0] ... p[19]; numbers are exact)
+1 0.061 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2 0.2
+2 0.111 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004 -0.30000000000000004
+3 0.16100000000000003 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4 0.4
+4 0.21100000000000002 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5 -0.5
+5 0.261 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.1
+6 0.31100000000000005 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2 -0.2
+7 0.36100000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004 0.30000000000000004
+8 0.41100000000000003 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4 -0.4
+9 0.461 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5
+10 0.511 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1 -0.1
+
+Best objective so far: 0.061 at index 1.
+Evaluation slots remaining after this batch is evaluated: 180.
+Number of vectors requested now: 10.
+
+Respond with the JSON object described in your instructions.

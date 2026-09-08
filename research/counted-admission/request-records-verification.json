@@ -1,0 +1,16 @@
+{
+  "adapter_integration_verified": false,
+  "kind": "offline_request_record_verification",
+  "provider_calls": 0,
+  "real_mapping_created": false,
+  "red_phase": "missing qbridge.request_records module as expected",
+  "ruff": "passed",
+  "scope": "fabricated bytes in temporary directories; includes killed writer after both syncs",
+  "sha256": {
+    "src/qbridge/request_records.py": "ce1b7fb4bbbbfe7d1511408c59f24b87ffc999eeed88cfbd649e613456b36f9f",
+    "tests/test_request_records.py": "ba14c84e3b4ac4f69060f3083b741dc49766a2fd0a9dbd39adc8e2e1c1c3fdb2"
+  },
+  "study_objective_evaluations": 0,
+  "test_seconds": 0.11,
+  "tests_passed": 19
+}

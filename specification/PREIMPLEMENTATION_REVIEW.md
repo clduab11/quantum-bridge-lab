@@ -1,16 +1,16 @@
 # Preimplementation review
 
-Revision: evidence-brief-v1, 2026-09-08. Status: research preparation; not a frozen protocol or experimental result.
+Revision: evidence-brief-v2, 2026-09-08. Status: design corrections resolved in protocol v0.4; implementation readiness and run-manifest freeze remain open. No experimental result.
 
 ## Authority and common scope
 
 Chris delegated expert research and pre-freeze corrections to Codex and Claude Science. The first experiment contains exactly one small simulated system, one joint noise model, one objective, one AI approach, one conventional optimizer and random search under one fixed budget contract. Independent seed replication of the same procedure is allowed; extra targets, grids, ablations and reference optimizers are outside this first experiment.
 
-The unchanged v0.1 source is historical evidence, not the operative protocol. Claude Science Round 1 is in progress and any intermediate file is provisional. No new inference request follows until this source brief has been synchronized. The initial Round 1 request preceded the user's source-preflight instruction; this chronology is preserved.
+The unchanged v0.1, Round 1 and protocol v0.2 are historical evidence. The operative reviewed design is [protocol v0.4](https://github.com/clduab11/quantum-bridge-lab/blob/research/protocol-hardening/specification/ai_quantum_control_protocol_v0.4.md). The first Round 1 request preceded the user's source-preflight instruction. Evidence-brief-v1 was then synchronized to GitHub, Linear and Claude Science before Round 2. This revision records the subsequent independent reviews and Fable's focused v0.3 check and the v0.4 clarification disposition; no history is retroactively represented as preflight.
 
 ## Evidence registry
 
-Access date for every entry: 2026-09-08. Exa searched seven targeted queries with five results each (35 result slots, including duplicate representations). Statistical and physics agents fetched seven distinct primary works; root reviewed the CMA tutorial and official SciPy documentation. This is a bounded review, not an exhaustive literature survey. Search rankings and generated summaries are not evidence of correctness. Common IDs below are used in every project surface.
+Access date for every entry: 2026-09-08. Exa searched eight targeted queries with five results each (40 result slots, including duplicate representations). The eighth search supported the independent median-interval review. Statistical and physics agents fetched seven distinct primary works; root reviewed the CMA tutorial and official SciPy documentation. This is a bounded review, not an exhaustive literature survey. Search rankings and generated summaries are not evidence of correctness. Common IDs below are used in every project surface.
 
 | ID | Primary source / version observed | Supported statement and limit |
 | --- | --- | --- |
@@ -29,7 +29,7 @@ Context7 resolved `/scipy/scipy` (catalog lists v1.16.1) and returned repository
 
 ## Adversarial correction register
 
-Classification vocabulary: fatal validity threat; required correction before protocol freeze; optional improvement; open question; accepted limitation. All R findings below are **required correction before protocol freeze**. They remain open until a saved revised artifact and independent review establish closure.
+Classification vocabulary: fatal validity threat; required correction before protocol freeze; optional improvement; open question; accepted limitation. All R findings below were classified **required correction before protocol freeze**. Their design-text corrections are resolved in v0.4, following separate statistical and operational reviews and Claude Science's focused check. This does not claim the future implementation or readiness checks have passed. The original requirement and its closure evidence remain visible below.
 
 | ID | Correction required | Evidence / verification condition |
 | --- | --- | --- |
@@ -51,3 +51,31 @@ No source establishes that a particular conventional optimizer is strongest on t
 The finite-grid objective is a mean; it is neither worst-case robustness nor a continuum guarantee. A feasible pulse bounds the minimum infidelity from above; multiple optimization restarts would still not certify the optimum. Landscape assumptions, finite precision and physical model limits remain separate.
 
 Exa and Context7 are retrieval services, not writable protocol stores. Superpowers is the planning/review/verification workflow. Uniform information means identical source IDs, scope, correction status and revision pointers in GitHub, Claude Science and Linear, with uncertainty and disagreement retained.
+
+
+## Independent review resolution and current design
+
+The operative v0.4 has SHA-256 `0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5`. Codex authored the derivative; Claude Science authored the preserved v0.2 and critically reviewed v0.3; v0.4 applies its seven non-blocking clarifications. Independent statistical re-review resolved six findings; independent operational review resolved its three findings and a subsequent missing-RS-endpoint wording regression. Fable independently reported no blocking design contradiction after reading v0.3 and checking its arithmetic. Its N1–N7 clarifications are explicitly resolved in v0.4 §16; final artifact readback verifies identity separately from scientific review. These are document reviews, not empirical validation.
+
+| Finding | v0.4 closure evidence |
+| --- | --- |
+| R1 | §§1–3 and 11: N=10, T=4π, d=20, one 25-node joint ensemble/X objective, one AI, one CMA-ES configuration, random search; no alternate-grid or target development experiment. |
+| R2 | §§3–6: process-infidelity name, minimize direction, segment-major ordering, common finite-float domain, overflow-safe disk mapping, shortest round-trip observations and explicit raw/mapped CMA flow. |
+| R3 | §§0 and 8–9: lower 0.5 quantile of the floored paired log ratio; closed order-statistic interval retaining ties; declared log10(2) margin; separate always-completed stages; conditional iid assumptions; no Wilcoxon, post-data comparator or pooled confirmatory test. |
+| R4 | §§2 and 7: 250 segment propagations per valid evaluation; slots/calls/attempts/forfeits/uncertain reservations separated; true deadlines, token ceilings and later cost gate. No measured runtime claim. |
+| R5 | §§6, 11 and 13: no outcome-driven prompt tuning; analytic identities and stubbed fixtures; actual objective/model access logged; prospective exposure amendments. |
+| R6 | §§5 and 7–9: no favorable-baseline gate, no run replacements, no dropped failed blocks; no replay after crash; simulator/inferential failures block both confirmatory support and exclusion. |
+| R7 | §10: locked all-ordered-pair summaries, sealed output, precommitted pair selection; nonce-protected commitment; automated sequence selected and expressly not independent blinding. |
+| R8 | §§0, 9 and 14: claims limited to the floored paired ratio for this configured instance; no reasoning/retrieval mechanism, target-hitting, hardware or commercial inference; inconclusive distinct from exclusion. |
+| R9 | §§4–8 and 11–12: complete normative prompts/schema, response-envelope/per-slot salvage, finite-input and partial-CMA handling, bounded retries and failure state, fixed seed policy; unknown operational metadata blocks readiness. |
+| R10 | §§12–13: real authority records and distinct design/implementation/freeze/run gates; complete future manifest, protected originals and additive amendments. |
+
+Declared expert decisions: CMA popsize10 is explicitly nondefault; exact-decimal observations preserve precision at a context-cost tradeoff; the 10^-12 floor and factor-two floored-ratio margin are research choices; automated sequencing supports autonomy while sacrificing independent evaluator blinding. The user's scientific delegation covers these design decisions. Monetary limits, provider identity/settings and paid preflight/run authority remain actual readiness decisions, not invented facts.
+
+### Additional median-inference evidence
+
+- **STAT-GEYER-2007:** [Geyer, Nonparametric Tests and Confidence Intervals](https://www.stat.umn.edu/geyer/s06/5102/notes/rank.pdf), author lecture notes, §§1.1–1.3. Supports sign-test inversion/order-statistic coverage. Its suggestion that continuity ensures a unique median is not adopted; v0.4 defines the lower quantile explicitly.
+- **STAT-IWASAKI-2005:** [Iwasaki, Less Conservative Distribution-free Confidence Intervals and Tests for the Median](https://doi.org/10.5691/jjb.26.65), primary methods paper. Corroborates binomial median intervals and ties; its interpolated/mid-P alternatives are not adopted.
+- [Independent proof and review](https://github.com/clduab11/quantum-bridge-lab/blob/research/protocol-hardening/research/median_inference_review.md): closed [D_(6),D_(15)] has at least 95.8610534668% coverage under iid blocks, conservatively including atoms/ties. This is a mathematical derivation using binomial sums, not a simulation. Separate stage intervals are not a joint 95% region. Width/power depends on the unknown outcome distribution.
+
+Unverified Round 1 quotations and proposed extra landscape references remain visible in the original Round 2 disposition, explicitly not relied on. No missing retrieval provenance is fabricated to make sources appear uniform.

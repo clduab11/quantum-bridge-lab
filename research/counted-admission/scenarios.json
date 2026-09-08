@@ -1,0 +1,138 @@
+{
+  "hypothetical_10_cent_count_attempt": {
+    "admission_enforcement_verified": false,
+    "all_arms_allotted_objective_slots": 24000,
+    "all_request_attempts": 9144,
+    "billing_complete": false,
+    "combined_ceiling_usd": "5778.28",
+    "combined_exact_usd": "5778.27648",
+    "conditions": [
+      "Unadopted prospective design; no provider or objective request is made.",
+      "Generation rates must cover all applicable input/output token categories.",
+      "The input limit is an admission choice, not proof all legal histories fit.",
+      "A supplied count fee must bound one count attempt including failed attempts; the returned input count does not establish that fee.",
+      "Unknown count fees remain unknown regardless of another reserve. A supplied zero is not evidence counting is free.",
+      "Account charges, rate validity, enforcement and financial authority require separate evidence; a conditional total does not satisfy those gates.",
+      "Attempt allowances are maxima; a shared deadline may forfeit work sooner."
+    ],
+    "count_requests": {
+      "attempt_fee_ceiling_usd": "0.10",
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": "457.20"
+    },
+    "currency": "USD",
+    "extra_usd_reserve": "0",
+    "generation_assumptions": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 200000,
+      "input_usd_per_million": "5",
+      "max_e9_attempts": 12,
+      "output_token_ceiling": 8192,
+      "output_usd_per_million": "20"
+    },
+    "generation_requests": {
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": "5321.07648"
+    },
+    "kind": "conditional_counted_admission_budget",
+    "protocol_adopted": false,
+    "spending_authorized": false,
+    "unpriced_request_classes": []
+  },
+  "prospective_272000_promo_unknown_count_fee": {
+    "admission_enforcement_verified": false,
+    "all_arms_allotted_objective_slots": 24000,
+    "all_request_attempts": 9144,
+    "billing_complete": false,
+    "combined_ceiling_usd": null,
+    "combined_exact_usd": null,
+    "conditions": [
+      "Unadopted prospective design; no provider or objective request is made.",
+      "Generation rates must cover all applicable input/output token categories.",
+      "The input limit is an admission choice, not proof all legal histories fit.",
+      "A supplied count fee must bound one count attempt including failed attempts; the returned input count does not establish that fee.",
+      "Unknown count fees remain unknown regardless of another reserve. A supplied zero is not evidence counting is free.",
+      "Account charges, rate validity, enforcement and financial authority require separate evidence; a conditional total does not satisfy those gates.",
+      "Attempt allowances are maxima; a shared deadline may forfeit work sooner."
+    ],
+    "count_requests": {
+      "attempt_fee_ceiling_usd": null,
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": null
+    },
+    "currency": "USD",
+    "extra_usd_reserve": "0",
+    "generation_assumptions": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 272000,
+      "input_usd_per_million": "4",
+      "max_e9_attempts": 12,
+      "output_token_ceiling": 8192,
+      "output_usd_per_million": "20"
+    },
+    "generation_requests": {
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": "5723.41248"
+    },
+    "kind": "conditional_counted_admission_budget",
+    "protocol_adopted": false,
+    "spending_authorized": false,
+    "unpriced_request_classes": [
+      "count"
+    ]
+  },
+  "unknown_count_fee": {
+    "admission_enforcement_verified": false,
+    "all_arms_allotted_objective_slots": 24000,
+    "all_request_attempts": 9144,
+    "billing_complete": false,
+    "combined_ceiling_usd": null,
+    "combined_exact_usd": null,
+    "conditions": [
+      "Unadopted prospective design; no provider or objective request is made.",
+      "Generation rates must cover all applicable input/output token categories.",
+      "The input limit is an admission choice, not proof all legal histories fit.",
+      "A supplied count fee must bound one count attempt including failed attempts; the returned input count does not establish that fee.",
+      "Unknown count fees remain unknown regardless of another reserve. A supplied zero is not evidence counting is free.",
+      "Account charges, rate validity, enforcement and financial authority require separate evidence; a conditional total does not satisfy those gates.",
+      "Attempt allowances are maxima; a shared deadline may forfeit work sooner."
+    ],
+    "count_requests": {
+      "attempt_fee_ceiling_usd": null,
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": null
+    },
+    "currency": "USD",
+    "extra_usd_reserve": "0",
+    "generation_assumptions": {
+      "extra_usd_reserve": "0",
+      "input_token_ceiling": 200000,
+      "input_usd_per_million": "5",
+      "max_e9_attempts": 12,
+      "output_token_ceiling": 8192,
+      "output_usd_per_million": "20"
+    },
+    "generation_requests": {
+      "e9_attempts": 12,
+      "study_attempts": 4560,
+      "total_attempts": 4572,
+      "total_usd": "5321.07648"
+    },
+    "kind": "conditional_counted_admission_budget",
+    "protocol_adopted": false,
+    "spending_authorized": false,
+    "unpriced_request_classes": [
+      "count"
+    ]
+  }
+}

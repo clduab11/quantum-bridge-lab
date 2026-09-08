@@ -1,0 +1,30 @@
+{
+  "additional_scenario": {
+    "combined_ceiling_usd": null,
+    "count_fee": "unknown",
+    "generation_study_plus_e9_usd": "5723.41248",
+    "independent_fraction_arithmetic": "passed",
+    "input_limit": 272000
+  },
+  "billing_complete": false,
+  "experimental_generation_calls": 0,
+  "frozen": false,
+  "independent_fraction_arithmetic": "passed",
+  "kind": "offline_count_budget_verification",
+  "protocol_adopted": false,
+  "provider_token_count_calls": 0,
+  "source_sha256": {
+    "src/qbridge/budget.py": "99178132a920f46f77044fdf76fed964e30adcc48b720b04de459fb7fbd3e8b0",
+    "src/qbridge/count_budget.py": "65edeb67af605e2c8af1b811589a1eab7ef2031d9f5e996d6546555548205ef4",
+    "tests/test_count_budget.py": "f7c42aee89c34cf0a9dbc71159eb3555e1f82b1d3659edeb376d867b9d4dfba0"
+  },
+  "spending_authorized": false,
+  "study_objective_evaluations": 0,
+  "tests": {
+    "existing_budget": 59,
+    "new": 13,
+    "seconds": 6.21,
+    "total_passed": 72
+  },
+  "utc": "2026-09-08T23:15:08.277860+00:00"
+}

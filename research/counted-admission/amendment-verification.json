@@ -1,0 +1,23 @@
+{
+  "adopted": false,
+  "baseline_sha256": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+  "candidate_rebuild": "three outputs byte-identical",
+  "candidate_sha256": "1f1db589681d688bd2ee517386636765bdf87bb266d54bf5caaf605c41af4001",
+  "frozen": false,
+  "independent_reference_tests": 152,
+  "provider_calls": 0,
+  "study_objective_evaluations": 0,
+  "test_seconds": 0.13,
+  "unchanged_major_sections": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "10",
+    "13",
+    "15",
+    "16"
+  ]
+}

@@ -1,0 +1,2 @@
+# Unified diffs use one space for empty context lines. Preserve this hashed artifact.
+research/counted-admission/claude-science/v0.4_to_v0.5_CANDIDATE_A1.diff whitespace=-blank-at-eol,-blank-at-eof

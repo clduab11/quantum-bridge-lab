@@ -4,7 +4,7 @@
 
 This repository contains the research plan, Python software and review history for answering that question. It is a small, deliberately limited experiment: one simulated qubit, one language model, one conventional optimizer and a random-search reference.
 
-**Current status:** 233 core tests and 53 candidate provider tests pass (286 total). The [reviewed execution preparation](research/execution-preparation/STATUS.md) includes a candidate adapter, synthetic preflight inputs and an isolated dependency lock. The first engineering milestone also passed all eight offline check groups. The experiment itself has **not run**. The final execution plan is not frozen, and no AI performance advantage has been demonstrated.
+**Current status:** The [counted-admission work](research/counted-admission/STATUS.md) adds separate counting and generation budgets, durable request records, and a runner that counts each proposed request before admitting it. An independently reviewed protocol amendment and reference implementation are preserved alongside the code. All checks so far use analytic identities or fabricated data. The experiment itself has **not run**, the final execution plan is not frozen, and no AI performance advantage has been demonstrated.
 
 ## The idea in everyday terms
 
@@ -53,8 +53,8 @@ The process executor requires a single-threaded POSIX caller, and callbacks must
 
 ## What comes next
 
-The [latest execution review](research/execution-preparation/STATUS.md) and [provider review](research/PROVIDER_DECISION.md) identify the next step: establish a usable model-identity and token-counting contract before choosing a provider. An [offline budget calculator](research/BUDGET_PLANNING.md) now shows how input limits, prices, retries and preflight calls affect a conditional cost ceiling. Its inputs still need verification before a spending decision.
+The [current status record](research/counted-admission/STATUS.md) tracks the proposed Responses API contract and remaining implementation. Counting each prompt before generation can enforce a chosen input limit; it does not prove every possible prompt fits or guarantee the provider's final bill. The [separate request budgets](research/counted-admission/BUDGET.md) retain an unknown total when counting fees are unverified. Model identity can be checked only through observable metadata, so undetectable provider changes remain a limitation.
 
-A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
+Protected storage and the roles for automated custody are [recorded](research/execution-preparation/operational-setup.json). The live Responses adapter, complete study launcher, verified billing and spending authority, live preflight and final frozen run manifest remain unfinished. There is currently no command that launches the full experiment. The existing software components and reference checks do not establish independent evaluator blinding.
 
 Scientific changes must be recorded prospectively. Historical reviews and synchronization receipts describe their own point in time; current status is stated above and in the readiness record. Study transcripts, results and private comparison mappings must stay out of public engineering artifacts.

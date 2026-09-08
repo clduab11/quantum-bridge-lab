@@ -1,0 +1,30 @@
+{
+  "adopted": false,
+  "builder_lint_correction": "Claude corrected E741 and formatting before publication; earlier builder and manifest preserved under review-history. All three generated documents, reference and tests remain byte-identical.",
+  "frozen": false,
+  "not_republished": [
+    "openai_cookbook_per_run_spending_controller_2026-09-08.md"
+  ],
+  "pre_builder_lint_manifest_sha256": "0d8ac1d17e3c30189656dadf51902e565781f40fb4e3239f1f8aada38f3697b2",
+  "provider_calls": 0,
+  "reason_not_republished": "Retain primary source URL and checksum, not a complete copy of the third-party article.",
+  "saved_authored_files_and_protocol_baseline": [
+    "amendment_A1_counted_responses_admission_PROPOSED_2026-09-08.md",
+    "ai_quantum_control_protocol_v0.5_CANDIDATE_A1_2026-09-08.md",
+    "v0.4_to_v0.5_CANDIDATE_A1.diff",
+    "counted_responses_request_accounting_contract_2026-09-08.md",
+    "counted_responses_amendment_review_2026-09-08.md",
+    "counted_responses_reference.py",
+    "test_counted_responses_reference.py",
+    "build_amendment_v2.py",
+    "amendment_head_v2.md",
+    "amendment_tail_v2.md",
+    "counted_admission_arithmetic_2026-09-08.json",
+    "sources/specification__ai_quantum_control_protocol_v0.4.md"
+  ],
+  "source_manifest_sha256": "c5dda3e138f114cf2868a93a0b740cab95bf7fa14de8c54a3e5c98bdaa7b12b6",
+  "source_manifest_unchanged_during_import": true,
+  "source_project_frame": "39acb682-2283-4366-84af-a2847578e2ed",
+  "study_objective_evaluations": 0,
+  "verified_source_files": 13
+}

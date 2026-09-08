@@ -1,0 +1,81 @@
+{
+  "generated_utc": "2026-09-08",
+  "status": "pre-exposure; NOT adopted; no provider or objective call; hashes computed from final bytes in the qbridge sandbox",
+  "baseline": {
+    "commit": "3d01292db173bbba8d877fcc50cca7edfdf0cbea",
+    "protocol_v0.4_sha256": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5"
+  },
+  "admission_limit": {
+    "selected_prospective": 272000,
+    "superseded": 200000,
+    "selected_by": "Codex",
+    "rationale": "documented price-tier boundary, read conservatively"
+  },
+  "checks": {
+    "ruff": "All checks passed!",
+    "pytest": "152 passed in 0.07s",
+    "build_deterministic": true,
+    "old_blocks_asserted_unique": 15
+  },
+  "codex_statements_not_verified_here": {
+    "components_commit": "adbf03d19f86f7f2d5592ae77ccb8c9b28672edf",
+    "branch": "research/counted-admission",
+    "counted_runner_tests": "15 cases passing (Codex)",
+    "request_record_tests": "19 offline incl. killed-writer retention (Codex)",
+    "live_transport": "unwired; all calls fabricated"
+  },
+  "files": {
+    "amendment_A1_counted_responses_admission_PROPOSED_2026-09-08.md": {
+      "sha256": "72b4e8b34824c0653d51c3d36eb4fed92769ca70a595a0de244461ed93cb5d67",
+      "bytes": 48231
+    },
+    "ai_quantum_control_protocol_v0.5_CANDIDATE_A1_2026-09-08.md": {
+      "sha256": "1f1db589681d688bd2ee517386636765bdf87bb266d54bf5caaf605c41af4001",
+      "bytes": 70211
+    },
+    "v0.4_to_v0.5_CANDIDATE_A1.diff": {
+      "sha256": "9ba14ee1d31057b3b018d8026f4afc311de81c71196c997eba6b8a8d1effcc8d",
+      "bytes": 36909
+    },
+    "counted_responses_request_accounting_contract_2026-09-08.md": {
+      "sha256": "0f491f248dae379fa4dbf5c44dd8a700757c03f6045b0dfdc748df08bff8b301",
+      "bytes": 22641
+    },
+    "counted_responses_amendment_review_2026-09-08.md": {
+      "sha256": "1e901d849bbfae9ba67714bf4e2c05b0e60fd949211ec4a5f83fe19c5b8e735d",
+      "bytes": 36362
+    },
+    "counted_responses_reference.py": {
+      "sha256": "9804ad049dcb9cc2e367e7734bced79b377945a00350b2af0b8c4cab2670d0f4",
+      "bytes": 37281
+    },
+    "test_counted_responses_reference.py": {
+      "sha256": "f3a3d3901e2910fa95b82f9272e4c2b01b7f1973c2acb074491066b21b8eb4e3",
+      "bytes": 38238
+    },
+    "build_amendment_v2.py": {
+      "sha256": "158c19deca7faee090e4736768ebe48110112469d13c61dd2704a27a8562f971",
+      "bytes": 29292
+    },
+    "amendment_head_v2.md": {
+      "sha256": "4f4428b1cd1c85a97f311e7c60497cb843246c88c315cb7dec26b611f8891cf7",
+      "bytes": 10010
+    },
+    "amendment_tail_v2.md": {
+      "sha256": "0893a5374aa9a8f06191af672edcec1fdb9cd8c326b2f604572ccd9851cc919e",
+      "bytes": 2305
+    },
+    "counted_admission_arithmetic_2026-09-08.json": {
+      "sha256": "7f000f6958265e9f7afdd5efde85a11688732ca698df4b731271eaca53b48078",
+      "bytes": 3020
+    },
+    "openai_cookbook_per_run_spending_controller_2026-09-08.md": {
+      "sha256": "856bc6ae09502984af5aa2fb95e762c3e14ab0a296ebab797c522477af95dc3d",
+      "bytes": 19022
+    },
+    "sources/specification__ai_quantum_control_protocol_v0.4.md": {
+      "sha256": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+      "bytes": 52526
+    }
+  }
+}

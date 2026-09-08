@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from importlib.resources import files
 import math
 import json
+import re
 from numbers import Real
 
 
@@ -40,20 +41,33 @@ def parse_response(text: str) -> ParseResult:
     if not isinstance(text, str):
         return _invalid("invalid_json")
     text = text.strip()
-    if text.startswith("```json\n") and text.endswith("\n```"):
-        text = text[len("```json\n"):-len("\n```")]
+    fenced = re.fullmatch(r"```json\r?\n([\s\S]*)\r?\n```", text)
+    if fenced:
+        text = fenced.group(1)
     try:
-        body = json.loads(text, object_pairs_hook=_unique_object,
-                          parse_constant=_reject_constant, parse_int=float, parse_float=float)
+        body = json.loads(
+            text,
+            object_pairs_hook=_unique_object,
+            parse_constant=_reject_constant,
+            parse_int=float,
+            parse_float=float,
+        )
     except (ValueError, RecursionError, OverflowError):
         return _invalid("invalid_json")
-    if (not isinstance(body, dict) or set(body) != {"proposals"}
-            or not isinstance(body["proposals"], list) or len(body["proposals"]) != 10):
+    if (
+        not isinstance(body, dict)
+        or set(body) != {"proposals"}
+        or not isinstance(body["proposals"], list)
+        or len(body["proposals"]) != 10
+    ):
         return _invalid("invalid_envelope")
     vectors = []
     for candidate in body["proposals"]:
-        if (isinstance(candidate, list) and len(candidate) == 20
-                and all(type(x) is float and math.isfinite(x) for x in candidate)):
+        if (
+            isinstance(candidate, list)
+            and len(candidate) == 20
+            and all(type(x) is float and math.isfinite(x) for x in candidate)
+        ):
             vectors.append(tuple(candidate))
         else:
             vectors.append(None)
@@ -73,23 +87,36 @@ def render_user(history: list[dict], batch: int) -> str:
         index, theta, value = row["index"], row["theta"], row["value"]
         if type(index) is not int or not 1 <= index <= 10 * batch or index in seen:
             raise ValueError("duplicate or out-of-range history index")
-        if (isinstance(value, bool) or not isinstance(value, Real)
-                or not math.isfinite(value) or not 0 <= value <= 1):
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, Real)
+            or not math.isfinite(value)
+            or not 0 <= value <= 1
+        ):
             raise ValueError("invalid history objective")
-        if len(theta) != 20 or any(isinstance(x, bool) or not isinstance(x, Real)
-                                   or not math.isfinite(x) for x in theta):
+        if len(theta) != 20 or any(
+            isinstance(x, bool) or not isinstance(x, Real) or not math.isfinite(x) for x in theta
+        ):
             raise ValueError("invalid mapped history vector")
-        if any(math.hypot(float(theta[k]), float(theta[k+1])) > 1 + 16 * 2**-52
-               for k in range(0, 20, 2)):
+        if any(
+            math.hypot(float(theta[k]), float(theta[k + 1])) > 1 + 16 * 2**-52
+            for k in range(0, 20, 2)
+        ):
             raise ValueError("history vector is outside mapped domain")
         seen.add(index)
         clean.append((float(value), index, tuple(float(x) for x in theta)))
     clean.sort(key=lambda row: (row[0], row[1]))
-    table = "\n".join(" ".join([str(index), repr(value), *(repr(x) for x in theta)])
-                      for value, index, theta in clean)
+    table = "\n".join(
+        " ".join([str(index), repr(value), *(repr(x) for x in theta)])
+        for value, index, theta in clean
+    )
     template = files("qbridge").joinpath("prompts/user_template_v0.3.txt").read_text()
-    replacements = {"history_table": table, "best_I": repr(clean[0][0]),
-                    "best_index": str(clean[0][1]), "remaining_after": str(200 - 10*(batch+1))}
+    replacements = {
+        "history_table": table,
+        "best_I": repr(clean[0][0]),
+        "best_index": str(clean[0][1]),
+        "remaining_after": str(200 - 10 * (batch + 1)),
+    }
     # Literal replacement leaves the mathematical set braces in the normative text intact.
     for name, value in replacements.items():
         template = template.replace("{" + name + "}", value)

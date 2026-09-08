@@ -30,15 +30,18 @@ def test_wrong_envelope_count_loses_whole_response(count):
     assert result.valid_count == 0
 
 
-@pytest.mark.parametrize("text", [
-    '{"proposals":[],"proposals":[]}',
-    '{"proposals":[{"x":0,"x":1}]}',
-    '{"proposals":[NaN]}',
-    '{"proposals":[]} trailing',
-    '```\n{"proposals":[]}\n```',
-    '```JSON\n{"proposals":[]}\n```',
-    '{"proposals":',
-])
+@pytest.mark.parametrize(
+    "text",
+    [
+        '{"proposals":[],"proposals":[]}',
+        '{"proposals":[{"x":0,"x":1}]}',
+        '{"proposals":[NaN]}',
+        '{"proposals":[]} trailing',
+        '```\n{"proposals":[]}\n```',
+        '```JSON\n{"proposals":[]}\n```',
+        '{"proposals":',
+    ],
+)
 def test_invalid_json_precedes_envelope_or_slot_salvage(text):
     result = parse_response(text)
     assert result.reason == "invalid_json"
@@ -53,9 +56,14 @@ def test_exact_json_fence_and_large_finite_raw_domain():
     assert math.isfinite(result.vectors[0][0])
 
 
+def test_json_fence_accepts_crlf_line_endings_without_changing_line_content():
+    result = parse_response("```json\r\n" + json.dumps(payload()) + "\r\n```")
+    assert result.schema_valid and result.valid_count == 10
+
+
 @pytest.mark.parametrize("value", ['"1"', "true", "null", "1e999"])
 def test_non_numeric_or_unrepresentable_values_forfeit_slots(value):
-    text = '{"proposals":[' + ','.join(['[' + ','.join([value] * 20) + ']'] * 10) + ']}'
+    text = '{"proposals":[' + ",".join(["[" + ",".join([value] * 20) + "]"] * 10) + "]}"
     result = parse_response(text)
     assert result.reason == "no_valid_vectors"
     assert result.valid_count == 0
@@ -77,7 +85,9 @@ def test_rendered_history_orders_by_objective_then_original_slot_and_keeps_repr(
     assert "exactly 10 new parameter vectors" in system_prompt()
 
 
-@pytest.mark.parametrize("rows,batch", [([], 1), ([{"index": 1,"theta": [0.] * 20,"value": 0.2}], 0)])
+@pytest.mark.parametrize(
+    "rows,batch", [([], 1), ([{"index": 1, "theta": [0.0] * 20, "value": 0.2}], 0)]
+)
 def test_render_rejects_missing_incumbent_or_invalid_batch(rows, batch):
     with pytest.raises(ValueError):
         render_user(rows, batch)

@@ -45,9 +45,17 @@ def make_runner(tmp_path, arm="AI", objective=constant_objective, **kwargs):
     log = journal.DurableJournal(tmp_path / "events")
     clock = kwargs.pop("clock", Clock())
     instance = runner.ArmRunner(
-        log, block=0, arm=arm, objective=objective, map_action=identity_map,
-        clock=clock, sleep=clock.sleep, executor=runner.InlineExecutor(),
-        input_token_limit=1000, count_input_tokens=lambda request: 10, **kwargs,
+        log,
+        block=0,
+        arm=arm,
+        objective=objective,
+        map_action=identity_map,
+        clock=clock,
+        sleep=clock.sleep,
+        executor=runner.InlineExecutor(),
+        input_token_limit=1000,
+        count_input_tokens=lambda request: 10,
+        **kwargs,
     )
     return instance, log, clock, runner
 
@@ -73,7 +81,9 @@ def render(history, batch):
 
 
 def run_ai(instance, transport):
-    return instance.run_llm(transport, parse_response=parse, render_user=render, system_prompt=lambda: "synthetic")
+    return instance.run_llm(
+        transport, parse_response=parse, render_user=render, system_prompt=lambda: "synthetic"
+    )
 
 
 def test_partial_response_keeps_slot_positions_without_correction(tmp_path):
@@ -129,7 +139,9 @@ def test_terminal_http_error_never_retries_or_corrects(tmp_path, status):
     instance, log, clock, runner = make_runner(tmp_path)
     with log:
         instance.initialize(vectors())
-        result = run_ai(instance, lambda request, timeout: runner.TransportResponse(status, "not JSON"))
+        result = run_ai(
+            instance, lambda request, timeout: runner.TransportResponse(status, "not JSON")
+        )
         assert result["attempt_allowances_used"] == 19
         assert result["logical_calls"] == 19
         assert clock.waits == []
@@ -205,8 +217,11 @@ def test_duplicate_counts_prior_confirmed_invalid_evaluation(tmp_path):
     instance, log, _, _ = make_runner(tmp_path, arm="RS", objective=objective)
     with log:
         result = instance.initialize(vectors())
-        completions = [event for event in log.read_events()
-                       if event["kind"] == "completed" and event.get("resource") == "objective"]
+        completions = [
+            event
+            for event in log.read_events()
+            if event["kind"] == "completed" and event.get("resource") == "objective"
+        ]
         assert completions[0]["duplicate"] is False
         assert completions[1]["status"] == "simulator_invalid"
         assert completions[1]["duplicate"] is True
@@ -251,8 +266,9 @@ def test_callback_orphaned_before_registration_never_starts_work(tmp_path, monke
     monkeypatch.setattr(multiprocessing.process.BaseProcess, "start", crash_after_start)
     executor = runner.ProcessExecutor()
     with pytest.raises((TimeoutError, runner.WorkerCrashed)):
-        executor.guard(lambda: executor.call(lambda: marker.write_text("late"), timeout=1.0),
-                       timeout=0.1)
+        executor.guard(
+            lambda: executor.call(lambda: marker.write_text("late"), timeout=1.0), timeout=0.1
+        )
     time.sleep(0.3)
     assert not marker.exists()
 
@@ -336,7 +352,10 @@ def test_model_change_sets_ivf_without_discarding_outcomes(tmp_path):
     instance, log, _, runner = make_runner(tmp_path, expected_identity={"model": "one"})
     with log:
         instance.initialize(vectors())
-        result = run_ai(instance, lambda request, timeout: runner.TransportResponse(200, "ok", metadata={"model": "two"}))
+        result = run_ai(
+            instance,
+            lambda request, timeout: runner.TransportResponse(200, "ok", metadata={"model": "two"}),
+        )
         assert result["valid_evaluations"] == 200
         assert result["ivf"] is True
 
@@ -372,8 +391,9 @@ def test_process_executor_cancels_work_instead_of_leaving_a_thread(tmp_path):
 def test_process_guard_keeps_cma_state_for_all_generations(tmp_path):
     journal, runner = modules()
     with journal.DurableJournal(tmp_path / "events") as log:
-        instance = runner.ArmRunner(log, block=0, arm="CMA", objective=constant_objective,
-                                    map_action=identity_map)
+        instance = runner.ArmRunner(
+            log, block=0, arm="CMA", objective=constant_objective, map_action=identity_map
+        )
         instance.initialize(vectors())
         result = instance.run_cma(CMA())
         assert result["valid_evaluations"] == 200
@@ -438,9 +458,17 @@ def test_installed_pycma_ask_tell_continues_after_a_stop_condition(tmp_path):
         return (pairs / np.maximum(norms[:, None], 1.0)).reshape(20)
 
     instance.map_action = bounded_map
-    optimizer = cma.CMAEvolutionStrategy(np.zeros(20), 0.5, {
-        "popsize": 10, "seed": 7, "maxiter": 0, "verbose": -9, "verb_log": 0,
-    })
+    optimizer = cma.CMAEvolutionStrategy(
+        np.zeros(20),
+        0.5,
+        {
+            "popsize": 10,
+            "seed": 7,
+            "maxiter": 0,
+            "verbose": -9,
+            "verb_log": 0,
+        },
+    )
     with log:
         instance.initialize(vectors())
         result = instance.run_cma(optimizer)
@@ -500,7 +528,11 @@ def test_reported_fingerprint_change_sets_ivf_even_if_not_a_frozen_key(tmp_path)
     def transport(request, timeout):
         nonlocal calls
         calls += 1
-        return runner.TransportResponse(200, "ok", metadata={"model": "fixed", "fingerprint": "first" if calls == 1 else "second"})
+        return runner.TransportResponse(
+            200,
+            "ok",
+            metadata={"model": "fixed", "fingerprint": "first" if calls == 1 else "second"},
+        )
 
     with log:
         instance.initialize(vectors())

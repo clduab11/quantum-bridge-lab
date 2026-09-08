@@ -52,13 +52,9 @@ def summarize_stage(differences, *, invalid=False):
     if complete:
         lower, upper = interval
         category = (
-            "supports"
-            if upper < MARGIN
-            else ("excludes" if lower > MARGIN else "inconclusive")
+            "supports" if upper < MARGIN else ("excludes" if lower > MARGIN else "inconclusive")
         )
-        zero_position = (
-            "below" if upper < 0 else ("above" if lower > 0 else "contains_zero")
-        )
+        zero_position = "below" if upper < 0 else ("above" if lower > 0 else "contains_zero")
     return {
         "differences": values,
         "n_planned": 20,
@@ -99,9 +95,7 @@ def analyze_masked(rows, *, svf=False, ivf=False):
                 raise ValueError("y must be log10 floored endpoint in [-12, 0]")
         table[label, block] = value
     if len(table) != 120:
-        raise ValueError(
-            "all 120 label/block records are required; use explicit null endpoints"
-        )
+        raise ValueError("all 120 label/block records are required; use explicit null endpoints")
     missing = [
         {"label": label, "block": block}
         for block in range(40)
@@ -125,16 +119,13 @@ def analyze_masked(rows, *, svf=False, ivf=False):
             "blocks": list(blocks),
             "pairs": summaries,
             "floor_boundary_counts": {
-                label: sum(table[label, block] == -12 for block in blocks)
-                for label in LABELS
+                label: sum(table[label, block] == -12 for block in blocks) for label in LABELS
             },
         }
     decisions = {}
     for left, right in PAIRS:
         key = f"{left}-{right}"
-        first, second = (
-            stages[s]["pairs"][key]["nominal_category"] for s in ("1", "2")
-        )
+        first, second = (stages[s]["pairs"][key]["nominal_category"] for s in ("1", "2"))
         if invalid:
             decision = "invalid"
         elif first == second == "supports":

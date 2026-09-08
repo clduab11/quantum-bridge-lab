@@ -105,9 +105,7 @@ def test_global_invalidity_applies_both_stages_and_directions(flag):
     result = analyze_masked(rows(), **{flag: True})
     assert set(result["pair_decisions"].values()) == {"invalid"}
     for stage in result["stages"].values():
-        assert all(
-            p["confirmatory_category"] == "invalid" for p in stage["pairs"].values()
-        )
+        assert all(p["confirmatory_category"] == "invalid" for p in stage["pairs"].values())
 
 
 def test_missing_rs_preserves_primary_nominal_comparison_and_blocks_confirmation():

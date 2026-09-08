@@ -1,0 +1,42 @@
+{
+  "event": "engineering_check",
+  "id": "E6-supplemental",
+  "inputs": {
+    "command_body": "from qbridge.proposals import render_user; print(render_user([{\"index\":1,\"theta\":[0.0]*20,\"value\":0.5}],1),end=\"\")",
+    "history": [
+      {
+        "index": 1,
+        "theta": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "value": 0.5
+      }
+    ],
+    "batch": 1
+  },
+  "fresh_processes": 2,
+  "passed": true,
+  "rendered_sha256": "4b48f44aebaa5d5f051ea230cbe49e093492e49762681f623a2ff5b46fe3b90c",
+  "rendered_bytes": 1744,
+  "study_objective_evaluations": 0,
+  "experimental_model_calls": 0
+}

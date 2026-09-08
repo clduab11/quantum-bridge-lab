@@ -63,9 +63,7 @@ def test_nonce_commitment_permissions_and_exclusive_creation(setup):
 def test_mapping_parent_must_be_protected(tmp_path):
     os.chmod(tmp_path, 0o755)
     with pytest.raises(ValueError):
-        create_private_mapping(
-            tmp_path / "mapping.json", public_repo=tmp_path / "public"
-        )
+        create_private_mapping(tmp_path / "mapping.json", public_repo=tmp_path / "public")
 
 
 def test_canonical_seal_is_hash_of_exact_output_and_never_overwrites(setup, tmp_path):
@@ -91,9 +89,7 @@ def test_verified_selection_records_sequence_and_limits(setup):
     assert event["pair"] == pair
     assert event["manifest_commit"] == ref.commit
     assert event["actor"] == "synthetic custodian"
-    assert (
-        event["sealed_output_sha256"] == hashlib.sha256(output.read_bytes()).hexdigest()
-    )
+    assert event["sealed_output_sha256"] == hashlib.sha256(output.read_bytes()).hexdigest()
     assert "not independent blinding" in event["custody_limit"]
 
 
@@ -131,9 +127,7 @@ def test_missing_committed_seal_rejected_before_mapping_access(setup):
 
 def test_fresh_nonce_changes_commitment_even_if_permutation_repeats(setup, monkeypatch):
     repo, mapping, _, _, _ = setup
-    monkeypatch.setattr(
-        "qbridge.custody.random.Random.shuffle", lambda self, values: None
-    )
+    monkeypatch.setattr("qbridge.custody.random.Random.shuffle", lambda self, values: None)
     first = create_private_mapping(mapping.parent / "one.json", public_repo=repo)
     second = create_private_mapping(mapping.parent / "two.json", public_repo=repo)
     one = json.loads((mapping.parent / "one.json").read_text())

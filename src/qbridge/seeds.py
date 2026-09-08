@@ -42,8 +42,14 @@ def seed_manifest(block: int):
     child = _children(block)[2]
     generator = np.random.Generator(np.random.PCG64(child))
     seed = int(generator.integers(1, 2**31))
-    return {"entropy": ENTROPY, "block": block, "spawn_key": [block],
-            "children": {"init": 0, "rs": 1, "cma": 2}, "generator": "PCG64",
-            "cma_seed": seed, "cma_seed_call": "int(generator.integers(1, 2**31))",
-            "draw_order": "vector, segment, uniform angle, uniform radius-squared",
-            "llm_seed_sent": False}
+    return {
+        "entropy": ENTROPY,
+        "block": block,
+        "spawn_key": [block],
+        "children": {"init": 0, "rs": 1, "cma": 2},
+        "generator": "PCG64",
+        "cma_seed": seed,
+        "cma_seed_call": "int(generator.integers(1, 2**31))",
+        "draw_order": "vector, segment, uniform angle, uniform radius-squared",
+        "llm_seed_sent": False,
+    }

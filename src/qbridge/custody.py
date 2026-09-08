@@ -62,9 +62,7 @@ def read_json_bytes(data):
     def reject_constant(value):
         raise ValueError(f"nonfinite JSON constant: {value}")
 
-    return json.loads(
-        data, object_pairs_hook=_unique_object, parse_constant=reject_constant
-    )
+    return json.loads(data, object_pairs_hook=_unique_object, parse_constant=reject_constant)
 
 
 def _digest(data):
@@ -151,13 +149,10 @@ def _committed_manifest(ref):
         raise ValueError("committed manifest unavailable") from exc
     manifest = read_json_bytes(data)
     if not isinstance(manifest, dict) or any(
-        not isinstance(manifest.get(key), str)
-        or not re.fullmatch(r"[0-9a-f]{64}", manifest[key])
+        not isinstance(manifest.get(key), str) or not re.fullmatch(r"[0-9a-f]{64}", manifest[key])
         for key in ("mapping_sha256", "sealed_output_sha256")
     ):
-        raise ValueError(
-            "committed manifest requires mapping and sealed-output SHA-256"
-        )
+        raise ValueError("committed manifest requires mapping and sealed-output SHA-256")
     return manifest
 
 
@@ -174,9 +169,7 @@ def _private_bytes(path, repo):
             or info.st_uid != os.getuid()
             or stat.S_IMODE(info.st_mode) != 0o600
         ):
-            raise ValueError(
-                "mapping requires an owner-owned regular file with mode 0600"
-            )
+            raise ValueError("mapping requires an owner-owned regular file with mode 0600")
         return stream.read()
 
 
@@ -205,17 +198,10 @@ def select_pair(ref, output_path, mapping_path, event_path, *, actor):
             and type(validity["ivf"]) is bool
             and isinstance(validity["missing_endpoints"], list)
             and invalid
-            == (
-                validity["svf"]
-                or validity["ivf"]
-                or bool(validity["missing_endpoints"])
-            )
+            == (validity["svf"] or validity["ivf"] or bool(validity["missing_endpoints"]))
             and set(output["stages"]) == {"1", "2"}
             and set(output["pair_decisions"]) == expected_pairs
-            and all(
-                set(output["stages"][stage]["pairs"]) == expected_pairs
-                for stage in ("1", "2")
-            )
+            and all(set(output["stages"][stage]["pairs"]) == expected_pairs for stage in ("1", "2"))
         )
         if valid:
             for stage, start in (("1", 0), ("2", 20)):
@@ -229,8 +215,7 @@ def select_pair(ref, output_path, mapping_path, event_path, *, actor):
                     )
             for pair in expected_pairs:
                 first, second = (
-                    output["stages"][s]["pairs"][pair]["nominal_category"]
-                    for s in ("1", "2")
+                    output["stages"][s]["pairs"][pair]["nominal_category"] for s in ("1", "2")
                 )
                 expected = (
                     "invalid"
@@ -249,9 +234,7 @@ def select_pair(ref, output_path, mapping_path, event_path, *, actor):
     except (KeyError, TypeError, ValueError):
         valid = False
     if not valid:
-        raise ValueError(
-            "sealed output must contain the complete locked all-pairs summary"
-        )
+        raise ValueError("sealed output must contain the complete locked all-pairs summary")
     private_data = _private_bytes(mapping_path, ref.repo)
     if _digest(private_data) != manifest["mapping_sha256"]:
         raise ValueError("mapping does not match the committed mapping hash")

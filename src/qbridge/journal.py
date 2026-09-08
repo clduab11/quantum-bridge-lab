@@ -29,8 +29,9 @@ class NoReplayError(RuntimeError):
 
 
 def _encoded(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"),
-                      ensure_ascii=True, allow_nan=False).encode("ascii")
+    return json.dumps(
+        value, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
+    ).encode("ascii")
 
 
 def _validate_usage(usage):
@@ -143,9 +144,12 @@ class DurableJournal:
             raise ValueError("event kind must be nonempty text")
         if {"seq", "previous", "hash", "kind"} & fields.keys():
             raise ValueError("reserved event fields")
-        row = {"seq": len(self._records) + 1,
-               "previous": self._records[-1]["hash"] if self._records else "0" * 64,
-               "kind": kind, **copy.deepcopy(fields)}
+        row = {
+            "seq": len(self._records) + 1,
+            "previous": self._records[-1]["hash"] if self._records else "0" * 64,
+            "kind": kind,
+            **copy.deepcopy(fields),
+        }
         row["hash"] = hashlib.sha256(_encoded(row)).hexdigest()
         data = _encoded(row) + b"\n"
         offset = 0
@@ -175,12 +179,20 @@ class DurableJournal:
         original = matches[0]
         if original["resource"] == "transport":
             _validate_usage(fields.get("usage"))
-        inherited = {key: original[key] for key in ("block", "arm", "slot", "batch", "logical", "attempt")
-                     if key in original}
+        inherited = {
+            key: original[key]
+            for key in ("block", "arm", "slot", "batch", "logical", "attempt")
+            if key in original
+        }
         if {"reservation", "resource"} & fields.keys():
             raise ValueError("completion cannot change its resource")
-        return self.append("completed", reservation=reservation, resource=original["resource"],
-                           **inherited, **fields)
+        return self.append(
+            "completed",
+            reservation=reservation,
+            resource=original["resource"],
+            **inherited,
+            **fields,
+        )
 
     def resource_counts(self, *, block=None, arm=None, usage_categories=()):
         """Return confirmed work, uncertainty bounds and known usage subtotals.
@@ -190,17 +202,27 @@ class DurableJournal:
         categories and explicit None are unknown, including for an empty usage
         object; known subtotals are lower bounds, never substituted totals.
         """
-        events = [e for e in self.read_events()
-                  if (block is None or e.get("block") == block)
-                  and (arm is None or e.get("arm") == arm)]
+        events = [
+            e
+            for e in self.read_events()
+            if (block is None or e.get("block") == block) and (arm is None or e.get("arm") == arm)
+        ]
         completed = {e["reservation"]: e for e in events if e["kind"] == "completed"}
         objectives = [e for e in events if e["kind"] == "reserved" and e["resource"] == "objective"]
         attempts = [e for e in events if e["kind"] == "reserved" and e["resource"] == "transport"]
-        confirmed = sum(completed.get(e["reservation"], {}).get("invoked") is True for e in objectives)
+        confirmed = sum(
+            completed.get(e["reservation"], {}).get("invoked") is True for e in objectives
+        )
         unresolved = sum(e["reservation"] not in completed for e in objectives)
-        dispatches = sum(completed.get(e["reservation"], {}).get("dispatched") is True for e in attempts)
-        unknown_dispatch = sum(completed.get(e["reservation"], {}).get("dispatched") is None for e in attempts)
-        if isinstance(usage_categories, str) or any(not isinstance(c, str) or not c for c in usage_categories):
+        dispatches = sum(
+            completed.get(e["reservation"], {}).get("dispatched") is True for e in attempts
+        )
+        unknown_dispatch = sum(
+            completed.get(e["reservation"], {}).get("dispatched") is None for e in attempts
+        )
+        if isinstance(usage_categories, str) or any(
+            not isinstance(c, str) or not c for c in usage_categories
+        ):
             raise ValueError("usage_categories must contain nonempty category names")
         categories = {"input_tokens", "output_tokens", *usage_categories}
         usages = []
@@ -211,7 +233,9 @@ class DurableJournal:
             categories.update(usage)
             usages.append(usage)
         lower_bounds = {c: sum(usage.get(c) or 0 for usage in usages) for c in sorted(categories)}
-        missing_counts = {c: sum(usage.get(c) is None for usage in usages) for c in sorted(categories)}
+        missing_counts = {
+            c: sum(usage.get(c) is None for usage in usages) for c in sorted(categories)
+        }
         unknown_usage = sum(any(usage.get(c) is None for c in categories) for usage in usages)
         return {
             "confirmed_objective_calls": confirmed,
@@ -219,7 +243,9 @@ class DurableJournal:
             "actual_objective_call_bounds": [confirmed, confirmed + unresolved],
             "attempt_allowances_used": len(attempts),
             "confirmed_transport_dispatches": dispatches,
-            "unresolved_transport_reservations": sum(e["reservation"] not in completed for e in attempts),
+            "unresolved_transport_reservations": sum(
+                e["reservation"] not in completed for e in attempts
+            ),
             "actual_transport_dispatch_bounds": [dispatches, dispatches + unknown_dispatch],
             "unknown_usage_attempts": unknown_usage,
             "usage_lower_bounds": lower_bounds,

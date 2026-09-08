@@ -123,8 +123,9 @@ class ProcessExecutor:
             self._callback_group = context.RawValue("q", 0)
         callback_group = self._callback_group
         receive, send = context.Pipe(duplex=False)
-        process = context.Process(target=_worker,
-                                  args=(send, receive, work, guard, callback_group, os.getpid()))
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
         started = time.monotonic()
         process.start()
         send.close()
@@ -144,7 +145,8 @@ class ProcessExecutor:
             if message[0] == "ok":
                 return message[1]
             exception = {"ConnectionError": ConnectionError, "TimeoutError": TimeoutError}.get(
-                message[1], RemoteError)
+                message[1], RemoteError
+            )
             raise exception(message[2])
         finally:
             receive.close()
@@ -209,10 +211,21 @@ class ArmRunner:
     instance may be inspected via history()/summary(), but cannot run again.
     """
 
-    def __init__(self, journal: DurableJournal, *, block: int, arm: str,
-                 objective, map_action, clock=time.monotonic, sleep=time.sleep,
-                 executor=None, input_token_limit=None, count_input_tokens=None,
-                 expected_identity=None):
+    def __init__(
+        self,
+        journal: DurableJournal,
+        *,
+        block: int,
+        arm: str,
+        objective,
+        map_action,
+        clock=time.monotonic,
+        sleep=time.sleep,
+        executor=None,
+        input_token_limit=None,
+        count_input_tokens=None,
+        expected_identity=None,
+    ):
         if isinstance(block, bool) or not isinstance(block, int) or not 0 <= block < 40:
             raise ValueError("block must be 0 through 39")
         if arm not in {"AI", "CMA", "RS"}:
@@ -237,8 +250,11 @@ class ArmRunner:
             self._event("arm_started", started=self.started, executor=type(self.executor).__name__)
 
     def _events(self):
-        return [e for e in self.journal.read_events()
-                if e.get("block") == self.block and e.get("arm") == self.arm]
+        return [
+            e
+            for e in self.journal.read_events()
+            if e.get("block") == self.block and e.get("arm") == self.arm
+        ]
 
     def _event(self, kind, **fields):
         return self.journal.append(kind, block=self.block, arm=self.arm, **fields)
@@ -251,9 +267,12 @@ class ArmRunner:
         return max(0.0, self.deadline - self.clock())
 
     def _allocated(self):
-        return {e["slot"] for e in self._events()
-                if e["kind"] == "slot_forfeited"
-                or (e["kind"] == "reserved" and e.get("resource") == "objective")}
+        return {
+            e["slot"]
+            for e in self._events()
+            if e["kind"] == "slot_forfeited"
+            or (e["kind"] == "reserved" and e.get("resource") == "objective")
+        }
 
     def _forfeit(self, slots, reason):
         allocated = self._allocated()
@@ -269,7 +288,9 @@ class ArmRunner:
         if self.closed:
             return
         self._forfeit(range(1, 201), reason)
-        if self.journal.resource_counts(block=self.block, arm=self.arm)["unresolved_objective_reservations"]:
+        if self.journal.resource_counts(block=self.block, arm=self.arm)[
+            "unresolved_objective_reservations"
+        ]:
             self._flag("svf", "unresolved_objective_reservation")
         if not self.history():
             self._flag("svf", "undefined_endpoint")
@@ -311,36 +332,58 @@ class ArmRunner:
         return self.summary()
 
     def history(self):
-        return [{"index": e["slot"], "theta": list(e["theta"]), "value": e["value"]}
-                for e in self._events() if e["kind"] == "completed"
-                and e.get("resource") == "objective" and e.get("status") == "valid"]
+        return [
+            {"index": e["slot"], "theta": list(e["theta"]), "value": e["value"]}
+            for e in self._events()
+            if e["kind"] == "completed"
+            and e.get("resource") == "objective"
+            and e.get("status") == "valid"
+        ]
 
     def summary(self):
         events = self._events()
         history = self.history()
         best = min(history, key=lambda row: (row["value"], row["index"])) if history else None
         counts = self.journal.resource_counts(block=self.block, arm=self.arm)
-        return {"block": self.block, "arm": self.arm, "allotted_slots": 200,
-                "endpoint": best["value"] if best else None,
-                "best_index": best["index"] if best else None,
-                "valid_evaluations": len(history),
-                "forfeits": sum(e["kind"] == "slot_forfeited" for e in events),
-                "simulator_invalid": sum(e["kind"] == "completed" and e.get("status") == "simulator_invalid"
-                                         for e in events),
-                "mapping_failures": sum(e["kind"] == "completed" and e.get("invoked") is False
-                                        and e.get("resource") == "objective" for e in events),
-                "logical_calls": sum(e["kind"] == "logical_started" for e in events),
-                "duplicates": sum(e["kind"] == "completed" and e.get("duplicate", False) for e in events),
-                "svf": any(e["kind"] == "svf" for e in events),
-                "ivf": any(e["kind"] == "ivf" for e in events),
-                "closed": self.closed, **counts}
+        return {
+            "block": self.block,
+            "arm": self.arm,
+            "allotted_slots": 200,
+            "endpoint": best["value"] if best else None,
+            "best_index": best["index"] if best else None,
+            "valid_evaluations": len(history),
+            "forfeits": sum(e["kind"] == "slot_forfeited" for e in events),
+            "simulator_invalid": sum(
+                e["kind"] == "completed" and e.get("status") == "simulator_invalid" for e in events
+            ),
+            "mapping_failures": sum(
+                e["kind"] == "completed"
+                and e.get("invoked") is False
+                and e.get("resource") == "objective"
+                for e in events
+            ),
+            "logical_calls": sum(e["kind"] == "logical_started" for e in events),
+            "duplicates": sum(
+                e["kind"] == "completed" and e.get("duplicate", False) for e in events
+            ),
+            "svf": any(e["kind"] == "svf" for e in events),
+            "ivf": any(e["kind"] == "ivf" for e in events),
+            "closed": self.closed,
+            **counts,
+        }
 
     def _evaluate(self, raw, slot):
         if not self._live():
             return None
         raw = _raw_vector(raw)
-        reservation = self.journal.reserve("objective", f"{self.arm}:{self.block}:{slot}",
-                                           block=self.block, arm=self.arm, slot=slot, raw=list(raw))
+        reservation = self.journal.reserve(
+            "objective",
+            f"{self.arm}:{self.block}:{slot}",
+            block=self.block,
+            arm=self.arm,
+            slot=slot,
+            raw=list(raw),
+        )
         try:
             theta = np.asarray(self.map_action(raw), dtype=np.float64)
             if theta.shape != (20,) or not np.all(np.isfinite(theta)):
@@ -349,22 +392,32 @@ class ArmRunner:
             if np.any(norms > 1 + TAU_MAP):
                 raise ValueError("mapped norm exceeds tolerance")
         except Exception as exc:
-            self.journal.complete(reservation, status="simulator_invalid", invoked=False,
-                                  error="mapping_failure", message=str(exc))
+            self.journal.complete(
+                reservation,
+                status="simulator_invalid",
+                invoked=False,
+                error="mapping_failure",
+                message=str(exc),
+            )
             self._flag("svf", "mapping_failure")
             return None
-        overshoots = [{"segment": int(k), "norm": float(norms[k])}
-                      for k in np.flatnonzero(norms > 1)]
+        overshoots = [
+            {"segment": int(k), "norm": float(norms[k])} for k in np.flatnonzero(norms > 1)
+        ]
         if overshoots:
             self._event("mapping_norm_overshoots", slot=slot, overshoots=overshoots)
         # Compare every confirmed evaluation, including simulator-invalid
         # values, by binary64 image (and signed-zero bits). Unresolved
         # reservations do not establish that evaluation occurred.
         bits = theta.tobytes()
-        duplicate = any(np.asarray(event["theta"], dtype=np.float64).tobytes() == bits
-                        for event in self._events()
-                        if event["kind"] == "completed" and event.get("resource") == "objective"
-                        and event.get("invoked") is True and "theta" in event)
+        duplicate = any(
+            np.asarray(event["theta"], dtype=np.float64).tobytes() == bits
+            for event in self._events()
+            if event["kind"] == "completed"
+            and event.get("resource") == "objective"
+            and event.get("invoked") is True
+            and "theta" in event
+        )
         try:
             value = self.executor.call(lambda: self.objective(theta), timeout=self._remaining())
         except (TimeoutError, WorkerCrashed):
@@ -373,9 +426,16 @@ class ArmRunner:
             self._finish("objective_interruption")
             return None
         except Exception as exc:
-            self.journal.complete(reservation, status="simulator_invalid", invoked=True,
-                                  raw=list(raw), theta=theta.tolist(), duplicate=duplicate,
-                                  error=type(exc).__name__, message=str(exc))
+            self.journal.complete(
+                reservation,
+                status="simulator_invalid",
+                invoked=True,
+                raw=list(raw),
+                theta=theta.tolist(),
+                duplicate=duplicate,
+                error=type(exc).__name__,
+                message=str(exc),
+            )
             self._flag("svf", "simulator_exception")
             return None
         try:
@@ -387,16 +447,29 @@ class ArmRunner:
             valid = False
         expired = self._remaining() <= 0
         if not valid or expired:
-            self.journal.complete(reservation, status="simulator_invalid", invoked=True,
-                                  raw=list(raw), theta=theta.tolist(), duplicate=duplicate,
-                                  error="deadline" if expired else "invalid_value")
+            self.journal.complete(
+                reservation,
+                status="simulator_invalid",
+                invoked=True,
+                raw=list(raw),
+                theta=theta.tolist(),
+                duplicate=duplicate,
+                error="deadline" if expired else "invalid_value",
+            )
             self._flag("svf", "objective_deadline" if expired else "invalid_value")
             if expired:
                 self._finish("deadline")
             return None
         value = float(value)
-        self.journal.complete(reservation, status="valid", invoked=True,
-                              raw=list(raw), theta=theta.tolist(), value=value, duplicate=duplicate)
+        self.journal.complete(
+            reservation,
+            status="valid",
+            invoked=True,
+            raw=list(raw),
+            theta=theta.tolist(),
+            value=value,
+            duplicate=duplicate,
+        )
         return value
 
     def initialize(self, raw_vectors):
@@ -414,6 +487,7 @@ class ArmRunner:
                 self._event("initialized")
             else:
                 self._finish("zero_valid_initialization")
+
         return self._guarded(work)
 
     def _ready(self, expected_arm):
@@ -432,6 +506,7 @@ class ArmRunner:
                     return
                 self._evaluate(next(actions), slot)
             self._finish("completed")
+
         return self._guarded(work)
 
     def run_cma(self, optimizer):
@@ -454,67 +529,123 @@ class ArmRunner:
                         return
                     values.append(value)
                 optimizer.tell(samples, values)
-                self._event("cma_generation", generation=generation,
-                            stop_conditions=_json_ready(optimizer.stop()))
+                self._event(
+                    "cma_generation",
+                    generation=generation,
+                    stop_conditions=_json_ready(optimizer.stop()),
+                )
             self._finish("completed")
+
         return self._guarded(work)
 
     def _logical(self, transport, request, batch, logical):
         self._event("logical_started", batch=batch, logical=logical, request=request)
         if self.input_token_limit is None or self.count_input_tokens is None:
-            raise ValueError("an input-token counter and ceiling are required even for a mocked LLM")
+            raise ValueError(
+                "an input-token counter and ceiling are required even for a mocked LLM"
+            )
         length = self.count_input_tokens(request)
-        if isinstance(length, bool) or not isinstance(length, int) or not 0 <= length <= self.input_token_limit:
-            self._event("request_not_sent", batch=batch, logical=logical, reason="input_token_ceiling")
+        if (
+            isinstance(length, bool)
+            or not isinstance(length, int)
+            or not 0 <= length <= self.input_token_limit
+        ):
+            self._event(
+                "request_not_sent", batch=batch, logical=logical, reason="input_token_ceiling"
+            )
             return None
         for attempt in range(1, 4):
             if not self._live():
                 return None
-            reservation = self.journal.reserve("transport", f"{self.arm}:{self.block}:{batch}:{logical}:{attempt}",
-                                               block=self.block, arm=self.arm, batch=batch, logical=logical,
-                                               attempt=attempt, request=request)
+            reservation = self.journal.reserve(
+                "transport",
+                f"{self.arm}:{self.block}:{batch}:{logical}:{attempt}",
+                block=self.block,
+                arm=self.arm,
+                batch=batch,
+                logical=logical,
+                attempt=attempt,
+                request=request,
+            )
             timeout = min(ATTEMPT_SECONDS, self._remaining())
             try:
-                response = self.executor.call(lambda: transport(copy.deepcopy(request), timeout), timeout=timeout)
+                response = self.executor.call(
+                    lambda: transport(copy.deepcopy(request), timeout), timeout=timeout
+                )
             except TimeoutError:
                 self._event("attempt_timeout", reservation=reservation)
                 retry = True
             except ConnectionError as exc:
-                self.journal.complete(reservation, status="connection_error", dispatched=None,
-                                      usage=None, message=str(exc))
+                self.journal.complete(
+                    reservation,
+                    status="connection_error",
+                    dispatched=None,
+                    usage=None,
+                    message=str(exc),
+                )
                 retry = True
             except WorkerCrashed:
                 self._recover("transport_interruption")
                 return None
             except Exception as exc:
-                self.journal.complete(reservation, status="client_error", dispatched=None,
-                                      usage=None, error=type(exc).__name__, message=str(exc))
+                self.journal.complete(
+                    reservation,
+                    status="client_error",
+                    dispatched=None,
+                    usage=None,
+                    error=type(exc).__name__,
+                    message=str(exc),
+                )
                 return None
             else:
                 if not isinstance(response, TransportResponse):
-                    self.journal.complete(reservation, status="client_error", dispatched=None,
-                                          usage=None, error="invalid_transport_response")
+                    self.journal.complete(
+                        reservation,
+                        status="client_error",
+                        dispatched=None,
+                        usage=None,
+                        error="invalid_transport_response",
+                    )
                     return None
-                self.journal.complete(reservation, status="response", dispatched=True,
-                                      http_status=response.status, text=response.text,
-                                      metadata=response.metadata, usage=response.usage)
+                self.journal.complete(
+                    reservation,
+                    status="response",
+                    dispatched=True,
+                    http_status=response.status,
+                    text=response.text,
+                    metadata=response.metadata,
+                    usage=response.usage,
+                )
                 if not self._live():
                     return None
                 if 200 <= response.status < 300:
                     if self.expected_identity is not None and any(
-                        response.metadata.get(key) != value for key, value in self.expected_identity.items()
+                        response.metadata.get(key) != value
+                        for key, value in self.expected_identity.items()
                     ):
                         self._flag("ivf", "model_or_decoding_change")
-                    relevant = {"model", "fingerprint", "system_fingerprint", "decoding", "effective_decoding"}
+                    relevant = {
+                        "model",
+                        "fingerprint",
+                        "system_fingerprint",
+                        "decoding",
+                        "effective_decoding",
+                    }
                     prior_identity = {}
                     for event in self.journal.read_events():
-                        if (event["kind"] == "completed" and event.get("resource") == "transport"
-                                and 200 <= event.get("http_status", 0) < 300):
+                        if (
+                            event["kind"] == "completed"
+                            and event.get("resource") == "transport"
+                            and 200 <= event.get("http_status", 0) < 300
+                        ):
                             for key, value in event.get("metadata", {}).items():
                                 if key in relevant and value is not None:
                                     prior_identity.setdefault(key, value)
-                    if any(key in prior_identity and value is not None and value != prior_identity[key]
-                           for key, value in response.metadata.items() if key in relevant):
+                    if any(
+                        key in prior_identity and value is not None and value != prior_identity[key]
+                        for key, value in response.metadata.items()
+                        if key in relevant
+                    ):
                         self._flag("ivf", "reported_identity_change")
                     return response.text
                 retry = response.status == 429 or 500 <= response.status < 600
@@ -539,18 +670,35 @@ class ArmRunner:
                 parsed = None
                 if text is not None:
                     parsed = parse_response(text)
-                    self._event("parsed_response", batch=batch, logical=1,
-                                valid_count=parsed.valid_count, schema_valid=parsed.schema_valid,
-                                reason=parsed.reason, validity=[v is not None for v in parsed.vectors])
+                    self._event(
+                        "parsed_response",
+                        batch=batch,
+                        logical=1,
+                        valid_count=parsed.valid_count,
+                        schema_valid=parsed.schema_valid,
+                        reason=parsed.reason,
+                        validity=[v is not None for v in parsed.vectors],
+                    )
                     if parsed.valid_count == 0:
-                        correction = {**request, "user": user + "\nPREVIOUS RESPONSE REJECTED: "
-                                      + parsed.reason + ". Respond again following the output rules exactly."}
+                        correction = {
+                            **request,
+                            "user": user
+                            + "\nPREVIOUS RESPONSE REJECTED: "
+                            + parsed.reason
+                            + ". Respond again following the output rules exactly.",
+                        }
                         text = self._logical(transport, correction, batch, 2)
                         parsed = parse_response(text) if text is not None else None
                         if parsed is not None:
-                            self._event("parsed_response", batch=batch, logical=2,
-                                        valid_count=parsed.valid_count, schema_valid=parsed.schema_valid,
-                                        reason=parsed.reason, validity=[v is not None for v in parsed.vectors])
+                            self._event(
+                                "parsed_response",
+                                batch=batch,
+                                logical=2,
+                                valid_count=parsed.valid_count,
+                                schema_valid=parsed.schema_valid,
+                                reason=parsed.reason,
+                                validity=[v is not None for v in parsed.vectors],
+                            )
                 if not self._live():
                     return
                 slots = range(10 * batch + 1, 10 * batch + 11)
@@ -565,6 +713,7 @@ class ArmRunner:
                     else:
                         self._evaluate(raw, slot)
             self._finish("completed")
+
         return self._guarded(work)
 
 

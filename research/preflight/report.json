@@ -1,0 +1,144 @@
+{
+  "all_checks_passed": true,
+  "checks": [
+    {
+      "elapsed_seconds": 0.5025209579616785,
+      "exit_code": 0,
+      "id": "E1",
+      "log_sha256": "fbf268c7c6a85dbcfce72540ba104f027f7eb805133157f4789aeae9118e27ff",
+      "name": "Propagator identities",
+      "passed": true
+    },
+    {
+      "elapsed_seconds": 0.23811720800586045,
+      "exit_code": 0,
+      "id": "E2",
+      "log_sha256": "a5e57870b77a116802adacf77712d3265a308b6e3ce27b8382203e2b11905e6f",
+      "name": "Fidelity identities and independent state-average conversion",
+      "passed": true
+    },
+    {
+      "component_timing": {
+        "inputs": {
+          "dt": 0.125,
+          "fidelities": [
+            0.25,
+            0.75
+          ],
+          "generator": [
+            0.25,
+            -0.5,
+            0.75
+          ],
+          "response": "{\"proposals\": [[0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]}"
+        },
+        "repetitions": 100,
+        "scope": "component arithmetic and parser only; imports excluded",
+        "seconds": 0.006435666990000755
+      },
+      "elapsed_seconds": 0.4214337920420803,
+      "exit_code": 0,
+      "id": "E3",
+      "log_sha256": "e3b8200132a50e625d8b8791da24b2c375e8b83157fe6ebfdc849b4334f6793c",
+      "name": "Literal synthetic aggregation and component timing",
+      "passed": true
+    },
+    {
+      "elapsed_seconds": 0.29777466697851196,
+      "exit_code": 0,
+      "id": "E4",
+      "log_sha256": "ed1b9617dea4bd3d0f0c888fd9557d8beb00d3d4809a36567ed8edbd61ed4600",
+      "name": "Overflow-safe disk mapping",
+      "passed": true
+    },
+    {
+      "elapsed_seconds": 0.18298504099948332,
+      "exit_code": 0,
+      "id": "E5",
+      "log_sha256": "1761b913dd652147763aef0ef8162556d55fe54c8d47d8c5bb4f22c177a998df",
+      "name": "JSON envelope and per-slot salvage",
+      "passed": true
+    },
+    {
+      "canonical_and_packaged_prompts_equal": true,
+      "elapsed_seconds": 0.18449799995869398,
+      "exit_code": 0,
+      "id": "E6",
+      "log_sha256": "8227f42b1c0a04cebfe3ea863b0a2eeabb7e539ab367e32699cb16bbd1fa0cff",
+      "name": "Literal prompt rendering",
+      "passed": true
+    },
+    {
+      "cma_options_sha256": "1b51aed4786901ee60aa4f41f04581d1ede3366d2cfd49cebbe2209c05c461a9",
+      "elapsed_seconds": 29.607615166984033,
+      "exit_code": 0,
+      "id": "E7",
+      "log_sha256": "f069bffc733d3d32c4bf026f0d683c1eac9883e8964d78e669b3b0b0a2b6a8b1",
+      "name": "Synthetic failure, custody-of-events and seed contracts",
+      "passed": true
+    },
+    {
+      "elapsed_seconds": 1.3224477089825086,
+      "exit_code": 0,
+      "id": "E8",
+      "log_sha256": "61ccbdc1c88b345f1b2ed8299365beeb0f192efca5f67c2dd92620eeaaf0fdcb",
+      "name": "Locked inference and temporary synthetic custody",
+      "passed": true
+    }
+  ],
+  "executed_snapshot_unchanged": true,
+  "experimental_model_calls": 0,
+  "frozen": false,
+  "packages": {
+    "cma": "4.4.4",
+    "numpy": "2.4.6",
+    "pip-audit": "2.10.1",
+    "pytest": "9.1.1",
+    "ruff": "0.16.6",
+    "scipy": "1.17.1"
+  },
+  "python": "3.11.15",
+  "readiness": {
+    "G-CMA": "pending",
+    "G-COST": "pending",
+    "G-CUSTODY": "pending",
+    "G-ENV": "pending",
+    "G-EXPOSURE": "pending",
+    "G-LOCK": "pending",
+    "G-MODEL": "pending",
+    "G-RUNTIME": "pending",
+    "G-STORAGE": "pending",
+    "G-TRANSPORT": "pending"
+  },
+  "readiness_note": "Evidence for offline components only. Full manifest, real-provider validation, protected study storage, roles and cost decisions remain.",
+  "schema": "qbridge.offline-preflight.v1",
+  "scope": "analytic_components_and_synthetic_fixtures",
+  "source_sha256": {
+    "analysis/locked_analysis.py": "a81a909c25fff5cc25523e255da1787e5802de7622c358db0c48a6ade0cdd989",
+    "prompts/system_v0.3.txt": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "prompts/user_template_v0.3.txt": "80aa634b5511134e9a741614f60d341422f38143e05136da3f3f2e159bf44ba1",
+    "pyproject.toml": "9c0c258cd1ab718ae7723bbc5e85ef5c8eef9350c4e27bed7885199395efd90a",
+    "specification/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+    "src/qbridge/__init__.py": "b7471ee6e7514616f51eb3f6fcf163b8cfe20c27d3c216b398b809a561ec3ab0",
+    "src/qbridge/analysis.py": "44225d19a94a81fc769f90a88251509608bf2a6700b8a0d179580b96f929a166",
+    "src/qbridge/custody.py": "9a7c5154165f3a5a5615aeca80107f1c97ada136da369b931c0fbdac882784e0",
+    "src/qbridge/journal.py": "4381e014a53bb3c3a7e432c1e84626560621dcfbba33ee32f8417d062f0338e4",
+    "src/qbridge/physics.py": "7c73f634b4014088935c6959ea5687a14a7e952ba87b777f155d13c2afbe6b42",
+    "src/qbridge/preflight.py": "e080e7d0aa8b98ed097c8c1103d71b66d835c4ae8466e6424852ccf936e6f3ba",
+    "src/qbridge/prompts/system_v0.3.txt": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "src/qbridge/prompts/user_template_v0.3.txt": "80aa634b5511134e9a741614f60d341422f38143e05136da3f3f2e159bf44ba1",
+    "src/qbridge/proposals.py": "2129c2f167f7cee3289c7fc5129fe7f3b6565203e07bc8e37d89d26732cd2254",
+    "src/qbridge/runner.py": "eb82e1cd2be8cf448f85b774801b6f6e6facd72a673a8b6fd986838b103491b0",
+    "src/qbridge/seeds.py": "f32fba8301a42592aa4135bfa5e94a6574be88ce1d9612a3f022c861cfcdec35",
+    "tests/test_analysis.py": "7e9f4171c4cb6af34efdcedb371cb7e82eacdc5f43468db4dd1cb1013f92f4ec",
+    "tests/test_custody.py": "3c3756a335a6b212ce6cddb865e4fcd99c621609e5bf7329a6f0d7cf374c5e9e",
+    "tests/test_journal.py": "3a08b1f48653b09c1d68f204380172424e116854f00004062e9029b9f521d33b",
+    "tests/test_physics.py": "752a53a6ef089fee41da6983bf0e45d15568c1ce2eee9038f1f669e84408baed",
+    "tests/test_preflight.py": "0a437c34951ea30072f04b021d7fb6a16ddf7fe9a661848e9dc457f84d263616",
+    "tests/test_proposals.py": "c93b7dcac32ca31af3fafaa6fc3803a1261de7ac5741667bb100ecb77947c51d",
+    "tests/test_runner.py": "64c8446fd5e95a6469279bbf773ef40f122730fa76133875ec88d7605783003c",
+    "tests/test_seeds.py": "58310804c2a6f4d1719c40501359ffae89f6b19c70f5eadb0e9577e8286045d1",
+    "uv.lock": "d30ab3ce22db8d9ca770944504cb956d84b70bdb152a6b415f98be77d565aaba"
+  },
+  "study_objective_evaluations": 0
+}

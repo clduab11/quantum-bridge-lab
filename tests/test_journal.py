@@ -106,8 +106,18 @@ def test_partial_usage_keeps_unknown_categories_and_known_lower_bounds(tmp_path)
         second = log.reserve("transport", "AI:0:2", block=0, arm="AI")
         log.complete(second, dispatched=True, usage={})
         counts = log.resource_counts(block=0, arm="AI", usage_categories=("reasoning_tokens",))
-        assert counts["usage_lower_bounds"] == {"input_tokens": 7, "output_tokens": 0, "cached_tokens": 3, "reasoning_tokens": 0}
-        assert counts["usage_missing_counts"] == {"input_tokens": 1, "output_tokens": 2, "cached_tokens": 1, "reasoning_tokens": 2}
+        assert counts["usage_lower_bounds"] == {
+            "input_tokens": 7,
+            "output_tokens": 0,
+            "cached_tokens": 3,
+            "reasoning_tokens": 0,
+        }
+        assert counts["usage_missing_counts"] == {
+            "input_tokens": 1,
+            "output_tokens": 2,
+            "cached_tokens": 1,
+            "reasoning_tokens": 2,
+        }
         assert counts["unknown_usage_attempts"] == 2
 
 

@@ -1,0 +1,46 @@
+# Viability assessment — 2026-09-08
+
+**Recommendation: continue through a small, rigorously completed first study, with a firm resource ceiling. Treat it as a useful benchmark and research-training investment. The current design is a weak standalone novelty or commercial proposition.** This is a judgment from the protocol and literature, not an experimental result or a prediction that the AI arm will win.
+
+Protocol reviewed: `ai_quantum_control_protocol_v0.4.md`, SHA-256 `0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5`. Its header states NOT FROZEN, NO EXPERIMENT RUN. This work performed no simulation, optimizer run, or experimental model call.
+
+## Bounded evidence check
+
+Accessed **2026-09-08** through Exa. Three searches requested ten results each: `sources_reviewed: 30`. All result titles and URLs were screened; duplicate/mirror records were consolidated. Six paper URLs were fetched for context; the five works below drive this assessment. Follow-up fetching read the two quantum-control papers' main text and the frontier-batch paper's PDF. The latter HTML fetch timed out; its PDF fetch succeeded. This is a targeted novelty check, not an exhaustive prior-art review or independent reproduction of any paper's results.
+
+| Proposed evidence ID | Primary source and date | Relevant finding and limitation |
+| --- | --- | --- |
+| OPT-LLAMBO-2024 | Liu et al., *Large Language Models to Enhance Bayesian Optimization* (2024), https://arxiv.org/abs/2402.03921 | Describes in-context use of problem descriptions and historical evaluations for candidate sampling, warm starting and surrogate modeling. Thus history-conditioned LLM optimization is established prior work. This is a modular BO method, not this protocol's direct numerical batch proposer. |
+| QCTRL-VF-2026 | Zhao et al., *Toward General Quantum Control with Physics-Informed Large Language Models* (May 2026 preprint), https://arxiv.org/abs/2605.26021 ; main text https://arxiv.org/html/2605.26021 | Describes LLM-generated analytic control ansätze refined with SPSA and a 16-task quantum-control benchmark. Authors report strong performance across their tasks. The structure/numerics separation is materially different from emitting 20 raw coordinates; its reported gains do not predict this study's outcome. |
+| QCTRL-WORKBENCH-2026 | Chen and Zhang, *LLM-Driven Cross-Paradigm Design for Quantum Optimal Control* (posted 2026-07-20; document draft dated 2026-06-18), https://arxiv.org/abs/2607.17498 ; main text https://arxiv.org/html/2607.17498v1 | Presents an auditable LLM workflow proposing control structures, writing simulation code, and retaining results across three control settings. Broad claims of novelty for an autonomous quantum co-scientist or auditable control workflow are therefore unavailable. Its changing structural search space differs from this fixed protocol. |
+| OPT-FRONTIER-BATCH-2026 | Hu, Chennakesavalu and Graff, *Frontier LLMs are effective batch optimizers: Assessing reasoning models in continuous and discrete settings* (submitted 2026-09-02), https://arxiv.org/abs/2609.03177 ; PDF https://arxiv.org/pdf/2609.03177 | Direct batch-optimization prior art. Authors report competitiveness but brittleness on numerical functions, sensitivity to disguised functions and batch sizes, and stronger performance on semantic molecular tasks. Their numeric experiments use different dimensions, budgets, models and a GP-EI comparator; this recent preprint neither proves nor disproves the present hypothesis. |
+| OPT-CENTAUR-2026 | Ferreira et al., *Can LLMs Beat Classical Hyperparameter Optimization Algorithms? A Study on autoresearch* (2026 preprint), https://arxiv.org/abs/2603.24647 | Authors report classical HPO outperforming pure LLM methods in their fixed search space, with a CMA-ES/LLM hybrid strongest in their experiments. Supports taking optimizer specialization seriously. It is a different HPO task with three seeds and excludes LLM inference overhead from its training-budget comparison, so it does not establish total-cost dominance or quantum-control performance. |
+
+These are claims from the original papers. The 2026 preprints are not treated as settled results. A fetched LLAMBO reproduction abstract was not used as core evidence because it attributes LLAMBO to a different author group than the verified original paper; that discrepancy merits checking before relying on it.
+
+## What is worth pursuing
+
+The contribution would be **a deliberately narrow, auditable comparison with complete failure and cost accounting**, not inventing LLM optimization or LLM quantum control. The fixed three-arm protocol, paired seed blocks, mandatory independent second stage, preserved failures, and locked analysis can yield useful local evidence and a reusable engineering harness. A clean negative or inconclusive report has value if it prevents this team from investing in an unsupported optimization story.
+
+At most, a valid positive result would support the predeclared lower-median threshold for the paired log ratio of floored final infidelities, on this one simulator/noise grid, with this one LLM setup and one CMA-ES configuration. It would not establish a new physical mechanism, new pulse family, robust hardware calibration, superiority to the strongest conventional method, a target-hitting advantage, or broad generalization. The protocol correctly acknowledges those boundaries.
+
+The exact parameterization and conservative comparison may still be an incremental contribution. This limited search does **not** establish first-of-kind status or publication novelty for the exact design.
+
+## Strongest skeptical case and opportunity cost
+
+The experiment deliberately removes many capabilities for which LLMs may be most useful: code generation, structural ansatz invention, retrieval and collaboration with numerical optimizers. It asks an expensive text model to emit numerical vectors for a small deterministic simulator. Recent adjacent work favors structure-plus-numerics or hybrids, while direct numerical search can be brittle. Meanwhile, one non-tuned classical comparator and one instance give a positive result little reach beyond this configuration. A resource-limited 20+20 design can also end inconclusively. Those are reasons to cap effort, not reasons to prejudge the data.
+
+The first experiment's theoretical accounting ceiling is **24,000 allotted objective slots** across 40 blocks and three arms. The LLM arm schedules **760 initial proposal calls**, with correction rules allowing **1,520 total logical calls** and **4,560 transport attempts** in the worst case. These are protocol-derived ceilings/scheduled counts, not measured runtime or price. Because objectives are cheap and histories grow, inference and engineering can dominate the cost. Resolve concrete billing/token limits before paid work; the full two-stage budget must be supportable without a performance-conditioned top-up.
+
+## Stop/continue milestones
+
+1. **Offline preflight:** finish only the component, parser, accounting and analysis checks required by the current protocol. Continue if they pass and leave a small reproducible package. If validity cannot be established without unresolved scientific changes, keep the run gate closed; do not build extra infrastructure to disguise the gap.
+2. **Before exposure:** record a stable model/decoding contract, actual provider cost ceiling and authority covering both stages. If those are unavailable or unaffordable, stop before the paid evaluation and retain the engineering deliverable. Decide whether the narrow inferential question is valuable enough to fund; novelty claims cannot supply that justification.
+3. **Frozen evaluation:** complete both planned stages without adapting prompts, metrics, comparator settings or instance to observed performance. Predetermined infrastructure/validity failures may invalidate inference; they are never replaced with more favorable runs.
+4. **Close the study:** publish or archive the complete scoped outcome and costs regardless of category. Do not extend this same study until it wins. A separate broader, hybrid or hardware-aware project requires a new research question, new protocol and budget, with prior exposure disclosed. Its value must be justified independently of selecting a favorable presentation of these data.
+
+## Commercial boundary
+
+There is no current evidence for a product, customer saving, market advantage, hardware-shot reduction or durable technical moat. A plausible later product hypothesis would concern reducing expert setup time or actual calibration resources under real hardware constraints. Proving that would require a hardware partner or representative workflow, incumbent production baselines, complete resource accounting and independently evaluated reliability. This experiment is not designed to establish those facts.
+
+**Practical judgment:** finish a bounded first study if the preflight and full-run budget gates can be satisfied; do not yet fund an open-ended quantum-control platform or business thesis. The best near-term return may be learning which assumptions survive a disciplined comparison and retaining a reliable research tool, even if the numerical LLM loses.

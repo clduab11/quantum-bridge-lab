@@ -2,6 +2,8 @@
 
 Status: research only. No provider selected, credentials inspected, API generation or token-counting request sent, price negotiated, or spending approved. This report compares two plausible API candidates; it does not equate either API with the Codex or Claude Science user interface. Protocol v0.4 is unchanged and G-MODEL, G-TRANSPORT and G-COST remain open.
 
+**Endpoint follow-up:** the initial comparison below is specifically Responses versus Messages. [A subsequent direct-documentation check](ENDPOINT_FEASIBILITY.md) found an optional, deprecated fingerprint field on OpenAI Chat Completions, which Sol supports. Whether Sol actually returns adequate metadata there is unmeasured. Do not generalize the initial evidence gap into impossibility across all provider endpoints, or infer that an amendment is already unavoidable.
+
 ## Decision that the evidence supports
 
 Continue with an offline, provider-neutral cost/contract implementation and prepare a synthetic E9 plan. GPT-5.6 Sol is the lower published-cost candidate of these two; Claude Fable 5.1 has especially clear published semantics that its dateless model ID pins a release. Neither is ready to use in the confirmatory study. The next decision should resolve the exact identity/defaults contract and a concrete tokenizer-derived input ceiling before money is authorized. Do not infer experimental performance from the model marketing descriptions or choose an effort level using objective outcomes.
@@ -35,6 +37,8 @@ USD per million tokens, direct API standard processing and global routing; no ba
 | Claude Fable 5.1 | $10.00 | $0.25 | $12.50 for 5m; $20.00 for 1h | $50.00 |
 
 Sol's published promotion lasts at least through November 21, 2026. Prices must be verified again when the run budget is authorized. OpenAI regional processing and Anthropic US-only inference can add 10%; these must not silently enter a global-price budget. The 1M Claude context has no long-context premium in the checked pricing documentation. The dated Fable 5.1 specification provides the new $0.25 cache-read price; portions of the general models/pricing pages returned older Fable 5 information and should not override the specific 5.1 table. These are public list prices, not the user's account invoice or an all-inclusive spending quote.
+
+Any eventual provider profile must record its price source, retrieval date, rate-validity window and behavior if the price changes or expires before completion. The end of a published minimum promotional window does not establish what prices will apply afterward; historical non-promotional rates may be stress scenarios, but are not a verified future ceiling. The generic calculator deliberately takes explicit effective rates rather than claiming to validate a provider's price window.
 
 Sources: [OpenAI pricing](https://developers.openai.com/api/docs/pricing), [OpenAI Sol model](https://developers.openai.com/api/docs/models/gpt-5.6-sol), [Fable 5.1 pricing table](https://platform.claude.com/docs/en/models/fable-5-1/overview), [Claude pricing](https://platform.claude.com/docs/en/about-claude/pricing).
 

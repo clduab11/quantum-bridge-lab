@@ -12,9 +12,9 @@ Publish the reviewed design and offline implementation through PRs #1 and #2, pr
 - [x] Preserve the invalid local loose ref `research/offline-preflight 2` outside Git refs, then verify successful fetch and connectivity. Its contents referenced the existing design commit; no research data or valid branch was deleted.
 - [x] Use Context7 and Exa to check at most two API candidates against current primary documentation; preserve explicit unknowns, pricing categories and protocol constraints.
 - [x] Submit the concrete evidence to a fresh Claude Science project conversation through the existing Edge tab. Request documentation review and arithmetic only, with no protocol or Project Context edits.
-- [ ] Reconcile the saved Claude review, preserving factual corrections and disagreements. Identify whether an explicit prospective protocol amendment is required before a provider can meet the existing contract.
-- [ ] Integrate and independently verify the small offline budget calculator described in `2026-09-08-budget-planning.md`. All monetary scenarios remain conditional, with no provider defaults or execution authorization.
-- [ ] Record new source hashes, test evidence and limits; preserve historical preflight reports as records of their original commit rather than rewriting them to fit later files.
+- [x] Reconcile the saved Claude review, preserving factual corrections and disagreements. An amendment is not yet shown to be unavoidable: investigate the optional deprecated Chat Completions fingerprint before drawing that conclusion. No provider route is execution-ready.
+- [x] Integrate and independently verify the small offline budget calculator described in `2026-09-08-budget-planning.md`. All monetary scenarios remain conditional, with no provider defaults or execution authorization.
+- [x] Record new source hashes, test evidence and limits; preserve historical preflight reports as records of their original commit rather than rewriting them to fit later files.
 - [ ] Push the new branch and synchronize the current status in Linear and Claude Science with immutable source references.
 
 No provider SDK or new dependency is needed for this milestone. No study objective or real model adapter is added. Missing billing categories and unverified tokenizer bounds remain open requirements.

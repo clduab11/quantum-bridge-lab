@@ -49,4 +49,4 @@ Interfaces: `parse_response(text) -> ParseResult` with length-10 tuple of valid 
 
 - [x] Reconcile a bounded primary-source novelty/value review with Claude Science in a fresh project conversation after Context7/Exa preflight. Ask for the strongest case against proceeding, without extending study scope.
 - [x] Write a candid status with research value, no empirical advantage claim, product boundary, sunk-cost-independent continuation criteria, measured engineering progress and remaining gates.
-- [ ] Push a reviewable implementation branch and update Linear ADV-36/current project status. Verify external readbacks; keep originals unchanged.
+- [x] Push a reviewable implementation branch and update Linear ADV-36/current project status. Verify external readbacks; keep originals unchanged.

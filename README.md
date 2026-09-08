@@ -53,6 +53,8 @@ The process executor requires a single-threaded POSIX caller, and callbacks must
 
 ## What comes next
 
-The next milestone is provider feasibility and full-run cost planning. A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
+The next milestone is [provider feasibility and full-run cost planning](research/PROVIDER_FEASIBILITY.md). An [offline budget calculator](research/BUDGET_PLANNING.md) now shows how input limits, prices, retries and preflight calls affect a conditional cost ceiling. Its inputs still need verification before a spending decision.
+
+A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
 
 Scientific changes must be recorded prospectively. Historical reviews and synchronization receipts describe their own point in time; current status is stated above and in the readiness record. Study transcripts, results and private comparison mappings must stay out of public engineering artifacts.

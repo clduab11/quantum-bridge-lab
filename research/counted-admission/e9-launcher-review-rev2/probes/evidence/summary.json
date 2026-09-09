@@ -1,0 +1,77 @@
+{
+  "environment": {
+    "executable": "/private/tmp/qbridge-review-runtime-qIwrPI/bin/python",
+    "packages": {
+      "cma": "4.4.4",
+      "httpx": "0.28.1",
+      "numpy": "2.4.6",
+      "openai": "3.9.0",
+      "pydantic": "2.13.5",
+      "pytest": "9.1.1",
+      "ruff": "0.16.6",
+      "scipy": "1.17.1"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.15"
+  },
+  "evidence_type": "counterexample observations; not passing safety tests",
+  "experimental_count_calls": 0,
+  "experimental_generation_calls": 0,
+  "generated_utc": "2026-09-09T14:30:45.906707+00:00",
+  "live_spending_authority": false,
+  "network_guard": "socket connection and DNS operations raise before access",
+  "preserved_submission_unchanged": true,
+  "probe_sha256": {
+    "deadline_probe.py": "838b8da0522f74a149b5d223f84300b6fa3ff29faef08715972528e94ca1209a",
+    "gate_probe.py": "c4070c7fafd82e0ddfca54f4b4d335ad9707b1682eef51b92827500a3265437d"
+  },
+  "provider_patch_applied": false,
+  "real_api_key_in_child_environment": false,
+  "results": [
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "gate_probe.py"
+    },
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "deadline_probe.py"
+    }
+  ],
+  "submission_sha256": {
+    "SHA256SUMS.external.txt": "40d35f762fe1abb8f559cc7dd2d6e98d5f74fc93cb597fc70c94a80cef364373",
+    "SHA256SUMS.inner.txt": "968b700c1564a80595a65093adff91a173154e60cfdceb9eb5d21636e74ae36c",
+    "deliverables/e9_acceptance_specification_rev2.md": "77a221bb68d77478a5d328a7f76fa4dc428468ca82d51c860e8628f0a1300a8c",
+    "deliverables/e9_billing_source_register_rev2_2026-09-09.json": "03ddcbe79e0245cd435a53816e0f5bc655bd53d070b3759fb0f6ccda6f412d58",
+    "deliverables/e9_execution_instructions_rev2.md": "ffbd010a929bee82ad9cfc3d1aad71db655b4a6f3574e1ef6b4cbd3eb438bbd9",
+    "deliverables/e9_financial_proposal_rev2_2026-09-09.md": "11a5e305bd3e0ebd1b3d9bf095881cdd0bb6c8c3249327c7c6c08cf331d3d372",
+    "deliverables/e9_implementation_report_rev2_2026-09-09.md": "5cc9008c460d43b792585b1a9cf0d6216cb597323c26d2be9bcd91d0f3fcc623",
+    "deliverables/e9_review_response_rev2.md": "28ce2bf40047b1542226a4184099dbe72b58c43a674cb33c046ecf0e60b5bbf9",
+    "deliverables/e9_test_evidence_rev2.log": "fa58e79cc64a8fbcad3ccd0abbd6a6549348ab11388578bd95219b3e147ba011",
+    "deliverables/e9_unapproved_authority_template_rev2.json": "a32a2b28f36889c80f1f047376db39dcdec760afb99f24113bedfe635539a6b1",
+    "e9tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "e9tests/support.py": "a97ae518730c2e39637b52cbe50f6ddaa1760c5aa388f572b74618136c60b240",
+    "e9tests/test_deadline.py": "f0527a8248f0b92f48f035d44a5dbbd197a0154a12679fa11bdbd6a268cc7aa7",
+    "e9tests/test_fixtures_identity.py": "4cf75d26ee06e64553ab6a678770b9b120db0874717c5aaef0f9b593d0e160d7",
+    "e9tests/test_gate.py": "d3db1527cba5fd9eb2b1e425c1f7add01573f09fe05790636d0a080af47aac4a",
+    "e9tests/test_money.py": "d9914c4096d9668024e01348e5848e29de8fdd7e6ab624a8f05ae8fc698ee330",
+    "e9tests/test_orchestrator.py": "c5ac9a390b602cebb4fc94d44c2cc70073c61d9a26a3c6aefe3ef3521f91aba7",
+    "e9tests/test_reopen.py": "9a36f22f81c92c0a40b4e2340f127f9bb525e17e6c4ec6d510e9bf0dfd5074d6",
+    "e9tests/test_spend_limit.py": "7cba6755e790d2fb1ae7c7006b052d8a13d70648fcd16e3244b168f308cf1829",
+    "e9tests/test_terminal_and_resume.py": "6c15437c4a83623a9d74843c544135650df58c81ddcb3369685938057014845c",
+    "patches/0001-spend-limit-not-retryable.diff": "f884bd3396d19566ab3675c18081098c4a828ee1dfed3f1f45a3cfbde53edf1c",
+    "patches/0002-conservative-generation-reservation.diff": "9842598b37eadc083f8f2edb85881b765f0e98e20bcd81efeaa00e7fc72e2904",
+    "qbridge_e9/__init__.py": "7db310d59d5016b3bdfcc2f7f16a9af4c248e1df28cc5f80b637443af073e2ed",
+    "qbridge_e9/acceptance.py": "adbfa5fb6b08ea23cb83aac4419bc012982c48f9f3e0cda8ce0830b791832a2d",
+    "qbridge_e9/cli.py": "bc5a2846e5163f814dc7775db1f9c51b286522a919584172957dd9d338060084",
+    "qbridge_e9/deadline.py": "412642604e70b2cf74ba357e81643bcae633be3824c9208ed4dc7e2858b80102",
+    "qbridge_e9/fixtures.py": "c80b0cd036cef00cad8687a7b9600de18669bc76659fe61ea0308d83d256f7c9",
+    "qbridge_e9/gate.py": "5bab929107a58dd9280d048118b51c316c5728ea7506ec54f570784b5c2c3a57",
+    "qbridge_e9/limits.py": "c257a42e366a7acaa7d9a587fd74bd1c1ba9192b93720dd469a952b8bdd2b8b8",
+    "qbridge_e9/mocks.py": "bc11de30ff547a9b7ce6f77341e921786fb8d2d8216d4f54fe266959e077e351",
+    "qbridge_e9/money.py": "c82727564aea85009c5926360f8a5f8d1ce65827b1989247f266cfe2563c72a7",
+    "qbridge_e9/orchestrator.py": "5fd97e262b30ffaa5ca79b80520de7b344f58ac362b4d9f1d8a21461aada711b",
+    "qbridge_e9/report.py": "efe260c723f1dedab6f1c69636cf09f2252743924a6f12bb20100aa0d59769b5"
+  }
+}

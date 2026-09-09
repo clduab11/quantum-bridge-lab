@@ -1,0 +1,45 @@
+{
+  "blocking_generation_not_canceled": {
+    "configured_deadline_seconds": 2,
+    "elapsed_seconds": 2.4903859160258435,
+    "outcomes": [
+      "completed",
+      "not_started",
+      "not_started",
+      "not_started"
+    ],
+    "remaining_seconds": -0.49038849998032674,
+    "request_timeouts": [
+      {
+        "connect": 1.7882270410191268,
+        "pool": 1.7882270410191268,
+        "read": 1.7882270410191268,
+        "write": 1.7882270410191268
+      }
+    ]
+  },
+  "same_journal_resets_exhausted_deadline": {
+    "after_attempts": [
+      4,
+      4
+    ],
+    "first_attempts": [
+      1,
+      1
+    ],
+    "first_outcomes": [
+      "completed",
+      "not_started",
+      "not_started",
+      "not_started"
+    ],
+    "first_stop": "deadline_exhausted",
+    "second_outcomes": [
+      "skipped",
+      "completed",
+      "completed",
+      "completed"
+    ],
+    "second_remaining_seconds": 7400.0
+  }
+}

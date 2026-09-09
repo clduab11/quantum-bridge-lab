@@ -1,40 +1,59 @@
-# quantum-bridge-lab
+# Quantum Bridge Lab
 
-**Can a language model suggest better settings for a simulated quantum system when every method gets the same trial budget?**
+Quantum Bridge Lab tests whether a language model can find better control settings for a simulated qubit than a numerical optimizer given the same trial allowance. A qubit is the basic unit of a quantum computer; this experiment models one in Python.
 
-This repository contains the research plan, Python software and review history for answering that question. It is a small, deliberately limited experiment: one simulated qubit, one language model, one conventional optimizer and a random-search reference.
+The experiment has not run. The software passed [607 offline tests](research/counted-admission/VERIFICATION.md), using analytic identities, fabricated data and mock API responses. A [second independent launcher review](research/counted-admission/e9-launcher-review-rev2/README.md) confirms several repairs but finds remaining problems with deadlines, restarts and expiring approvals. We have [allocated $32 for the model preflight](research/counted-admission/E9_BUDGET_DECISION.md), including mandatory charges. Spending waits for those repairs and verified billing terms.
 
-**Current status:** 233 core tests and 53 candidate provider tests pass (286 total). The [reviewed execution preparation](research/execution-preparation/STATUS.md) includes a candidate adapter, synthetic preflight inputs and an isolated dependency lock. The first engineering milestone also passed all eight offline check groups. The experiment itself has **not run**. The final execution plan is not frozen, and no AI performance advantage has been demonstrated.
+## How it works
 
-## The idea in everyday terms
+A control pulse changes a qubit's state. Small calibration errors can make the resulting operation differ from the one intended. The task here is to choose pulse settings that keep that error small across a specified set of calibration conditions.
 
-Imagine tuning a radio with several connected knobs. Each set of settings gets a score, and you can use earlier scores to choose the next settings. Here, the “knobs” describe a sequence of control pulses for a simulated qubit—the basic unit of a quantum computer. The score measures how closely those pulses perform a desired operation across a fixed set of calibration errors.
+Think of tuning a radio with several connected knobs: try settings, check the result, then choose what to try next. In this experiment, the simulator supplies a numerical error score instead of sound.
 
-The language model receives the previous settings and scores, then proposes ten new settings at a time. A conventional optimizer called CMA-ES and random search work under the same trial budget. Each method gets 200 evaluation slots per run. The plan includes two sets of 20 paired runs, both completed before the final comparison is revealed.
+```mermaid
+flowchart LR
+    A[Classical software proposes pulse settings] --> B[Simulate the qubit operation]
+    B --> C[Calculate error across calibration conditions]
+    C --> A
+```
 
-The test asks whether the language model delivers a prespecified improvement in the final error. Equal trial budgets do not mean equal time or cost: model calls, retries, failures and other resources must also be counted.
+This feedback loop is the quantum–classical connection in the project. The first study runs entirely on a classical computer. It uses no quantum hardware.
 
-## Why this matters
+## The comparison
 
-AI is often proposed as a scientific assistant. A useful next step is to test a precise claim against an established method, with the rules written down before results are available.
+The language model receives previous settings and scores, then proposes ten new settings at a time. Its competitors are CMA-ES, a numerical optimization method, and random search.
 
-This project makes that comparison inspectable. The code preserves failed attempts, enforces budgets and fixes the analysis in advance. A negative or inconclusive answer is useful too: an honest record of what the test could resolve helps guide further investment.
+Each method gets 200 evaluation slots per run, including the same ten starting points. There are two stages of 20 paired runs. Both stages finish before the final comparison is revealed.
 
-Our present judgment is that a bounded research effort is worth pursuing. Funding the actual model experiment is a separate decision, based on its full cost and the value of the answer. This simulation alone cannot establish savings on quantum hardware, a commercial product, or an explanation of how a model reasons. Related research already exists; we make no blanket novelty claim. See the [pursuit decision and retained reviewer disagreements](research/PURSUIT_DECISION.md).
+The success criterion requires statistical evidence that, in a typical paired comparison, the model's final error is less than half the error from the configured CMA-ES baseline. This must hold in each stage. Errors below a fixed numerical floor count as equal. The validity checks must also pass. The [protocol](specification/ai_quantum_control_protocol_v0.4.md) gives the exact criterion and failure rules.
 
-## What is here
+We record time, API usage and costs as well as error. Equal trial allowances do not imply equal computing costs. A [proposed amendment](research/counted-admission/STATUS.md) adds exact prompt counting and revised model-identity checks; it has not been adopted.
 
-| Part | What it provides |
+## What a result would tell us
+
+A positive result would apply to this model, pulse-search method and simulated task. It would justify a follow-up on harder control problems. Whether the method saves trials on quantum hardware would need a hardware experiment.
+
+The possible application is calibration software that finds useful control settings with fewer measurements. To make that a product, a later study would have to show that measurement savings outweigh model costs and that the method works reliably beyond this one-qubit simulation. This repository has no evidence for those claims yet.
+
+A negative or inconclusive result will also be published. It can help researchers decide whether to keep investigating this particular use of a language model. The [pursuit decision](research/PURSUIT_DECISION.md) explains why we are continuing the engineering work and records disagreements from the review.
+
+## Use the work
+
+Quantum-control researchers can inspect the simulator and comparison. Optimization researchers can examine the evaluation budget and failure accounting. Readers learning about the topic can start with the protocol's physical setup and follow the tests.
+
+| File or directory | Contents |
 | --- | --- |
-| [Research protocol](specification/ai_quantum_control_protocol_v0.4.md) | The question, fixed comparison, failure rules and analysis requirements |
-| [Python components](src/qbridge/) | Numerical building blocks, proposal parsing, trial accounting and locked analysis |
-| [Tests](tests/) and [verification evidence](research/preflight/VERIFICATION.md) | Analytic and fabricated-data checks, with their scope and limitations |
-| [Research and reviews](research/) | Evidence, decisions, remaining work and synchronization records |
-| [Original sources](sources/original/) | Earlier designs and Claude Science reviews, preserved unchanged |
+| [Current status](research/counted-admission/STATUS.md) | Completed work and remaining requirements |
+| [Protocol](specification/ai_quantum_control_protocol_v0.4.md) | Physical task, comparison and analysis rules |
+| [Python source](src/qbridge/) | Simulator, proposal parser, trial accounting and analysis |
+| [Verification](research/counted-admission/VERIFICATION.md) | Commands, test results and limitations |
+| [Costs](research/counted-admission/COST_BRIEF.md) | Who is paid, conditional calculations and budget approval |
+| [Research](research/) | Sources, decisions and reviews |
+| [Original documents](sources/original/) | Earlier designs and Claude Science reviews |
 
-Codex and Claude Science develop and challenge the work under Chris Dukes's direction. Agreement between assistants is review input; experimental evidence must come from the recorded study. The [Linear project](https://linear.app/cld-maindev/project/quantum-bridge-lab-cc3b6e3fff04) tracks progress; the repository contains the research record for readers without Linear access.
+Codex and Claude Science write and review the code and documents under Chris Dukes's direction. Their reviews do not establish experimental performance. Work is tracked in [Linear](https://linear.app/cld-maindev/project/quantum-bridge-lab-cc3b6e3fff04); the research record is available here without a Linear account.
 
-## Try the offline checks
+## Run the offline checks
 
 Use macOS or Linux, Python 3.11 and [uv](https://docs.astral.sh/uv/). From a source checkout:
 
@@ -47,14 +66,18 @@ uv run --frozen ruff check src tests analysis
 PYTHONPATH=src uv run --frozen python -m qbridge.preflight --output-dir preflight-output
 ```
 
-These checks need no model API key. The final command requires a new output directory and saves the exact tested inputs, logs and engineering report. It runs analytic identities and fabricated-data checks, including a constant-score optimizer fixture. It evaluates no candidate on the study objective and calls no experimental model. It provides no network sandbox.
+These commands check the selected checkout's core suite. Current work may be on a research branch; see the [pull requests](https://github.com/clduab11/quantum-bridge-lab/pulls). The [607-test verification guide](research/counted-admission/VERIFICATION.md) includes the additional candidate packages and their separate dependency environment.
 
-The process executor requires a single-threaded POSIX caller, and callbacks must not detach into new sessions. Its local cancellation cannot cancel work already accepted by a remote provider. `InlineExecutor` is for synthetic timing fixtures only.
+No model API key is needed. The final command requires a new output directory and saves inputs, logs and an engineering report. It checks analytic identities and fabricated data, including a constant-score optimizer fixture. It makes no experimental model call and evaluates no candidate on the study objective. These checks do not provide a network sandbox.
 
-## What comes next
+The process executor requires a single-threaded POSIX caller; callbacks must not detach into new sessions. Local cancellation cannot cancel a request already accepted by a remote provider. `InlineExecutor` is for synthetic timing fixtures only.
 
-The [latest execution review](research/execution-preparation/STATUS.md) and [provider review](research/PROVIDER_DECISION.md) identify the next step: establish a usable model-identity and token-counting contract before choosing a provider. An [offline budget calculator](research/BUDGET_PLANNING.md) now shows how input limits, prices, retries and preflight calls affect a conditional cost ceiling. Its inputs still need verification before a spending decision.
+## Next steps
 
-A real provider adapter, complete study launcher, protected data storage, custody assignments and the final frozen run manifest remain unfinished. [Implementation readiness](research/IMPLEMENTATION_READINESS.md) tracks these requirements. There is currently no command that launches the full experiment.
+1. Correct and retest the bounded model-preflight launcher using the [fixed fabricated inputs](research/counted-admission/e9-inputs/README.md), and record the amendment decision.
+2. Verify billing and release the approved $32 allocation only if the complete preflight fits. Run the model preflight, complete the study launcher and freeze the full execution plan after the remaining checks pass.
+3. Run both study stages and publish the analysis, failures and costs.
 
-Scientific changes must be recorded prospectively. Historical reviews and synchronization receipts describe their own point in time; current status is stated above and in the readiness record. Study transcripts, results and private comparison mappings must stay out of public engineering artifacts.
+The complete experiment has no launch command yet. [Protected storage and automated custody roles](research/execution-preparation/operational-setup.json) are recorded, but independent evaluator blinding is not established. [Budget calculations](research/counted-admission/BUDGET.md) leave the total unknown while counting fees remain unverified. Model metadata can reveal some provider changes; changes that leave it unchanged may go undetected.
+
+Study transcripts and private comparison mappings will stay outside public engineering artifacts until a release is prepared. Scientific changes must be recorded before observations can influence them.

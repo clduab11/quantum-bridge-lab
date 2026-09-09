@@ -1,0 +1,368 @@
+F.F                                                                      [100%]
+=================================== FAILURES ===================================
+____ test_abrupt_worker_exit_preserves_worker_crashed_classification[call] _____
+
+self = <qbridge.runner.ProcessExecutor object at 0x1086e9e90>
+work = <function test_abrupt_worker_exit_preserves_worker_crashed_classification.<locals>.<lambda> at 0x1095abf60>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+>               message = receive.recv()
+                          ^^^^^^^^^^^^^^
+
+src/qbridge/runner.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:250: in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:430: in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <multiprocessing.connection.Connection object at 0x108e26c50>, size = 4
+read = <built-in function read>
+
+    def _recv(self, size, read=_read):
+        buf = io.BytesIO()
+        handle = self._handle
+        remaining = size
+        while remaining > 0:
+            chunk = read(handle, remaining)
+            n = len(chunk)
+            if n == 0:
+                if remaining == size:
+>                   raise EOFError
+E                   EOFError
+
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:399: EOFError
+
+The above exception was the direct cause of the following exception:
+
+self = <qbridge.runner.ProcessExecutor object at 0x1086e9e90>
+work = <function test_abrupt_worker_exit_preserves_worker_crashed_classification.<locals>.<lambda> at 0x1095abf60>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+                message = receive.recv()
+                received = True
+            except EOFError as exc:
+>               raise WorkerCrashed("worker returned no result") from exc
+E               qbridge.runner.WorkerCrashed: worker returned no result
+
+src/qbridge/runner.py:144: WorkerCrashed
+
+During handling of the above exception, another exception occurred:
+
+method = 'call'
+
+    @pytest.mark.parametrize("method", ["call", "guard"])
+    def test_abrupt_worker_exit_preserves_worker_crashed_classification(method):
+        import os
+    
+        _, runner = modules()
+        with pytest.raises(runner.WorkerCrashed):
+>           getattr(runner.ProcessExecutor(), method)(lambda: os._exit(1), timeout=2)
+
+tests/test_runner.py:550: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/qbridge/runner.py:110: in call
+    return self._run(work, timeout=timeout, guard=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <qbridge.runner.ProcessExecutor object at 0x1086e9e90>
+work = <function test_abrupt_worker_exit_preserves_worker_crashed_classification.<locals>.<lambda> at 0x1095abf60>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+                message = receive.recv()
+                received = True
+            except EOFError as exc:
+                raise WorkerCrashed("worker returned no result") from exc
+            if message[0] == "ok":
+                return message[1]
+            exception = {"ConnectionError": ConnectionError, "TimeoutError": TimeoutError}.get(
+                message[1], RemoteError
+            )
+            raise exception(message[2])
+        finally:
+            receive.close()
+            # A result proves the callback has returned. Let the worker exit
+            # normally instead of racing killpg against a disappearing group.
+            if received:
+                process.join(timeout=0.1)
+            elif guard and process.is_alive():
+                # The guard can be waiting on a callback in another group.
+                # Its handler unwinds that call and performs group cleanup.
+                process.terminate()
+                process.join(timeout=0.5)
+            try:
+>               os.killpg(process.pid, signal.SIGKILL)
+E               PermissionError: [Errno 1] Operation not permitted
+
+src/qbridge/runner.py:163: PermissionError
+_________ test_abrupt_worker_exit_still_cancels_nondetached_descendant _________
+
+self = <qbridge.runner.ProcessExecutor object at 0x1097b5f10>
+work = <function test_abrupt_worker_exit_still_cancels_nondetached_descendant.<locals>.callback at 0x1096916c0>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+>               message = receive.recv()
+                          ^^^^^^^^^^^^^^
+
+src/qbridge/runner.py:141: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:250: in recv
+    buf = self._recv_bytes()
+          ^^^^^^^^^^^^^^^^^^
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:430: in _recv_bytes
+    buf = self._recv(4)
+          ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <multiprocessing.connection.Connection object at 0x1097b62d0>, size = 4
+read = <built-in function read>
+
+    def _recv(self, size, read=_read):
+        buf = io.BytesIO()
+        handle = self._handle
+        remaining = size
+        while remaining > 0:
+            chunk = read(handle, remaining)
+            n = len(chunk)
+            if n == 0:
+                if remaining == size:
+>                   raise EOFError
+E                   EOFError
+
+/opt/homebrew/Cellar/python@3.11/3.11.15_3/Frameworks/Python.framework/Versions/3.11/lib/python3.11/multiprocessing/connection.py:399: EOFError
+
+The above exception was the direct cause of the following exception:
+
+self = <qbridge.runner.ProcessExecutor object at 0x1097b5f10>
+work = <function test_abrupt_worker_exit_still_cancels_nondetached_descendant.<locals>.callback at 0x1096916c0>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+                message = receive.recv()
+                received = True
+            except EOFError as exc:
+>               raise WorkerCrashed("worker returned no result") from exc
+E               qbridge.runner.WorkerCrashed: worker returned no result
+
+src/qbridge/runner.py:144: WorkerCrashed
+
+During handling of the above exception, another exception occurred:
+
+tmp_path = PosixPath('/private/var/folders/x0/97s7n8xd1c5fhlztcsrxh2kc0000gp/T/pytest-of-chrisdukes/pytest-60/test_abrupt_worker_exit_still_0')
+
+    def test_abrupt_worker_exit_still_cancels_nondetached_descendant(tmp_path):
+        import os
+    
+        _, runner = modules()
+        marker = tmp_path / "crashed-worker-descendant"
+    
+        def callback():
+            if os.fork() == 0:
+                time.sleep(0.25)
+                marker.write_text("must have been cancelled")
+                os._exit(0)
+            os._exit(1)
+    
+        with pytest.raises(runner.WorkerCrashed):
+>           runner.ProcessExecutor().call(callback, timeout=2)
+
+tests/test_runner.py:567: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/qbridge/runner.py:110: in call
+    return self._run(work, timeout=timeout, guard=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <qbridge.runner.ProcessExecutor object at 0x1097b5f10>
+work = <function test_abrupt_worker_exit_still_cancels_nondetached_descendant.<locals>.callback at 0x1096916c0>
+timeout = 2, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+            raise TimeoutError("deadline expired")
+        if os.name != "posix" or threading.active_count() != 1:
+            raise RuntimeError("process executor requires a single-threaded POSIX caller")
+        context = multiprocessing.get_context("fork")
+        previous_group = self._callback_group
+        if guard:
+            self._callback_group = context.RawValue("q", 0)
+        callback_group = self._callback_group
+        receive, send = context.Pipe(duplex=False)
+        process = context.Process(
+            target=_worker, args=(send, receive, work, guard, callback_group, os.getpid())
+        )
+        started = time.monotonic()
+        process.start()
+        send.close()
+        received = False
+        try:
+            remaining = max(0.0, timeout - (time.monotonic() - started))
+            ready = wait([receive, process.sentinel], timeout=remaining)
+            if not ready:
+                raise TimeoutError("worker deadline expired")
+            if receive not in ready:
+                raise WorkerCrashed("worker exited before returning a result")
+            try:
+                message = receive.recv()
+                received = True
+            except EOFError as exc:
+                raise WorkerCrashed("worker returned no result") from exc
+            if message[0] == "ok":
+                return message[1]
+            exception = {"ConnectionError": ConnectionError, "TimeoutError": TimeoutError}.get(
+                message[1], RemoteError
+            )
+            raise exception(message[2])
+        finally:
+            receive.close()
+            # A result proves the callback has returned. Let the worker exit
+            # normally instead of racing killpg against a disappearing group.
+            if received:
+                process.join(timeout=0.1)
+            elif guard and process.is_alive():
+                # The guard can be waiting on a callback in another group.
+                # Its handler unwinds that call and performs group cleanup.
+                process.terminate()
+                process.join(timeout=0.5)
+            try:
+>               os.killpg(process.pid, signal.SIGKILL)
+E               PermissionError: [Errno 1] Operation not permitted
+
+src/qbridge/runner.py:163: PermissionError
+=========================== short test summary info ============================
+FAILED tests/test_runner.py::test_abrupt_worker_exit_preserves_worker_crashed_classification[call]
+FAILED tests/test_runner.py::test_abrupt_worker_exit_still_cancels_nondetached_descendant
+2 failed, 1 passed, 28 deselected in 6.38s

@@ -1,0 +1,30 @@
+........................................................................ [ 47%]
+................................................FF...................... [ 94%]
+........                                                                 [100%]
+=================================== FAILURES ===================================
+_______________ test_absent_optional_safe_fields_are_acceptable ________________
+
+    def test_absent_optional_safe_fields_are_acceptable():
+        p = ok_response()
+        del p["tools"]
+        assert ref.validate_expected_profile(p, reasoning_effort=EFF) == []
+>       assert ref.identity_vector(p)["tools"] == ("absent",)
+E       AssertionError: assert ['absent'] == ('absent',)
+E         
+E         Use -v to get more diff
+
+test_counted_responses_reference.py:469: AssertionError
+___ test_identity_vector_is_presence_tagged_and_covers_whole_frozen_objects ____
+
+    def test_identity_vector_is_presence_tagged_and_covers_whole_frozen_objects():
+        base = ref.identity_vector(ok_response())
+>       assert base["temperature"] == ("present", "null")
+E       AssertionError: assert ['present', 'null'] == ('present', 'null')
+E         
+E         Use -v to get more diff
+
+test_counted_responses_reference.py:474: AssertionError
+=========================== short test summary info ============================
+FAILED test_counted_responses_reference.py::test_absent_optional_safe_fields_are_acceptable
+FAILED test_counted_responses_reference.py::test_identity_vector_is_presence_tagged_and_covers_whole_frozen_objects
+2 failed, 150 passed in 0.22s

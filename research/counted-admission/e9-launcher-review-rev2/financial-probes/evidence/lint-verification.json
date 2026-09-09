@@ -1,0 +1,25 @@
+[
+  {
+    "command": [
+      "/tmp/qbridge-review-runtime-qIwrPI/bin/ruff",
+      "check",
+      "--no-cache",
+      "research/counted-admission/e9-launcher-review-rev2/financial-probes"
+    ],
+    "exit_code": 0,
+    "log": "evidence/ruff-check.log",
+    "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+  },
+  {
+    "command": [
+      "/tmp/qbridge-review-runtime-qIwrPI/bin/ruff",
+      "format",
+      "--check",
+      "--no-cache",
+      "research/counted-admission/e9-launcher-review-rev2/financial-probes"
+    ],
+    "exit_code": 0,
+    "log": "evidence/ruff-format.log",
+    "sha256": "177f260a5645724013185e4b140c7045cc39e56c0c97b120f5cb23599f85f0de"
+  }
+]

@@ -1,0 +1,107 @@
+--- a/research/counted-admission/provider-candidate/counted_responses_provider/contract.py	2026-09-08 20:54:11
++++ b/research/counted-admission/provider-candidate/counted_responses_provider/contract.py	2026-09-08 21:44:38
+@@ -260,9 +260,40 @@
+ RETRYABLE_TRANSPORT_ERRORS = frozenset({"connection", "timeout"})
+ RETRYABLE_RESPONSE_ERROR_CODES = frozenset({"server_error", "rate_limit_exceeded"})
+ CREDENTIAL_STATUSES = frozenset({401, 402, 403})
++# A 429 is not always a throughput signal. developers.openai.com documents four
++# billing/spend rejections carried on 429 and states that retrying them will not
++# restore access; error.type may still be insufficient_quota. Treating them as
++# retryable burns the attempt allowance, re-reserves money and waits for a
++# condition only the account owner can clear, so they bucket with the credential
++# statuses (402 Payment Required is already there). Genuine throughput 429s --
++# rate_limit_error / slow_down, and a 429 with no parseable body -- are unchanged.
++SPEND_LIMIT_ERROR_CODES = frozenset(
++    {
++        "organization_spend_limit_exceeded",
++        "project_spend_limit_exceeded",
++        "organization_usage_limit_exceeded",
++        "credit_balance_exhausted",
++    }
++)
++SPEND_LIMIT_ERROR_TYPES = frozenset({"insufficient_quota"})
+ 
+ 
+-def _status_bucket(http_status, transport_error):
++def billing_rejection_code(payload):
++    """The documented billing/spend code in a provider error object, else None."""
++    if not isinstance(payload, dict):
++        return None
++    error = payload.get("error")
++    if not isinstance(error, dict):
++        return None
++    code, kind = error.get("code"), error.get("type")
++    if isinstance(code, str) and code in SPEND_LIMIT_ERROR_CODES:
++        return code
++    if isinstance(kind, str) and kind in SPEND_LIMIT_ERROR_TYPES:
++        return f"type:{kind}"
++    return None
++
++
++def _status_bucket(http_status, transport_error, payload=None):
+     """Shared, explicit bucketing. Unknown inputs are anomalies, never retryable."""
+     if transport_error is not None:
+         if transport_error in RETRYABLE_TRANSPORT_ERRORS:
+@@ -270,6 +301,8 @@
+         return "anomaly"
+     if not _strict_int(http_status):
+         return "anomaly"
++    if http_status == 429 and billing_rejection_code(payload) is not None:
++        return "credential"
+     if http_status == 429 or 500 <= http_status <= 599:
+         return "retryable"
+     if http_status in CREDENTIAL_STATUSES:
+@@ -283,8 +316,10 @@
+ 
+ def classify_count_outcome(http_status, payload, transport_error=None):
+     """(category, retryable) for the COUNT class.
+-    count_ok | count_retryable | count_halt_credential | count_terminal | count_contract_anomaly"""
+-    b = _status_bucket(http_status, transport_error)
++    count_ok | count_retryable | count_halt_credential | count_terminal | count_contract_anomaly
++    A 429 carrying a documented billing/spend code is a credential-class halt, not
++    retryable throughput (see billing_rejection_code)."""
++    b = _status_bucket(http_status, transport_error, payload)
+     if b == "retryable":
+         return "count_retryable", True
+     if b == "credential":
+@@ -302,8 +337,10 @@
+     received_completed | received_incomplete | gen_failed_retryable | gen_failed_terminal |
+     gen_retryable | gen_halt_credential | gen_terminal | gen_contract_anomaly.
+     A 2xx `failed` object is still an object whose usage/metadata must be recorded
+-    before any retry (see settle_response)."""
+-    b = _status_bucket(http_status, transport_error)
++    before any retry (see settle_response).
++    A 429 carrying a documented billing/spend code is a credential-class halt, not
++    retryable throughput (see billing_rejection_code)."""
++    b = _status_bucket(http_status, transport_error, payload)
+     if b == "retryable":
+         return "gen_retryable", True
+     if b == "credential":
+--- a/research/counted-admission/provider-candidate/counted_responses_provider/provider.py	2026-09-08 20:54:11
++++ b/research/counted-admission/provider-candidate/counted_responses_provider/provider.py	2026-09-08 21:44:38
+@@ -659,7 +659,12 @@
+                     else:
+                         counted, cfindings = C.validate_count_payload(payload)
+                         findings.extend(cfindings)
+-                category, _ = C.classify_count_outcome(status, payload)
++                error_payload = payload
++                if error_payload is None and status == 429:
++                    # Parse the retained error body only to separate a billing/spend
++                    # rejection from a throughput 429; retention already happened.
++                    error_payload, _ = C.parse_json_strict(retained["body"])
++                category, _ = C.classify_count_outcome(status, error_payload)
+                 if 200 <= status <= 299 and payload is not None:
+                     counted, _ = C.validate_count_payload(payload)
+                 else:
+@@ -935,7 +940,10 @@
+                 )
+             else:
+                 status = retained["status"]
+-                category, _ = C.classify_generation_outcome(status, None)
++                error_payload = None
++                if status == 429:
++                    error_payload, _ = C.parse_json_strict(retained["body"])
++                category, _ = C.classify_generation_outcome(status, error_payload)
+                 retry = self._retry_after(retained)
+                 meta["retry_after"] = retry
+                 meta["settlement"] = self._settle_unknown(

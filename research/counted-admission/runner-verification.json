@@ -1,0 +1,21 @@
+{
+  "kind": "offline_counted_runner_verification",
+  "live_adapter_wired": false,
+  "prior_core_regression": {
+    "counted_tests_at_that_revision": 13,
+    "seconds": 34.71,
+    "tests_passed": 41,
+    "unchanged_core_tests": 28
+  },
+  "protocol_adopted": false,
+  "provider_calls": 0,
+  "ruff": "passed",
+  "scope": "Fabricated provider outcomes and constant objectives; includes real ProcessExecutor halt visibility, unresolved timeouts, no replay, per-class retry caps, admission, correction and common deadlines.",
+  "source_sha256": {
+    "src/qbridge/counted_runner.py": "d36a5bd8f3ab643a81a9e9f27fad25fe8f37171a6d1f5979943b554cd01edff4",
+    "tests/test_counted_runner.py": "9a85b47286ca96b57027b643d53f28d8c42d20a653aa41da4976bc49b00d4ff0"
+  },
+  "study_objective_evaluations": 0,
+  "test_seconds": 13.48,
+  "tests_passed": 15
+}

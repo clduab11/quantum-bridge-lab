@@ -1,0 +1,43 @@
+--- a/research/counted-admission/provider-candidate/counted_responses_provider/contract.py	2026-09-08 21:44:38
++++ b/research/counted-admission/provider-candidate/counted_responses_provider/contract.py	2026-09-08 23:57:28
+@@ -700,14 +700,38 @@
+         + Fraction(written) * r["cache_write"]
+         + Fraction(ot) * r["output"]
+     )
++
++
++# Input tokens of ONE generation request can be billed under any of these
++# categories; which one applies is not known before the response arrives.
++INPUT_RATE_CATEGORIES = ("input", "cached_input", "cache_write")
++
++
++def worst_case_input_rate(rates) -> Fraction:
++    """The highest rate any single input token can be billed at (Fraction)."""
++    r = validate_rates(rates)
++    return max(r[name] for name in INPUT_RATE_CATEGORIES)
+ 
+ 
+ def reservation_for_generation(counted_input_tokens, rates) -> Fraction:
+-    """Exact input at the uncached rate + full output cap at the output rate (Fraction)."""
++    """Conservative: input at the WORST applicable category rate + full output cap.
++
++    Reserving at the uncached input rate under-reserves whenever the provider
++    reports cache writes, because charge_from_usage bills written tokens at the
++    cache-write rate (1.25x uncached input at the documented gpt-5.6-sol rates).
++    At the prospective admission limit that is 1.251840 USD reserved against a
++    1.523840 USD charge. Recording an overrun after settlement cannot repair an
++    under-reservation: the money is already committed. The reservation therefore
++    covers every category that could apply. Cache activity still fails E9 - this
++    is a solvency measure, not permission.
++    """
+     r = validate_rates(rates)
+     if not _strict_int(counted_input_tokens) or counted_input_tokens < 0:
+         raise ContractViolation("counted input tokens must be a non-negative int")
+-    return Fraction(counted_input_tokens) * r["input"] + Fraction(MAX_OUTPUT_TOKENS) * r["output"]
++    return (
++        Fraction(counted_input_tokens) * worst_case_input_rate(r)
++        + Fraction(MAX_OUTPUT_TOKENS) * r["output"]
++    )
+ 
+ 
+ def _validate_reservation(reservation):

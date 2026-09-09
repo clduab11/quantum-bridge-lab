@@ -113,6 +113,8 @@ class ProcessExecutor:
         return self._run(work, timeout=timeout, guard=True)
 
     def _run(self, work, *, timeout, guard):
+        if not math.isfinite(timeout):
+            raise ValueError("worker timeout must be finite")
         if timeout <= 0:
             raise TimeoutError("deadline expired")
         if os.name != "posix" or threading.active_count() != 1:
@@ -131,10 +133,18 @@ class ProcessExecutor:
         send.close()
         received = False
         try:
-            remaining = max(0.0, timeout - (time.monotonic() - started))
-            ready = wait([receive, process.sentinel], timeout=remaining)
-            if not ready:
-                raise TimeoutError("worker deadline expired")
+            while True:
+                remaining = max(0.0, timeout - (time.monotonic() - started))
+                ready = wait([receive, process.sentinel], timeout=min(remaining, 0.05))
+                if ready:
+                    break
+                # A forked descendant can inherit both pipes and hold them
+                # open after the worker exits. Poll waitpid via exitcode so
+                # that inherited descriptors cannot delay crash cleanup.
+                if process.exitcode is not None:
+                    raise WorkerCrashed("worker exited before returning a result")
+                if time.monotonic() - started >= timeout:
+                    raise TimeoutError("worker deadline expired")
             if receive not in ready:
                 raise WorkerCrashed("worker exited before returning a result")
             try:
@@ -159,6 +169,10 @@ class ProcessExecutor:
                 # Its handler unwinds that call and performs group cleanup.
                 process.terminate()
                 process.join(timeout=0.5)
+            # Reap an already-exited worker even when it sent no result. On
+            # macOS, signalling its unreaped group can raise EPERM and mask
+            # WorkerCrashed. Still signal the group to collect descendants.
+            process.join(timeout=0)
             try:
                 os.killpg(process.pid, signal.SIGKILL)
             except ProcessLookupError:

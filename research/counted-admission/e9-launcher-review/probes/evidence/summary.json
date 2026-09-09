@@ -1,0 +1,82 @@
+{
+  "environment": {
+    "executable": "/private/tmp/qbridge-review-runtime-qIwrPI/bin/python",
+    "packages": {
+      "cma": "4.4.4",
+      "httpx": "0.28.1",
+      "numpy": "2.4.6",
+      "openai": "3.9.0",
+      "pydantic": "2.13.5",
+      "pytest": "9.1.1",
+      "ruff": "0.16.6",
+      "scipy": "1.17.1"
+    },
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.11.15"
+  },
+  "evidence_type": "counterexample observations; not passing safety tests",
+  "experimental_count_calls": 0,
+  "experimental_generation_calls": 0,
+  "generated_utc": "2026-09-09T04:46:31.733565+00:00",
+  "live_spending_authority": false,
+  "network_guard": "socket connection and DNS operations raise before access",
+  "preserved_submission_unchanged": true,
+  "probe_sha256": {
+    "cli_probe.py": "4f9448145f2e0e3e533ff9e89297e54dc40e1a0faa8f2a46d08dd7889f3ea94a",
+    "gate_probe.py": "05a7f658fcc391235c51f1456e2cbaf3d7ded4f115d25a12604c2d915990ab4e",
+    "orchestrator_probe.py": "06e1ad29370d6fb337bef421658a6c4b9af227a8db7432d52f96183bb64bf6d1",
+    "reopen_probe.py": "571d699cfe2082e2d5adb0006591841f69af6758e26f1b9b5a96f9581cd2d841"
+  },
+  "provider_patch_applied": false,
+  "real_api_key_in_child_environment": false,
+  "results": [
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "gate_probe.py"
+    },
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "cli_probe.py"
+    },
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "orchestrator_probe.py"
+    },
+    {
+      "exit_code": 0,
+      "observation_recorded": true,
+      "probe": "reopen_probe.py"
+    }
+  ],
+  "submission_sha256": {
+    "SHA256SUMS.embedded.txt": "a7fe9ab9ac8ea5779b8076114adec510001b1228e1b504b4ff122def386131a1",
+    "SHA256SUMS.external.txt": "e63433ba7d59bc51a562d579c95945deae2fa01d909c1d5feb155bde4ff9e5e4",
+    "deliverables/e9_acceptance_specification.md": "c6c4c0b79d34ad74970eb389f0ae73de3a900640250a3e4be780b13474260067",
+    "deliverables/e9_billing_source_register_2026-09-09.json": "67e7ce8cb412bc1d58156de8f0326b1dae917382c8c472818283548fc93db0a0",
+    "deliverables/e9_execution_instructions.md": "ed62bec269473a5e794e2e5c863ba22f0e06f79836371b0172bb6a96a3a1a63c",
+    "deliverables/e9_financial_proposal_2026-09-09.md": "320d97ca37fce38dab08af542e9dafd1c5d4d8a399bced9519bb8a9912d8af8b",
+    "deliverables/e9_implementation_report_2026-09-09.md": "e0c3c5d6564d07a657882f31b481b66f1657d5d2aa22b7390b56eb9d7a5cd174",
+    "deliverables/e9_test_evidence.log": "fe997d5b089ae776e9407c55197276afe439f19f3b669d05f0afebef8919e63b",
+    "deliverables/e9_unapproved_authority_template.json": "3204e0efbe4e4fd9f3c99cffa1125e6eae70defc30f88f396508a4a35a991d3d",
+    "e9tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "e9tests/support.py": "dd4e6d410aa19dfab5acdbd012d6fc5db548afbf653e449195ca4c2f916f8bc4",
+    "e9tests/test_fixtures_identity.py": "50b866a8dcc87aaba19031acc3427868bfa16707d54e6fb18d878443b2328dda",
+    "e9tests/test_gate.py": "c51f77012c17650672bb59516df66fe9549092c16484df4fdea75699f7196fa6",
+    "e9tests/test_orchestrator.py": "4738042a0a558c100f21f8ff0f0dc85e8fbd8811cb048445045308ab50639f48",
+    "e9tests/test_reopen.py": "6fa7741ea0665502e22f8de11d6ca8caa56efdfc21c8ca2bd2f8f4b68d0247a8",
+    "e9tests/test_spend_limit.py": "7cba6755e790d2fb1ae7c7006b052d8a13d70648fcd16e3244b168f308cf1829",
+    "patches/0001-spend-limit-not-retryable.diff": "f884bd3396d19566ab3675c18081098c4a828ee1dfed3f1f45a3cfbde53edf1c",
+    "qbridge_e9/__init__.py": "7db310d59d5016b3bdfcc2f7f16a9af4c248e1df28cc5f80b637443af073e2ed",
+    "qbridge_e9/acceptance.py": "adbfa5fb6b08ea23cb83aac4419bc012982c48f9f3e0cda8ce0830b791832a2d",
+    "qbridge_e9/cli.py": "e066df4e005c2c7f48c80b9944d72cfe5eab186e7dd7377c13a7ace22dc21603",
+    "qbridge_e9/fixtures.py": "eaf1edf6924a61b16b9a017ec40c1291f24037e3e4932af7654452c4fedbe9a3",
+    "qbridge_e9/gate.py": "4bc10aa274f53fb7d441f4982977c8d7a7868e3ea4a13ec154f6938903bd36d9",
+    "qbridge_e9/limits.py": "c257a42e366a7acaa7d9a587fd74bd1c1ba9192b93720dd469a952b8bdd2b8b8",
+    "qbridge_e9/mocks.py": "bc11de30ff547a9b7ce6f77341e921786fb8d2d8216d4f54fe266959e077e351",
+    "qbridge_e9/orchestrator.py": "b14e9f127a1f5c9014563deee43a78c7d223a819a610019debef58283291421b",
+    "qbridge_e9/report.py": "b9a74986a7da83c38d9d9ae3b00bf9b3448bd6ba34adcc4649518502c5400ecf"
+  }
+}

@@ -1,0 +1,57 @@
+..........................................................F............. [ 63%]
+.........................................                                [100%]
+=================================== FAILURES ===================================
+_______ test_child_killed_after_request_retention_keeps_reservation_open _______
+
+tmp_path = PosixPath('/Users/chrisdukes/.claude-science/orgs/67ea5a9e-a68a-45f2-83cb-7d2bb3559bbb/workspaces/bbd403c9-9e28-4efd-8513-54cf83e57833/.tmp/pytest-of-chrisdukes/pytest-16/test_child_killed_after_reques0')
+
+    def test_child_killed_after_request_retention_keeps_reservation_open(tmp_path):
+        """STRICT. Known failure on macOS, reproduced BOTH in the Claude Science sandbox and by
+        Codex in the authorized local 3.11.15 environment (112 passed / 1 failed, 34.04 s), so it
+        is a core-runner defect, not a sandbox artifact. Recorded, not weakened:
+        qbridge/runner.py ProcessExecutor._run, `finally` block, os.killpg(process.pid,
+        signal.SIGKILL) raises PermissionError [Errno 1] EPERM when the child exited via
+        os._exit(1) without sending a result (received=False, so process.join is skipped and
+        the child is an unreaped zombie whose setsid() group has no signalable member). Only
+        ProcessLookupError is caught there, so WorkerCrashed is masked and the runner records
+        provider_client_error instead of recovering with transport_interruption. Minimal
+        reproduction: ProcessExecutor().call(lambda: os._exit(1), timeout=10). Codex owns the
+        core correction (abrupt-exit and descendant-cleanup regressions) and will rerun this test
+        unchanged; the cloned core in this package's build was not patched."""
+    
+        def die(request):
+            # The request bytes are already retained and the money reservation journaled.
+            os._exit(1)
+    
+        with DurableJournal(tmp_path / "j") as log:
+            seeded(log)
+            provider, _, clock = make_provider(tmp_path, log, Fabricated(count=die))
+            result = run(make_runner(log, clock, executor=ProcessExecutor()), provider)
+            assert result["closed"] and result["forfeits"] == 190
+            assert raw_names(tmp_path) == ["AI_b0_bt1_l1_count_a1.request.json"]
+            reserved = events(log, "money_reserved")
+            assert len(reserved) == 1 and not events(log, "money_settled")
+            state = provider.ledger.state()
+            assert state["open"] == [reserved[0]["money_reservation"]]
+            assert state["committed"] == provider.authority.count_fee_ceiling()
+            intents = events(log, "provider_dispatch_intent")
+            assert (
+                len(intents) == 1
+                and intents[0]["transport_reservation"] == "transport:AI:0:1:1:count:1"
+            )
+            # the runner's own transport reservation is unresolved too
+            counts = log.read_events()
+            completed = {e["reservation"] for e in counts if e["kind"] == "completed"}
+            assert "transport:AI:0:1:1:count:1" not in completed
+            # a fresh block still carries the open reservation against the ceiling
+            (tmp_path / "next").mkdir()
+            provider2, _, _ = make_provider(tmp_path / "next", log, Fabricated())
+            assert provider2.ledger.state()["committed"] == provider.authority.count_fee_ceiling()
+>           assert not halts(log)
+E           AssertionError: assert not [('provider_client_error', False)]
+E            +  where [('provider_client_error', False)] = halts(<qbridge.journal.DurableJournal object at 0x1077c1f90>)
+
+tests/test_fork_and_crash.py:136: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_fork_and_crash.py::test_child_killed_after_request_retention_keeps_reservation_open
+1 failed, 112 passed in 25.05s

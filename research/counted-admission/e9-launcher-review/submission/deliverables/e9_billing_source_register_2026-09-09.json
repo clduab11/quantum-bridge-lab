@@ -1,0 +1,149 @@
+{
+  "kind": "e9_billing_source_register",
+  "retrieved_utc": "2026-09-09T02:21:59Z",
+  "retrieval_method": "direct HTTPS GET of the official documentation markdown variants (append .md to the page URL). No API call, no account access, no credential used.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://developers.openai.com/api/docs/guides/spend-limits.md",
+      "file": "spend-limits.md",
+      "establishes": [
+        "Spend alerts notify only; a hard spend limit stops traffic at org or project level.",
+        "At an enforced hard limit, affected requests return HTTP 429 with organization_spend_limit_exceeded or project_spend_limit_exceeded.",
+        "Enforcement is explicitly not instantaneous, so recorded spend can slightly exceed the configured amount."
+      ],
+      "does_not_establish": [
+        "Whether any limit is currently configured on this account.",
+        "Any per-request fee for the token-count endpoint."
+      ],
+      "sha256": "c390d663cfc85416270be1804ab1fd52f731bbaa7d2d789ea037156426b5343c",
+      "bytes": 4489,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S2",
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol.md",
+      "file": "model-gpt-5.6-sol.md",
+      "establishes": [
+        "gpt-5.6-sol text rates: input $4, cached input $0.4, output $20 per 1M tokens.",
+        "Prompts with more than 272K input tokens are priced at 2x input and 1.5x output for the full request.",
+        "Cache writes are billed at 1.25x the uncached input token rate.",
+        "Promotional pricing stated as available at least through November 21, 2026.",
+        "Context window 1,050,000; maximum input tokens 922,000; 128,000 max output tokens."
+      ],
+      "does_not_establish": [
+        "Whether the /v1/responses/input_tokens subresource is billed.",
+        "Rates after the promotional period."
+      ],
+      "sha256": "6aaf0b7116c48f427f3bbcd1d3f908d140ae3bfa44ea060bec3d007678b9c5df",
+      "bytes": 3945,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S3",
+      "url": "https://developers.openai.com/api/docs/pricing.md",
+      "file": "pricing.md",
+      "establishes": [
+        "Standard table lists gpt-5.6-sol short context $4 / $0.40 / $5.00 / $20.00 and long context $8 / $0.80 / $10 / $30 per 1M tokens.",
+        "Responses, Chat Completions, Realtime, Batch and Assistants APIs are not priced separately; tokens are billed at the chosen model's input and output rates."
+      ],
+      "does_not_establish": [
+        "Whether tokens submitted to the token-count subresource are 'tokens used' for billing.",
+        "Any tax, invoice or billing-cycle terms."
+      ],
+      "sha256": "244b537c06fb94e4d7214ba7f076f2bd18cace4ad165d30ad5da77cbaaad36c6",
+      "bytes": 21646,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S4",
+      "url": "https://developers.openai.com/api/docs/guides/error-codes.md",
+      "file": "error-codes.md",
+      "establishes": [
+        "429 credit_balance_exhausted means the organization's prepaid credit balance is depleted; credits must be added to restore access.",
+        "429 organization_usage_limit_exceeded is the OpenAI-assigned monthly usage limit, separate from configured spend limits.",
+        "429 also covers genuine throughput conditions (rate limit reached; rate_limit_error / slow_down), which should follow Retry-After.",
+        "Python raises RateLimitError for 429 and InternalServerError for 503; handlers should inspect error.code."
+      ],
+      "does_not_establish": [
+        "Whether a failed or rejected request incurs any charge."
+      ],
+      "sha256": "ca56d0600fdfd00b2c48011233317c3eb7a8e8e5e6aeb958bb2777ea8a042982",
+      "bytes": 32170,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S5",
+      "url": "https://developers.openai.com/api/docs/guides/token-counting.md",
+      "file": "token-counting.md",
+      "establishes": [
+        "The input token count endpoint accepts the same input format as the Responses API and returns the exact count the model will receive.",
+        "The stated purpose includes estimating costs before making API calls."
+      ],
+      "does_not_establish": [
+        "Any statement that the count call is free.",
+        "Any statement that the count call is billed.",
+        "Any per-attempt fee for a failed or rejected count call."
+      ],
+      "sha256": "c60315cf603d0cdd6ec1e7dd27ff00fb1196c180db90c3a052a02d3afb5ecd05",
+      "bytes": 22604,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S6",
+      "url": "https://developers.openai.com/api/docs/guides/rate-limits.md",
+      "file": "rate-limits.md",
+      "establishes": [
+        "Usage tiers with OpenAI-assigned monthly usage limits: Tier 1 $100/month at $5 paid, rising to Tier 5 $200,000/month."
+      ],
+      "does_not_establish": [
+        "Which tier this account is in."
+      ],
+      "sha256": "4a10e75768a5c246a1f9ea942b7547d0e72e8d555e36d8997ddb8282107c4f35",
+      "bytes": 20170,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S7",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-caching.md",
+      "file": "prompt-caching.md",
+      "establishes": [
+        "Cache prefix eligibility is model-specific and must be measured with the model and settings actually used."
+      ],
+      "does_not_establish": [
+        "Any cache lifetime or window applicable to the F2/F3 repeat."
+      ],
+      "sha256": "116afe3d8639c788318605d870229b178bdb8f4d7369062e13fcfc7d457d1837",
+      "bytes": 45072,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    },
+    {
+      "id": "S8",
+      "url": "https://developers.openai.com/llms.txt",
+      "file": "llms.txt",
+      "establishes": [
+        "Documentation index; confirms markdown variants are the canonical machine-readable form."
+      ],
+      "does_not_establish": [],
+      "sha256": "d62a1e8e62eef9098fe2a120bf1b0413b7b014b2f1fa3e0109e63f32140bd5be",
+      "bytes": 5853,
+      "retrieved_utc": "2026-09-09T02:21:59Z"
+    }
+  ],
+  "unretrieved": [
+    {
+      "url": "https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing",
+      "named_by": "the work order, as prepaid-billing evidence",
+      "outcome": "HTTP 403 from the help centre's automated-client protection, on a plain request and on one retry using only standard Accept content negotiation.",
+      "retained_file": "prepaid_help_403_refusal.html",
+      "sha256": "89cc4d415ba4ecd9c04456a7467860a7230d3f3a534f38820980265a63e1c3f3",
+      "note": "No browser impersonation, mirror, cache or proxy was attempted. Its contents are therefore NOT part of this register and nothing about prepaid billing mechanics is asserted from it. The prepaid credit model is evidenced only indirectly by S4 (credit_balance_exhausted)."
+    }
+  ],
+  "explicitly_unresolved": [
+    "Whether a request to /v1/responses/input_tokens is billed at all, and if so at what rate. S3 states the API families are not priced separately and that tokens are billed at model rates; it does not say whether tokens submitted to the count subresource are billed tokens. This establishes neither a zero fee nor a positive fee.",
+    "Whether a failed (non-2xx) or admission-rejected attempt of either class incurs a charge. No source addresses this.",
+    "This account's billing mode (prepaid credits vs monthly invoicing), current credit balance, usage tier, assigned monthly usage limit, and whether any hard spend limit is presently configured.",
+    "Tax treatment. No fetched source states any tax, VAT or invoicing term."
+  ]
+}

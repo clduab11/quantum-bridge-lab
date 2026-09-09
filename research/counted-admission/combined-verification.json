@@ -1,0 +1,18 @@
+{
+  "counted_reference_tests": 152,
+  "dependency_lock": "research/execution-preparation/claude-science/uv.lock",
+  "earlier_chat_candidate_tests": 53,
+  "frozen": false,
+  "kind": "combined_offline_verification",
+  "protocol_adopted": false,
+  "provider_count_calls": 0,
+  "provider_generation_calls": 0,
+  "python": "3.11.15",
+  "root_core_tests": 280,
+  "source_manifest_sha256": "c5dda3e138f114cf2868a93a0b740cab95bf7fa14de8c54a3e5c98bdaa7b12b6",
+  "study_objective_evaluations": 0,
+  "test_log_sha256": "0cfed2c42c504c7b874acee5c4f47fc60cf8dec0c775b2f7eb9e4c0980d5aee9",
+  "test_seconds": 144.51,
+  "tests_passed": 485,
+  "warning": "optional cma plotting unavailable; no plotting required"
+}

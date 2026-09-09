@@ -1,0 +1,194 @@
+"""Build amendment A1 rev2: verbatim old blocks are extracted from the v0.4 bytes and each
+replacement is asserted to match exactly once. Produces the amendment document, a fully
+applied CANDIDATE v0.5 text (not adopted), and a unified diff."""
+
+import difflib
+import hashlib
+import re
+from pathlib import Path
+
+SRC = "sources/specification__ai_quantum_control_protocol_v0.4.md"
+V04 = Path(SRC).read_text(encoding="utf-8")
+assert hashlib.sha256(V04.encode("utf-8")).hexdigest() == (
+    "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5"
+)
+lines = V04.split("\n")
+
+
+def block(start_prefix, end_prefix=None, *, inclusive_end=True):
+    """Return the exact text from the unique line starting with start_prefix up to (and
+    including, if inclusive_end) the next line starting with end_prefix."""
+    idx = [i for i, l in enumerate(lines) if l.startswith(start_prefix)]
+    assert len(idx) == 1, (start_prefix, idx)
+    i = idx[0]
+    if end_prefix is None:
+        return lines[i]
+    j = next(k for k in range(i + 1, len(lines)) if lines[k].startswith(end_prefix))
+    return "\n".join(lines[i : j + 1] if inclusive_end else lines[i:j])
+
+
+L = "272,000"  # Codex-selected prospective admission limit (see review §3)
+
+# ------------------------------------------------------------------ replacements
+R = []  # (section label, old, new)
+
+# Header line and status block
+old = lines[0]
+new = "# AI-Guided vs Conventional Parameter Discovery on a Simulated Single-Qubit Robust-Gate Objective — Protocol Draft v0.5 (CANDIDATE — amendment A1 applied for review; NOT ADOPTED)"
+R.append(("Title", old, new))
+
+old = block("Revision: protocol-v0.4 draft")
+new = "Revision: protocol-v0.5 CANDIDATE, 2026-09-08. Applies proposed pre-exposure amendment A1 (counted Responses admission and observable-identity standard) to reviewed protocol-v0.4; all earlier artifacts remain unchanged. This candidate is under Codex review; it is neither adopted nor a run-manifest freeze. Supersedes nothing until recorded in `AMENDMENTS.md`. Evidence IDs refer to `research_evidence_brief_v2.md` (evidence-brief-v2). Governance terms refer to `protocol_governance_v2.md` (governance-v2)."
+R.append(("Revision line", old, new))
+
+# §6.1
+old = block("### 6.1 Model and decoding", "- No tools, no system-side code execution")
+new = """### 6.1 Model and decoding
+- Exactly one model, addressed by one exact model string (never a routing alias). For generation, the model identifier is **recorded from the `model` field of every generation response**; no identifier is asserted in this document. The count endpoint returns only `object` and `input_tokens`, so a count receipt carries the *requested* model string and the count-body hash, not a served-model identity.
+- Endpoints: `POST /v1/responses` for generation, preceded for every distinct logical-call body by `POST /v1/responses/input_tokens` (§7.2a). Chat Completions is not used under this revision.
+- Request profile (frozen; its SHA-256 enters the manifest). Explicitly sent: `reasoning.effort` (one documented Sol value, design candidate `medium`), `text.verbosity: "medium"` (documented default, sent explicitly), `truncation: "disabled"` (documented default; marked deprecated in the reference — a later rejection is a contract failure, not a field to drop), `max_output_tokens: 8192`, `store: false`, `stream: false`, `service_tier: "default"`, `prompt_cache_options: {"mode": "explicit"}` with no breakpoints (documented as not using prompt caching). Never sent: `temperature`, `top_p`, `tools`, `tool_choice`, `parallel_tool_calls`, `instructions`, `personality`, `previous_response_id`, `conversation`, `context_management`, `include`, `metadata`, `user`, `safety_identifier`, `prompt_cache_key`, `prompt_cache_retention`, `background`, `reasoning.mode`, `reasoning.context`, `reasoning.summary`. Developer and user texts are plain-string `input` items (roles `developer`, `user`).
+- **Observable-identity standard (replaces the fingerprint requirement for this revision).** The evaluated method is defined as the archived exact request profile plus the observable generation-response metadata. (i) *Required echo fields* must be present and equal the frozen profile with strict types on every received response: `object == "response"`, `model`, `service_tier`, `truncation`, `max_output_tokens` (integer), `store` (boolean), `reasoning.effort`, `text.verbosity`, `prompt_cache_options.mode`. (ii) *Optional fields with a safe set*: `background` must be absent or `false`; `tools` must be absent or `[]`; any other value fails the profile even on the first response — optional does not mean that a conflicting value is acceptable. (iii) *Optional free fields* `temperature` and `top_p` are recorded verbatim. (iv) The identity vector records every field as a presence-tagged canonical value (absent, or present with its canonical JSON), and records the **whole** `reasoning`, `text` and `prompt_cache_options` objects canonically, so that a nested field appearing, changing or disappearing cannot escape the drift check. A missing, unequal or unsafe required value before the baseline exists is an unverified-compatibility failure (E9 fails; no baseline is recorded); the baseline is the identity vector of the first profile-valid `completed` E9 generation response and enters the manifest; on every later response any difference in any identity key is IVF (§7.4). **Limitations stated as part of any confirmatory claim:** the inspected Responses reference exposes no serving fingerprint and the model page lists a single undated snapshot, so weight or serving changes that leave the echo unchanged are undetectable; effective sampling values are unobserved when echoed as `null`; reproducibility is transcript-level (exact bytes sent and received are archived), not re-executable. Other endpoints or providers are not characterised by this statement.
+- `max_output_tokens` 8192 is a cap inclusive of reasoning tokens (documented), not a guarantee that every permissible output fits; a response with `status: "incomplete"` is a received response (§7.4).
+- No tools, no system-side code execution, no multi-turn memory, no retrieval augmentation, no conversation linkage. `store: false` is sent; this is not a claim of zero server-side storage or retention (provider data-control terms govern; disclosed limitation)."""
+R.append(("§6.1", old, new))
+
+# §7.1 additions
+old = block(
+    "- **Transport attempt:** one HTTP request made in service of a logical call."
+)
+new = (
+    old
+    + """
+- **Count request:** one HTTP request to `POST /v1/responses/input_tokens` carrying the exact projection (§7.2a) of a logical-call body. A count request is a transport attempt of the **count class**; a generation request is a transport attempt of the **generation class**. Attempt caps, backoff, timeout, reservation and logging apply to each class separately.
+- **Count receipt:** the provider's `input_tokens` integer for one count body, bound to that body's SHA-256, the requested model string, the response headers and the receipt time. Valid only for byte-identical generation attempts of the same logical call; never reused across logical calls, corrections, batches or blocks.
+- **Admission:** the predetermined decision `counted input_tokens ≤ L*`. Rejection forfeits the batch (§7.4) and dispatches no generation request. Admission never truncates or edits the prompt."""
+)
+R.append(("§7.1 additions", old, new))
+
+# §7.2 whole section (six bullets) + new §7.2a
+old = block(
+    "### 7.2 Per-block caps (LLM arm)",
+    "- HTTP timeout/backoff allowance alone is at most",
+)
+assert old.count("\n- ") == 6, old.count("\n- ")
+deadline_bullet = block("- HTTP timeout/backoff allowance alone is at most")
+deadline_tail = deadline_bullet.split("it is not a bound on total runtime. ", 1)[1].replace(
+    "Enforce an independent monotonic **36,000 s (10 h) deadline per arm per block**,",
+    "The independent monotonic **36,000 s (10 h) deadline per arm per block** is the binding bound and is unchanged; enforce it,",
+    1,
+)
+new = f"""### 7.2 Per-block caps (LLM arm)
+- Logical calls ≤ 2 per batch (1 proposal + ≤ 1 correction) → **≤ 38 per block**.
+- Count-class attempts ≤ 3 per logical call → **≤ 114 per block**; generation-class attempts ≤ 3 per admitted logical call → **≤ 114 per block**. Study maxima over 40 blocks: ≤ 4,560 count and ≤ 4,560 generation attempts. These are caps, not expected counts; completion of all of them within the arm deadline is not promised.
+- Per-attempt timeout (either class): declared design value **300 s** (verified at readiness).
+- Backoff between attempts of the same logical call and class: nominal 5 s after attempt 1, 20 s after attempt 2. If the provider returns `Retry-After` (a documented minimum wait), the wait is max(nominal backoff, server minimum) and is **never shortened**; the retry is made only if that wait is ≤ 300 s and wait plus a fixed dispatch margin of exactly 1 s fits the remaining arm deadline, otherwise the logical call ends without retry and the batch is forfeited with reason recorded. `Retry-After` delta-seconds are parsed as non-negative integers; HTTP-dates are measured against the response `Date` header when present, else against receipt time; a malformed value means no retry; a date in the past means the minimum is already satisfied; `retry-after-ms` is recorded but not interpreted (no documentation evidence); a retry is never made when the remaining deadline is unknown or non-finite.
+- Output tokens ≤ 8192 per generation attempt (§6.1). **Input admission is enforced, not inferred:** every distinct logical-call body is counted by the provider before generation and a generation request is dispatched only if `input_tokens ≤ L*`, with **L\\* = {L} provider-counted input tokens** (prospective admission choice anchored to the documented price-tier boundary "prompts with >272K input tokens", read conservatively as 272,000; it is not a proof that every legal history fits and not spending authority; the earlier candidate value 200,000 is recorded as superseded in the amendment file). The visible history is at most 10·b valid rows at batch b ≤ 19 under §6.3 (forfeits and invalid evaluations reduce it; never more than 190 rows because batch 19's results are not fed back), but no row count, byte count or tokenizer estimate is used for any bound; whether and when a body exceeds L\\* depends on the rendered text, not only on row count, and no monotonicity in batch index is claimed. An over-limit body is a forfeited batch under §7.4. The per-attempt token ceiling is L\\* + 8,192; the a priori study ceiling is 4,560 × (L\\* + 8,192) generation tokens plus ≤ 4,560 count requests whose billing is unknown until account evidence exists. Provider-reported token categories are recorded separately; unavailable billing quantities remain unknown, never zero.
+- Nominal fixed-backoff HTTP allowance (no server-imposed waits): 2 × (114×300 + 38×25) = 70,300 s per block, which already exceeds the arm deadline; with `Retry-After` waits it is not an upper bound at all, and it is not a bound on total runtime. {deadline_tail}
+
+### 7.2a Count-to-send identity
+Let `G` be the generation body. The count body `C` is the exact projection `C = {{k: G[k] for k in G if k ∈ COUNT_SCHEMA}}`, where `COUNT_SCHEMA` is the parameter set of `POST /v1/responses/input_tokens` in the pinned SDK (openai-python 3.9.0: `conversation, input, instructions, model, parallel_tool_calls, personality, previous_response_id, reasoning, text, tool_choice, tools, truncation`). Before projection the full profile of `G` is validated value by value (exact model string, exactly two plain-string `input` items with roles `developer` then `user`, `reasoning` exactly `{{"effort": <fixed>}}`, `text` exactly `{{"verbosity": "medium"}}`, `truncation` `"disabled"`, `max_output_tokens` the integer 8192, `store` and `stream` the boolean `false`, `service_tier` `"default"`, `prompt_cache_options` exactly `{{"mode": "explicit"}}`, no other key). `C` must then be exactly `{{model, input, reasoning, text, truncation}}` and `G \\ C` exactly `{{max_output_tokens, store, stream, service_tier, prompt_cache_options}}`. The canonical bytes of `C` and `G` are bound (copied, not aliased) before any dispatch and durably journaled together with their SHA-256; the bytes actually leaving the process and the URL are verified against the bound bytes in a pre-send hook for both endpoints, and any difference aborts before dispatch and raises a `compatibility_halt` (§7.3). Provider JSON is parsed rejecting duplicate keys; a count response is valid only if `object == "response.input_tokens"` and `input_tokens` is a non-negative integer. Generation retries within a logical call reuse the identical `G` and the same count receipt; a correction call is a new logical call with its own count. No generation request is dispatched without a valid count receipt, an admitted count, bound bytes and a validated profile."""
+R.append(("§7.2 + new §7.2a", old, new))
+
+# §7.3 whole section
+old = block("### 7.3 Ordering of transport retry", "For each batch: **logical call 1**")
+new = """### 7.3 Ordering of transport retry and malformed-output correction
+For each batch: **logical call 1** → **count step**: up to 3 count-class attempts with the identical count body (retry the identical request only on connection failure, timeout, HTTP 429 or HTTP 5xx, subject to the `Retry-After` and deadline rule of §7.2; a retry is never made when the remaining deadline is unknown or non-finite). A valid count is an HTTP 2xx body with `object == "response.input_tokens"` and a non-negative integer `input_tokens`. HTTP 401, 402 or 403 on either class halts further LLM dispatch for the run (credential/billing failure is not per-request): remaining LLM slots of the current and all later blocks are forfeited without replay, RS and CMA-ES continue under the frozen schedule, and the halt is journaled. Any other HTTP 4xx or exhaustion of 3 count attempts → batch **forfeited** (10 slots), **no correction call**, no generation request (ordinary failure: only this batch is affected). A malformed count body (2xx without a valid `object`/`input_tokens`), a failed profile/body validation, or a pre-send bytes/URL mismatch → **compatibility halt** (`compatibility_halt`): malformed provider or wire evidence means the contract cannot be trusted for any later request, so all future LLM dispatch for the run stops, the current batch and all remaining LLM slots are forfeited without replay, and RS/CMA-ES continue; this is not automatically IVF. If `input_tokens > L*` → **admission rejected**: batch forfeited, no correction call, the counted value recorded. Otherwise → **generation step**: up to 3 generation-class attempts with the identical generation body (same retry conditions and rule; 401/402/403 as above). Every HTTP 2xx `Response` object — whether `status` is `completed`, `incomplete` or `failed` — has its metadata and `usage` recorded and settled (§7.4 accounting rows) **before** any retry decision or parsing. A received model response is a 2xx object with `status ∈ {completed, incomplete}`; a 2xx object with `status: "failed"` and `error.code ∈ {server_error, rate_limit_exceeded}` counts as a failed attempt eligible for retry; `failed` with any other or missing code terminates the logical call and forfeits the batch without correction (ordinary failure); any other status (`in_progress`, `queued`, `cancelled`, missing), an unparseable or duplicate-key 2xx body, or a pre-send bytes/URL mismatch is malformed evidence → `compatibility_halt` as above. **Halt consequences for the text of the current attempt (pre-exposure method selection, fixed here):** on an `accounting_halt` raised by a received `completed`/`incomplete` object, the already-received text is parsed and its valid vectors evaluated, any correction call or other new provider call is suppressed, and all remaining future LLM slots are forfeited, with every mandatory billing unknown kept reserved; on an IVF, identity/profile, credential or compatibility halt, the current proposal is **not** evaluated (its slots are forfeited) and the raw text is retained for audit only. Only HTTP 2xx objects are parsed. Every dispatched request of either class consumes one attempt of its class, regardless of whether it was billed or returned text. If no model response is received after 3 generation attempts → all 10 slots of the batch **forfeited**; **no correction call**; proceed to the next batch (statelessness makes this well-defined). If a response is received → apply §6.7 to the concatenated `output_text` parts of `message` items in `output` (reasoning items are never parsed; a `refusal` part or empty output yields 0 valid vectors). If it yields ≥ 1 valid vector → evaluate them, forfeit the remainder, proceed. If it yields 0 valid vectors → **logical call 2 (correction)**: same system prompt; the user message is the original message with the appended line `PREVIOUS RESPONSE REJECTED: {reason}. Respond again following the output rules exactly.` → its own count step (new body, new receipt, same admission rule) → if admitted, up to 3 generation attempts → apply §6.7 → evaluate valid, forfeit the rest. No further calls for that batch."""
+R.append(("§7.3", old, new))
+
+# §7.4 rows: replace the fingerprint row and add rows
+old = block("| Provider model/fingerprint or effective decoding change;")
+new = """| Provider model string or any required/baselined identity field (§6.1) changes after the baseline; `usage.input_tokens ≠ count receipt`; non-zero `cached_tokens` or `cache_write_tokens` under explicit mode with no breakpoints; other evidence of shared state or nonstationarity | Inferential validity failure (IVF): evidence of contract breach or drift. Applicable-rate charge recorded unclipped first; the current proposal is not evaluated (raw text retained for audit); LLM dispatch halted for both stages; remaining LLM slots forfeited without replay; RS/CMA-ES continue descriptively (§8.3) | Neither confirmatory support nor exclusion is permitted |
+| LLM count-class exhaustion or terminal HTTP 4xx on the count | Batch forfeited (10 slots); no correction; cause `count_failure` (ordinary failure, this batch only) | Incumbent unchanged |
+| Malformed count body, malformed or duplicate-key 2xx generation body, unexpected `status`, failed profile/body validation, or pre-send bytes/URL mismatch | `compatibility_halt`: all future LLM dispatch stops; current proposal not evaluated (raw bytes retained for audit); current and remaining LLM slots forfeited without replay; RS/CMA-ES continue. Not automatically IVF | Blocks remain in analysis; forfeits reported |
+| LLM admission rejected (`input_tokens > L*`) | Batch forfeited (10 slots); no correction; cause `admission_rejected`; counted value recorded | Incumbent unchanged |
+| HTTP 401/402/403 on either class | LLM dispatch halted for the run (`credential_halt`); current proposal not evaluated; remaining LLM slots forfeited without replay; RS/CMA-ES continue | Blocks remain in analysis; forfeits reported |
+| Received 2xx object whose usage is not fully reconciled — mandatory `input_tokens`, `output_tokens`, `total_tokens`, `input_tokens_details.cached_tokens`, `.cache_write_tokens` missing or not non-negative integers, or `total_tokens ≠ input_tokens + output_tokens` — or a known applicable-rate charge above its reservation (any computable category-based charge and the raw inconsistent report are preserved; nothing is substituted by zero; `output_tokens_details.reasoning_tokens` is informational, included in `output_tokens`, never charged again) | `accounting_halt` (unverified accounting, distinct from IVF): a received `completed`/`incomplete` text is still parsed and its valid vectors evaluated; correction and all further provider calls suppressed; remaining LLM slots forfeited without replay; the full reservation is retained (unknown) or the overrun recorded unclipped. Under E9 policy this is a failed preflight. | Blocks remain in analysis; forfeits reported; confirmatory status unaffected unless an IVF row also applies |"""
+R.append(("§7.4 rows", old, new))
+
+# §7.5 append
+old = block("Durably reserve the allotted slot or transport-attempt number")
+new = (
+    old
+    + " Count-class attempt numbers are durably reserved before dispatch exactly as generation attempts are, and the bound canonical request bytes are journaled before dispatch so that a process kill after dispatch leaves an auditable record; an unresolved count or generation reservation is logged as dispatch/execution status unknown with unknown billing, never zero. Retained headers exclude request authorization material."
+)
+R.append(("§7.5 addition", old, new))
+
+# §8.3 stationarity bullet
+old = block("- **Stationarity assumption:**")
+new = "- **Stationarity assumption:** the model, tokenizer and serving configuration behind the recorded identifier are unchanged across all calls of both stages. Mitigation: record the identity vector and count receipt per call; require `usage.input_tokens == count receipt` on every generation response; execute both stages within the shortest feasible window; report any change. A change in the model string or any baselined identity field, or a count/usage mismatch, breaches the frozen stationarity model and sets IVF; any continued computation is descriptive only. Absence of a reported change is not proof that the service is stationary; under a single undated snapshot without a fingerprint, undetectable drift is possible and is disclosed with every confirmatory statement."
+R.append(("§8.3", old, new))
+
+# §9.6
+old = block("Per stage: all 20 D values;")
+new = "Per stage: all 20 D values; the interval; decision category; sample median; number of floored endpoints; number of exact ties; per-block forfeits **by cause (invalid vector, zero-valid after correction, count failure or anomaly, admission rejected, generation transport exhaustion, terminal error, deadline, credential halt, compatibility halt, accounting halt, IVF halt)**, objective calls, valid evaluations, duplicates for each arm; **per dispatched LLM request: class, attempt numbers, counted input tokens, `usage` categories or explicit unknowns, applicable-rate charge or unknown**; SVF and IVF events; best-so-far curves per arm (descriptive figure; label-revealing, see §10.4). Random-search endpoints alongside (descriptive). Forfeit-cause tabulation is descriptive; it licenses no re-analysis, re-run or exclusion."
+R.append(("§9.6", old, new))
+
+# §11 E9
+old = block("- **E9 LLM interface:**")
+new = "- **E9 LLM interface:** format-, count- and identity-compliance smoke test with **synthetic** histories (fabricated numbers). Exactly four fixed fixtures — F1 (batch 1, 10 rows), F2 (batch 19, 190 rows, renderer maximum), F3 (byte-identical repeat of F2), F4 (F2 with the fixed correction suffix) — each run as one logical call: count step then, if admitted, generation step; ≤ 12 count and ≤ 12 generation attempts in total; monotonic stop limit 7,400 s (the nominal fixed-backoff HTTP allowance 24×300 + 8×25; server-imposed waits and overhead consume it, so not every maximum attempt is promised to fit). Pass conditions on every fixture: valid count; required echo fields equal the frozen profile (§6.1); `usage.input_tokens == count` with all mandatory usage categories present; `cached_tokens == cache_write_tokens == 0`; identity vector recorded and (F2 vs F3) identical; `count(F3) == count(F2)`; §6.7 parse result logged. Unknown mandatory usage, any profile mismatch, any count/usage inequality or any cache activity fails E9; no baseline is recorded from a failed E9. Over-limit rejection, count-only, count-failure, `Retry-After`, `status: failed/incomplete`, credential-halt, compatibility-halt, accounting-halt and IVF paths are exercised offline with mocked responses, not live. Every count and generation request, its bound and sent bytes, full response headers (without authorization material) and body are logged. E9 may not be used to choose L\\*, the effort, or any prompt text; if a fixture count exceeds L\\*, that is a recorded finding for a revised amendment. E9 is the only permitted pre-freeze provider call; it follows adoption of this amendment, requires its own recorded E9 gate (monetary authority covering both request classes and the billing evidence of §12 G-COST), and is not authorized by this document. Freeze follows closure of all §12 gates, not E9 alone."
+R.append(("§11 E9", old, new))
+
+# §12 rows
+old = block("| G-MODEL |")
+new = "| G-MODEL | Model string from generation response metadata equals the frozen profile's; explicit request profile (§6.1) accepted live; required echo fields validated against the profile and the identity baseline captured at E9 and entered in the manifest; `max_output_tokens` 8192 accepted; admission limit L\\* fixed before E9 and enforced; `usage.input_tokens == count` with complete usage on every E9 fixture; the observable-identity limitations of §6.1 recorded in the manifest | Metadata capture + E9 log |"
+R.append(("§12 G-MODEL", old, new))
+old = block("| G-TRANSPORT |")
+new = "| G-TRANSPORT | Enforced per-class attempt limits, 300 s timeout, nominal backoff and the `Retry-After`/deadline rule, 36,000 s per-arm deadline, count-to-send identity (profile validation, bound bytes, pre-send verification on both endpoints), status/error classification for 2xx objects, header retention, durable pre-dispatch journaling and provider usage accounting validated with mocks and E9 | Engineering and E9 log |"
+R.append(("§12 G-TRANSPORT", old, new))
+old = block("| G-COST |")
+new = "| G-COST | Admission-limit-derived token ceilings for both request classes; conditional monetary scenarios at the hashed current price page (exact rational arithmetic independent of ambient numeric context, bounded finite positive rate grammar; exact subtotals; a combined total is null while any class's price is unknown — an assumed count fee yields only a conditional mathematical total, never billing completeness); **before any live dispatch, account/provider contract evidence covering count-request charges (including failed and rejected counts) and the applicable model rates, or an explicitly adopted and bounded financial-risk exception (none is proposed or adopted here)**; price page hash and validity date checked at every dispatch; monetary spending ceiling and authorization for E9 and both stages recorded; the software enforces attempt and reservation limits conditional on the recorded prices and provider compliance — it does not enforce the invoice; overruns and unknowns remain possible and are recorded unclipped; account usage tier, monthly limit and model rate limits recorded as operational context | Budget and authority record before any paid preflight or evaluation |"
+R.append(("§12 G-COST", old, new))
+
+# §14.4 null/inconclusive
+old = block("*For a null or inconclusive result:*")
+new = old.replace(
+    "forfeits under the failure contract dominate the endpoint;",
+    "forfeits under the failure contract dominate the endpoint, including count-class failures, admission rejections and halts that exist only for the LLM arm;",
+)
+assert new != old
+R.append(("§14.4", old, new))
+
+# ------------------------------------------------------------------ apply
+text = V04
+for label, o, n in R:
+    assert text.count(o) == 1, (label, text.count(o))
+    text = text.replace(o, n)
+Path("ai_quantum_control_protocol_v0.5_CANDIDATE_A1_2026-09-08.md").write_text(
+    text, encoding="utf-8"
+)
+diff = "".join(
+    difflib.unified_diff(
+        V04.splitlines(keepends=True),
+        text.splitlines(keepends=True),
+        fromfile="specification/ai_quantum_control_protocol_v0.4.md (0df9242f…)",
+        tofile="ai_quantum_control_protocol_v0.5_CANDIDATE_A1_2026-09-08.md",
+        n=1,
+    )
+)
+Path("v0.4_to_v0.5_CANDIDATE_A1.diff").write_text(diff, encoding="utf-8")
+
+# ------------------------------------------------------------- amendment doc
+cand_sha = hashlib.sha256(text.encode("utf-8")).hexdigest()
+diff_sha = hashlib.sha256(diff.encode("utf-8")).hexdigest()
+head = Path("amendment_head_v2.md").read_text(encoding="utf-8")
+head = (
+    head.replace("{CAND_SHA}", cand_sha)
+    .replace("{DIFF_SHA}", diff_sha)
+    .replace("{CAND_BYTES}", str(len(text.encode("utf-8"))))
+)
+parts = [head]
+for i, (label, o, n) in enumerate(R, 1):
+    parts.append(
+        f"\n## A1.{i} — {label}\n\n**old (verbatim from v0.4)**\n\n```\n{o}\n```\n\n**new (complete replacement text)**\n\n```\n{n}\n```\n"
+    )
+tail = Path("amendment_tail_v2.md").read_text(encoding="utf-8")
+parts.append(tail)
+doc = "".join(parts)
+Path("amendment_A1_counted_responses_admission_PROPOSED_2026-09-08.md").write_text(
+    doc, encoding="utf-8"
+)
+print("candidate", cand_sha, len(text.encode()))
+print("diff", diff_sha, len(diff))
+print("amendment", hashlib.sha256(doc.encode()).hexdigest(), len(doc.encode()))
+print("replacements", len(R), [r[0] for r in R])
+print("verify", all(re.search(re.escape(n), text) for _, _, n in R))

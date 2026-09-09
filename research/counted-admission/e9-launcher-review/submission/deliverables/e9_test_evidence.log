@@ -1,0 +1,268 @@
+# E9 launcher test evidence
+# generated: 2026-09-09T02:46:50Z
+# baseline commit: a8c3e1e83c28db80642ab0123dd1fbf4d9ff5bc2
+# python: 3.11.16 | macOS-26.5.2-arm64-arm-64bit
+# packages: cma==4.4.4, httpx==0.28.1, numpy==2.4.6, openai==3.9.0, pip-audit==2.10.1, pydantic==2.12.0, pytest==9.1.1, ruff==0.16.6, scipy==1.17.1
+
+════════════════════════════════════════════════════════════════
+### dep_core_289
+════════════════════════════════════════════════════════════════
+........................................................................ [ 24%]
+........................................................................ [ 49%]
+........................................................................ [ 74%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+=============================== warnings summary ===============================
+tests/test_runner.py::test_installed_pycma_ask_tell_continues_after_a_stop_condition
+  /Users/chrisdukes/.claude-science/conda/envs/qbridge-e9/lib/python3.11/site-packages/cma/s.py:16: UserWarning: Could not import matplotlib.pyplot, therefore ``cma.plot()`` etc. is not available
+    _warnings.warn('Could not import matplotlib.pyplot, therefore'
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+289 passed, 1 warning in 64.31s (0:01:04)
+
+════════════════════════════════════════════════════════════════
+### dep_provider_113
+════════════════════════════════════════════════════════════════
+........................................................................ [ 63%]
+.........................................                                [100%]
+113 passed in 24.97s
+
+════════════════════════════════════════════════════════════════
+### dep_reference_152
+════════════════════════════════════════════════════════════════
+........................................................................ [ 47%]
+........................................................................ [ 94%]
+........                                                                 [100%]
+152 passed in 0.06s
+
+════════════════════════════════════════════════════════════════
+### dep_ext_53
+════════════════════════════════════════════════════════════════
+.....................................................                    [100%]
+53 passed in 2.58s
+
+════════════════════════════════════════════════════════════════
+### patched_provider_113
+════════════════════════════════════════════════════════════════
+........................................................................ [ 63%]
+.........................................                                [100%]
+113 passed in 24.42s
+
+════════════════════════════════════════════════════════════════
+### patched_reference_152
+════════════════════════════════════════════════════════════════
+........................................................................ [ 47%]
+........................................................................ [ 94%]
+........                                                                 [100%]
+152 passed in 0.06s
+
+════════════════════════════════════════════════════════════════
+### E9 launcher suite — UNPATCHED dependency (full -v listing)
+════════════════════════════════════════════════════════════════
+============================= test session starts ==============================
+platform darwin -- Python 3.11.16, pytest-9.1.1, pluggy-1.6.0 -- /Users/chrisdukes/.claude-science/orgs/67ea5a9e-a68a-45f2-83cb-7d2bb3559bbb/workspaces/3028e4de-1ac6-4a2a-98cd-a7bea009f3ad/.venv/qbridge-e9/bin/python
+rootdir: /Users/chrisdukes/.claude-science/orgs/67ea5a9e-a68a-45f2-83cb-7d2bb3559bbb/workspaces/3028e4de-1ac6-4a2a-98cd-a7bea009f3ad/work/e9
+plugins: anyio-4.15.1
+collecting ... collected 92 items
+
+e9tests/test_fixtures_identity.py::test_committed_fixtures_verify_with_builder_and_source_hashes PASSED [  1%]
+e9tests/test_fixtures_identity.py::test_provider_prepare_reproduces_every_committed_byte PASSED [  2%]
+e9tests/test_fixtures_identity.py::test_f2_and_f3_are_byte_identical PASSED [  3%]
+e9tests/test_fixtures_identity.py::test_single_byte_edit_fails_the_hash_binding PASSED [  4%]
+e9tests/test_fixtures_identity.py::test_broken_f2_f3_repeat_is_rejected PASSED [  5%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[admission_limit-200000] PASSED [  6%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[max_output_tokens-4096] PASSED [  7%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[model-gpt-daybreak-blue-latest] PASSED [  8%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[reasoning_effort-high] PASSED [  9%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[max_count_attempts-24] PASSED [ 10%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[deadline_seconds-36000] PASSED [ 11%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[execution_authorized-True] PASSED [ 13%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[protocol_adopted-True] PASSED [ 14%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[count_fee_verified-True] PASSED [ 15%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[counted_input_tokens-100] PASSED [ 16%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[provider_generation_calls-1] PASSED [ 17%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[study_objective_candidate_evaluations-1] PASSED [ 18%]
+e9tests/test_fixtures_identity.py::test_effort_must_equal_the_manifest_fixed_value PASSED [ 19%]
+e9tests/test_gate.py::test_empty_evidence_fails_every_requirement_except_the_installed_sdk PASSED [ 20%]
+e9tests/test_gate.py::test_unresolved_requirements_are_failures_not_defaults PASSED [ 21%]
+e9tests/test_gate.py::test_a_synthetic_authority_fails_the_live_gate PASSED [ 22%]
+e9tests/test_gate.py::test_dry_run_mode_never_permits_a_live_dispatch PASSED [ 23%]
+e9tests/test_gate.py::test_expired_price_validity_fails PASSED           [ 25%]
+e9tests/test_gate.py::test_marker_words_in_the_count_fee_evidence_fail PASSED [ 26%]
+e9tests/test_gate.py::test_a_proposed_amendment_cannot_satisfy_adoption PASSED [ 27%]
+e9tests/test_gate.py::test_adoption_record_whose_protocol_hash_does_not_match_the_file_fails PASSED [ 28%]
+e9tests/test_gate.py::test_billing_evidence_hash_must_match_the_authority PASSED [ 29%]
+e9tests/test_gate.py::test_unknown_account_terms_fail PASSED             [ 30%]
+e9tests/test_gate.py::test_a_forged_authorization_amount_fails PASSED    [ 31%]
+e9tests/test_gate.py::test_an_unapproved_authorization_template_fails PASSED [ 32%]
+e9tests/test_gate.py::test_a_study_scope_authority_cannot_run_e9 PASSED  [ 33%]
+e9tests/test_gate.py::test_a_routing_alias_model_cannot_be_recorded PASSED [ 34%]
+e9tests/test_gate.py::test_an_unverified_count_fee_cannot_even_be_constructed PASSED [ 35%]
+e9tests/test_gate.py::test_credential_presence_is_recorded_without_the_value PASSED [ 36%]
+e9tests/test_gate.py::test_a_complete_consistent_non_synthetic_evidence_set_passes PASSED [ 38%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[adoption_evidence] PASSED [ 39%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[billing_evidence] PASSED [ 40%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[authorization_record] PASSED [ 41%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[records_dir] PASSED [ 42%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[env] PASSED [ 43%]
+e9tests/test_gate.py::test_authority_must_pin_the_installed_sdk_versions PASSED [ 44%]
+e9tests/test_orchestrator.py::test_nominal_run_uses_one_attempt_per_class_per_fixture PASSED [ 45%]
+e9tests/test_orchestrator.py::test_run_never_labels_records_with_a_study_arm PASSED [ 46%]
+e9tests/test_orchestrator.py::test_separate_e9_records_are_written_outside_git PASSED [ 47%]
+e9tests/test_orchestrator.py::test_count_failure_forfeits_only_that_fixture_and_sends_no_generation PASSED [ 48%]
+e9tests/test_orchestrator.py::test_admission_rejection_blocks_generation_and_is_only_a_finding PASSED [ 50%]
+e9tests/test_orchestrator.py::test_count_at_exactly_the_admission_limit_is_admitted PASSED [ 51%]
+e9tests/test_orchestrator.py::test_server_minimum_wait_is_honoured_in_full_never_shortened PASSED [ 52%]
+e9tests/test_orchestrator.py::test_malformed_retry_after_stops_the_class_without_retrying PASSED [ 53%]
+e9tests/test_orchestrator.py::test_retry_after_above_the_attempt_cap_is_not_retried PASSED [ 54%]
+e9tests/test_orchestrator.py::test_deadline_exhaustion_stops_the_run PASSED [ 55%]
+e9tests/test_orchestrator.py::test_retry_is_refused_when_wait_plus_margin_exceeds_the_deadline PASSED [ 56%]
+e9tests/test_orchestrator.py::test_twelve_count_attempts_are_the_total_allowance PASSED [ 57%]
+e9tests/test_orchestrator.py::test_attempt_cap_is_enforced_at_a_shorter_authority_cap PASSED [ 58%]
+e9tests/test_orchestrator.py::test_monetary_ceiling_halts_before_dispatch PASSED [ 59%]
+e9tests/test_orchestrator.py::test_cache_activity_fails_e9_and_stops_all_further_dispatch PASSED [ 60%]
+e9tests/test_orchestrator.py::test_count_usage_mismatch_fails_e9 PASSED  [ 61%]
+e9tests/test_orchestrator.py::test_unknown_mandatory_usage_cannot_become_zero PASSED [ 63%]
+e9tests/test_orchestrator.py::test_profile_mismatch_before_a_baseline_fails_e9 PASSED [ 64%]
+e9tests/test_orchestrator.py::test_identity_drift_between_f2_and_f3_fails_e9 PASSED [ 65%]
+e9tests/test_orchestrator.py::test_credential_status_halts_the_run PASSED [ 66%]
+e9tests/test_orchestrator.py::test_incomplete_status_is_preserved_but_does_not_pass_e9 PASSED [ 67%]
+e9tests/test_orchestrator.py::test_parse_result_is_logged_for_every_received_text PASSED [ 68%]
+e9tests/test_orchestrator.py::test_no_study_baseline_is_ever_seeded_by_the_launcher PASSED [ 69%]
+e9tests/test_orchestrator.py::test_f2_f3_timing_is_recorded_and_no_cache_window_is_claimed PASSED [ 70%]
+e9tests/test_reopen.py::test_rerunning_a_finished_journal_dispatches_nothing_new PASSED [ 71%]
+e9tests/test_reopen.py::test_an_unresolved_prior_attempt_is_never_replayed PASSED [ 72%]
+e9tests/test_reopen.py::test_the_journal_refuses_a_reused_reservation_number PASSED [ 73%]
+e9tests/test_reopen.py::test_a_second_writer_cannot_open_the_same_journal PASSED [ 75%]
+e9tests/test_reopen.py::test_real_process_dry_run_completes_and_reports PASSED [ 76%]
+e9tests/test_reopen.py::test_real_process_rerun_on_the_same_work_dir_adds_no_dispatch PASSED [ 77%]
+e9tests/test_reopen.py::test_real_child_crash_leaves_an_unresolved_reservation_that_blocks_replay PASSED [ 78%]
+e9tests/test_reopen.py::test_live_mode_is_refused_without_confirmation_and_without_a_key PASSED [ 79%]
+e9tests/test_reopen.py::test_gate_subcommand_exits_nonzero_and_prints_every_failure PASSED [ 80%]
+e9tests/test_spend_limit.py::test_documented_codes_are_exactly_the_orchestrator_set PASSED [ 81%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[organization_spend_limit_exceeded] PASSED [ 82%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[project_spend_limit_exceeded] PASSED [ 83%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[organization_usage_limit_exceeded] PASSED [ 84%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[credit_balance_exhausted] PASSED [ 85%]
+e9tests/test_spend_limit.py::test_insufficient_quota_type_without_a_known_code_still_halts PASSED [ 86%]
+e9tests/test_spend_limit.py::test_a_billing_429_on_the_generation_class_also_halts PASSED [ 88%]
+e9tests/test_spend_limit.py::test_genuine_throughput_429_is_still_retried PASSED [ 89%]
+e9tests/test_spend_limit.py::test_a_429_without_a_retained_body_is_treated_as_throughput PASSED [ 90%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[organization_spend_limit_exceeded] PASSED [ 91%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[project_spend_limit_exceeded] PASSED [ 92%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[organization_usage_limit_exceeded] PASSED [ 93%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[credit_balance_exhausted] PASSED [ 94%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[organization_spend_limit_exceeded] SKIPPED [ 95%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[project_spend_limit_exceeded] SKIPPED [ 96%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[organization_usage_limit_exceeded] SKIPPED [ 97%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[credit_balance_exhausted] SKIPPED [ 98%]
+e9tests/test_spend_limit.py::test_patched_contract_leaves_throughput_429s_retryable SKIPPED [100%]
+
+======================== 87 passed, 5 skipped in 7.35s =========================
+════════════════════════════════════════════════════════════════
+### E9 launcher suite — PATCHED dependency (full -v listing)
+════════════════════════════════════════════════════════════════
+============================= test session starts ==============================
+platform darwin -- Python 3.11.16, pytest-9.1.1, pluggy-1.6.0 -- /Users/chrisdukes/.claude-science/orgs/67ea5a9e-a68a-45f2-83cb-7d2bb3559bbb/workspaces/3028e4de-1ac6-4a2a-98cd-a7bea009f3ad/.venv/qbridge-e9/bin/python
+rootdir: /Users/chrisdukes/.claude-science/orgs/67ea5a9e-a68a-45f2-83cb-7d2bb3559bbb/workspaces/3028e4de-1ac6-4a2a-98cd-a7bea009f3ad/work/e9
+plugins: anyio-4.15.1
+collecting ... collected 92 items
+
+e9tests/test_fixtures_identity.py::test_committed_fixtures_verify_with_builder_and_source_hashes PASSED [  1%]
+e9tests/test_fixtures_identity.py::test_provider_prepare_reproduces_every_committed_byte PASSED [  2%]
+e9tests/test_fixtures_identity.py::test_f2_and_f3_are_byte_identical PASSED [  3%]
+e9tests/test_fixtures_identity.py::test_single_byte_edit_fails_the_hash_binding PASSED [  4%]
+e9tests/test_fixtures_identity.py::test_broken_f2_f3_repeat_is_rejected PASSED [  5%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[admission_limit-200000] PASSED [  6%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[max_output_tokens-4096] PASSED [  7%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[model-gpt-daybreak-blue-latest] PASSED [  8%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[reasoning_effort-high] PASSED [  9%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[max_count_attempts-24] PASSED [ 10%]
+e9tests/test_fixtures_identity.py::test_profile_or_allowance_drift_in_manifest_is_rejected[deadline_seconds-36000] PASSED [ 11%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[execution_authorized-True] PASSED [ 13%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[protocol_adopted-True] PASSED [ 14%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[count_fee_verified-True] PASSED [ 15%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[counted_input_tokens-100] PASSED [ 16%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[provider_generation_calls-1] PASSED [ 17%]
+e9tests/test_fixtures_identity.py::test_prospective_state_claims_cannot_be_flipped[study_objective_candidate_evaluations-1] PASSED [ 18%]
+e9tests/test_fixtures_identity.py::test_effort_must_equal_the_manifest_fixed_value PASSED [ 19%]
+e9tests/test_gate.py::test_empty_evidence_fails_every_requirement_except_the_installed_sdk PASSED [ 20%]
+e9tests/test_gate.py::test_unresolved_requirements_are_failures_not_defaults PASSED [ 21%]
+e9tests/test_gate.py::test_a_synthetic_authority_fails_the_live_gate PASSED [ 22%]
+e9tests/test_gate.py::test_dry_run_mode_never_permits_a_live_dispatch PASSED [ 23%]
+e9tests/test_gate.py::test_expired_price_validity_fails PASSED           [ 25%]
+e9tests/test_gate.py::test_marker_words_in_the_count_fee_evidence_fail PASSED [ 26%]
+e9tests/test_gate.py::test_a_proposed_amendment_cannot_satisfy_adoption PASSED [ 27%]
+e9tests/test_gate.py::test_adoption_record_whose_protocol_hash_does_not_match_the_file_fails PASSED [ 28%]
+e9tests/test_gate.py::test_billing_evidence_hash_must_match_the_authority PASSED [ 29%]
+e9tests/test_gate.py::test_unknown_account_terms_fail PASSED             [ 30%]
+e9tests/test_gate.py::test_a_forged_authorization_amount_fails PASSED    [ 31%]
+e9tests/test_gate.py::test_an_unapproved_authorization_template_fails PASSED [ 32%]
+e9tests/test_gate.py::test_a_study_scope_authority_cannot_run_e9 PASSED  [ 33%]
+e9tests/test_gate.py::test_a_routing_alias_model_cannot_be_recorded PASSED [ 34%]
+e9tests/test_gate.py::test_an_unverified_count_fee_cannot_even_be_constructed PASSED [ 35%]
+e9tests/test_gate.py::test_credential_presence_is_recorded_without_the_value PASSED [ 36%]
+e9tests/test_gate.py::test_a_complete_consistent_non_synthetic_evidence_set_passes PASSED [ 38%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[adoption_evidence] PASSED [ 39%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[billing_evidence] PASSED [ 40%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[authorization_record] PASSED [ 41%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[records_dir] PASSED [ 42%]
+e9tests/test_gate.py::test_removing_any_single_evidence_element_closes_the_gate[env] PASSED [ 43%]
+e9tests/test_gate.py::test_authority_must_pin_the_installed_sdk_versions PASSED [ 44%]
+e9tests/test_orchestrator.py::test_nominal_run_uses_one_attempt_per_class_per_fixture PASSED [ 45%]
+e9tests/test_orchestrator.py::test_run_never_labels_records_with_a_study_arm PASSED [ 46%]
+e9tests/test_orchestrator.py::test_separate_e9_records_are_written_outside_git PASSED [ 47%]
+e9tests/test_orchestrator.py::test_count_failure_forfeits_only_that_fixture_and_sends_no_generation PASSED [ 48%]
+e9tests/test_orchestrator.py::test_admission_rejection_blocks_generation_and_is_only_a_finding PASSED [ 50%]
+e9tests/test_orchestrator.py::test_count_at_exactly_the_admission_limit_is_admitted PASSED [ 51%]
+e9tests/test_orchestrator.py::test_server_minimum_wait_is_honoured_in_full_never_shortened PASSED [ 52%]
+e9tests/test_orchestrator.py::test_malformed_retry_after_stops_the_class_without_retrying PASSED [ 53%]
+e9tests/test_orchestrator.py::test_retry_after_above_the_attempt_cap_is_not_retried PASSED [ 54%]
+e9tests/test_orchestrator.py::test_deadline_exhaustion_stops_the_run PASSED [ 55%]
+e9tests/test_orchestrator.py::test_retry_is_refused_when_wait_plus_margin_exceeds_the_deadline PASSED [ 56%]
+e9tests/test_orchestrator.py::test_twelve_count_attempts_are_the_total_allowance PASSED [ 57%]
+e9tests/test_orchestrator.py::test_attempt_cap_is_enforced_at_a_shorter_authority_cap PASSED [ 58%]
+e9tests/test_orchestrator.py::test_monetary_ceiling_halts_before_dispatch PASSED [ 59%]
+e9tests/test_orchestrator.py::test_cache_activity_fails_e9_and_stops_all_further_dispatch PASSED [ 60%]
+e9tests/test_orchestrator.py::test_count_usage_mismatch_fails_e9 PASSED  [ 61%]
+e9tests/test_orchestrator.py::test_unknown_mandatory_usage_cannot_become_zero PASSED [ 63%]
+e9tests/test_orchestrator.py::test_profile_mismatch_before_a_baseline_fails_e9 PASSED [ 64%]
+e9tests/test_orchestrator.py::test_identity_drift_between_f2_and_f3_fails_e9 PASSED [ 65%]
+e9tests/test_orchestrator.py::test_credential_status_halts_the_run PASSED [ 66%]
+e9tests/test_orchestrator.py::test_incomplete_status_is_preserved_but_does_not_pass_e9 PASSED [ 67%]
+e9tests/test_orchestrator.py::test_parse_result_is_logged_for_every_received_text PASSED [ 68%]
+e9tests/test_orchestrator.py::test_no_study_baseline_is_ever_seeded_by_the_launcher PASSED [ 69%]
+e9tests/test_orchestrator.py::test_f2_f3_timing_is_recorded_and_no_cache_window_is_claimed PASSED [ 70%]
+e9tests/test_reopen.py::test_rerunning_a_finished_journal_dispatches_nothing_new PASSED [ 71%]
+e9tests/test_reopen.py::test_an_unresolved_prior_attempt_is_never_replayed PASSED [ 72%]
+e9tests/test_reopen.py::test_the_journal_refuses_a_reused_reservation_number PASSED [ 73%]
+e9tests/test_reopen.py::test_a_second_writer_cannot_open_the_same_journal PASSED [ 75%]
+e9tests/test_reopen.py::test_real_process_dry_run_completes_and_reports PASSED [ 76%]
+e9tests/test_reopen.py::test_real_process_rerun_on_the_same_work_dir_adds_no_dispatch PASSED [ 77%]
+e9tests/test_reopen.py::test_real_child_crash_leaves_an_unresolved_reservation_that_blocks_replay PASSED [ 78%]
+e9tests/test_reopen.py::test_live_mode_is_refused_without_confirmation_and_without_a_key PASSED [ 79%]
+e9tests/test_reopen.py::test_gate_subcommand_exits_nonzero_and_prints_every_failure PASSED [ 80%]
+e9tests/test_spend_limit.py::test_documented_codes_are_exactly_the_orchestrator_set PASSED [ 81%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[organization_spend_limit_exceeded] PASSED [ 82%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[project_spend_limit_exceeded] PASSED [ 83%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[organization_usage_limit_exceeded] PASSED [ 84%]
+e9tests/test_spend_limit.py::test_billing_429_is_not_retried_and_halts_the_run[credit_balance_exhausted] PASSED [ 85%]
+e9tests/test_spend_limit.py::test_insufficient_quota_type_without_a_known_code_still_halts PASSED [ 86%]
+e9tests/test_spend_limit.py::test_a_billing_429_on_the_generation_class_also_halts PASSED [ 88%]
+e9tests/test_spend_limit.py::test_genuine_throughput_429_is_still_retried PASSED [ 89%]
+e9tests/test_spend_limit.py::test_a_429_without_a_retained_body_is_treated_as_throughput PASSED [ 90%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[organization_spend_limit_exceeded] SKIPPED [ 91%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[project_spend_limit_exceeded] SKIPPED [ 92%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[organization_usage_limit_exceeded] SKIPPED [ 93%]
+e9tests/test_spend_limit.py::test_defect_unpatched_contract_calls_a_billing_429_retryable[credit_balance_exhausted] SKIPPED [ 94%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[organization_spend_limit_exceeded] PASSED [ 95%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[project_spend_limit_exceeded] PASSED [ 96%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[organization_usage_limit_exceeded] PASSED [ 97%]
+e9tests/test_spend_limit.py::test_patched_contract_classifies_a_billing_429_as_a_credential_halt[credit_balance_exhausted] PASSED [ 98%]
+e9tests/test_spend_limit.py::test_patched_contract_leaves_throughput_429s_retryable PASSED [100%]
+
+======================== 88 passed, 4 skipped in 7.54s =========================
+════════════════════════════════════════════════════════════════
+### ruff (repository rule set: E4,E7,E9,F @ line-length 100)
+════════════════════════════════════════════════════════════════
+All checks passed!

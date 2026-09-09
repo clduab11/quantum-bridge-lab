@@ -1,0 +1,8 @@
+........................................................................ [ 48%]
+...............s..................................................sssss. [ 96%]
+......                                                                   [100%]
+=========================== short test summary info ============================
+SKIPPED [1] e9tests/test_money.py:138: requires 0002 to be applied
+SKIPPED [4] e9tests/test_spend_limit.py:149: the minimal patch is not applied
+SKIPPED [1] e9tests/test_spend_limit.py:157: the minimal patch is not applied
+144 passed, 6 skipped in 13.27s

@@ -1,0 +1,86 @@
+{
+  "_what_this_is": "UNAPPROVED TEMPLATE, revision 2. Not an authorization, not evidence, and structurally incapable of dispatching a live request. Every field below is either false, zero or a placeholder. Fill it in ONLY after (a) Codex's review is closed, (b) amendment A1 is adopted, (c) the count-request charging question is resolved from account or contract evidence, (d) the account facts are recorded, and (e) a person with billing authority signs a numeric E9-only limit. Neither 25 nor 32 USD is approved.",
+  "_why_it_cannot_dispatch": [
+    "authority_record.synthetic is true, which the provider binds to httpx.MockTransport: provider._preflight refuses a synthetic authority against any real transport.",
+    "authority_record.usd_ceiling is '0', which fails AuthorityRecord construction, so this object cannot even become an AuthorityRecord.",
+    "authorization_record.approved is false and approved_at_utc is empty, so gate requirements authorization.explicit_e9 and authorization.bound_and_timed both fail.",
+    "authorization_record.authority_sha256 is a zero placeholder, so the approval is not bound to any authority record.",
+    "adoption_evidence.amendment_adopted is false, so adoption.record fails.",
+    "count_fee_verified is false, so authority.count_fee fails.",
+    "billing_evidence account terms are 'unknown', so billing.account_terms fails.",
+    "The launcher additionally requires --confirm-live, a present credential, and a --work-dir outside every Git worktree."
+  ],
+  "_revision_2_changes": [
+    "authorization_record now requires authority_sha256 binding the approval to one authority record, and expires_at_utc (review finding 6).",
+    "billing_evidence.account_terms now requires existing_month_to_date_spend_usd and concurrent_project_traffic, because a project hard limit is MONTHLY and applies to all traffic in the project (review finding 9).",
+    "The authority ceiling must additionally satisfy the gate's authority.conservative_ceiling requirement: it must cover every applicable billing category at the admission limit for every allowed attempt (review finding 5)."
+  ],
+  "authority_record": {
+    "scope": "e9",
+    "synthetic": true,
+    "authorized_by": "",
+    "recorded_at_utc": "0000-00-00T00:00:00Z",
+    "purpose": "TEMPLATE ONLY - not an authorization",
+    "profile_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "model": "gpt-5.6-sol",
+    "reasoning_effort": "medium",
+    "input_token_ceiling": 272000,
+    "max_output_tokens": 8192,
+    "count_attempt_cap": 12,
+    "generation_attempt_cap": 12,
+    "usd_ceiling": "0",
+    "billing_categories": [
+      "input",
+      "cached_input",
+      "cache_write",
+      "output"
+    ],
+    "rate_source": "PLACEHOLDER - a retained, hashed rate page is required",
+    "rate_source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "price_valid_through_utc": "0000-00-00T00:00:00Z",
+    "count_fee_ceiling_usd": "0",
+    "count_fee_evidence": "PLACEHOLDER - no count-request fee has been established",
+    "count_fee_evidence_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "count_fee_valid_through_utc": "0000-00-00T00:00:00Z",
+    "count_fee_covers_failed_and_rejected": false,
+    "count_fee_verified": false,
+    "sdk_version": "3.9.0",
+    "httpx_version": "0.28.1"
+  },
+  "authorization_record": {
+    "approved": false,
+    "status": "UNAPPROVED TEMPLATE",
+    "scope": "e9",
+    "approved_by": "",
+    "approved_at_utc": "",
+    "expires_at_utc": "",
+    "authority_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "e9_usd_limit": "0"
+  },
+  "adoption_evidence": {
+    "amendment_adopted": false,
+    "status": "PROPOSED",
+    "amendment_file": "amendment_A1_counted_responses_admission_PROPOSED_2026-09-08.md",
+    "adopted_at_utc": null,
+    "operative_protocol_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "billing_evidence": {
+    "model_rates": {
+      "retained_path": "",
+      "valid_through_utc": null
+    },
+    "count_request_charges": {
+      "retained_path": "",
+      "valid_through_utc": null,
+      "covers_failed_and_rejected": false
+    },
+    "account_terms": {
+      "billing_mode": "unknown",
+      "usage_tier": "unknown",
+      "monthly_usage_limit_usd": "unknown",
+      "taxes": "unknown",
+      "existing_month_to_date_spend_usd": "unknown",
+      "concurrent_project_traffic": "unknown"
+    }
+  }
+}

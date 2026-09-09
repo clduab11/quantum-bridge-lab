@@ -280,3 +280,45 @@ def test_real_worker_halt_is_observed_before_accepting_text(tmp_path):
         assert runner._logical(provider, request, 2, 1) is None
         assert sum(e["kind"] == "fabricated_count_dispatch" for e in log.read_events()) == 1
         assert runner.summary()["ivf"]
+
+
+@pytest.mark.parametrize(
+    "reason,ivf",
+    [("count_usage_mismatch", True), ("profile_incompatible", False)],
+)
+def test_accounting_result_cannot_override_a_stricter_durable_halt(tmp_path, reason, ivf):
+    from qbridge.runner import ProcessExecutor
+
+    with DurableJournal(tmp_path / "journal") as log:
+        runner, _ = make(log)
+        runner.executor = ProcessExecutor()
+
+        class ConflictingProvider(Provider):
+            def generate(self, pair, receipt, context, timeout):
+                # Earlier accounting evidence must not hide a later validity failure.
+                log.append("provider_halted", reason="accounting_halt", inferential_failure=False)
+                log.append("provider_halted", reason=reason, inferential_failure=ivf)
+                return AttemptResult(
+                    "received_completed",
+                    text="good",
+                    halt_reason="accounting_halt",
+                    accept_received_on_halt=True,
+                )
+
+        request = {"system": "fabricated", "user": "fabricated", "max_tokens": 8192}
+        assert runner._logical(ConflictingProvider(), request, 1, 1) is None
+        assert runner.summary()["ivf"] is ivf
+        assert runner._last_failure == reason
+
+
+def test_later_validity_halt_remains_visible_in_the_next_block(tmp_path):
+    with DurableJournal(tmp_path / "journal") as log:
+        runner, _ = make(log)
+        runner._halt("accounting_halt")
+        runner._halt("count_usage_mismatch", ivf=True)
+        next_runner, _ = make(log, block=1)
+        provider = Provider()
+        request = {"system": "fabricated", "user": "fabricated", "max_tokens": 8192}
+        assert next_runner._logical(provider, request, 1, 1) is None
+        assert next_runner.summary()["ivf"]
+        assert not provider.count_calls and not provider.generation_calls

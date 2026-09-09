@@ -539,3 +539,38 @@ def test_reported_fingerprint_change_sets_ivf_even_if_not_a_frozen_key(tmp_path)
         result = run_ai(instance, transport)
         assert result["valid_evaluations"] == 200
         assert result["ivf"] is True
+
+
+@pytest.mark.parametrize("method", ["call", "guard"])
+def test_abrupt_worker_exit_preserves_worker_crashed_classification(method):
+    import os
+
+    _, runner = modules()
+    with pytest.raises(runner.WorkerCrashed):
+        getattr(runner.ProcessExecutor(), method)(lambda: os._exit(1), timeout=2)
+
+
+def test_abrupt_worker_exit_still_cancels_nondetached_descendant(tmp_path):
+    import os
+
+    _, runner = modules()
+    marker = tmp_path / "crashed-worker-descendant"
+
+    def callback():
+        if os.fork() == 0:
+            time.sleep(0.25)
+            marker.write_text("must have been cancelled")
+            os._exit(0)
+        os._exit(1)
+
+    with pytest.raises(runner.WorkerCrashed):
+        runner.ProcessExecutor().call(callback, timeout=2)
+    time.sleep(0.35)
+    assert not marker.exists()
+
+
+@pytest.mark.parametrize("timeout", [float("nan"), float("inf"), -float("inf")])
+def test_process_executor_requires_finite_timeout(timeout):
+    _, runner = modules()
+    with pytest.raises(ValueError, match="finite"):
+        runner.ProcessExecutor().call(lambda: None, timeout=timeout)

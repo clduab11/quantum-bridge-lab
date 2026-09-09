@@ -1,0 +1,11 @@
+{
+  "worker_pid": 66222,
+  "exitcode": 1,
+  "sentinel_ready": false,
+  "descendant": {
+    "pid": 66223,
+    "group": 66222
+  },
+  "group_signal": "sent",
+  "late_write": false
+}

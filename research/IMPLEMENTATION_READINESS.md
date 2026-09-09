@@ -1,5 +1,9 @@
 # Offline implementation readiness — 2026-09-08
 
+**Current continuation:** See [counted-admission status](counted-admission/STATUS.md) and [integrated verification](counted-admission/VERIFICATION.md) for the Responses-provider candidate, corrected process cleanup, fixed E9 inputs and remaining execution requirements. Protocol v0.4 is still unchanged and unfrozen. The sections below preserve the earlier milestones and their gate evidence; their test counts and descriptions of missing components are historical.
+
+## Historical offline and provider-feasibility milestones
+
 Current phase: permitted offline implementation and analytic/synthetic preflight. This status supersedes the implementation-phase status in the historical governance-v2/design-review snapshot; its governance rules still apply. Protocol v0.4 is unchanged and not frozen. No study objective evaluation or experimental model call has occurred. Chris's 2026-09-08 instruction to continue the repo is recorded in docs/plans/2026-09-08-offline-preflight.md as authority for this work.
 
 **Provider-feasibility continuation:** Chris subsequently requested publication and continued work. PRs #1 and #2 are merged into main at `1c091f721b8ad49a79c29d6ae9f7eb628bc003f1`, including the plain-language README. [PR #3](https://github.com/clduab11/quantum-bridge-lab/pull/3) adds an offline conditional budget calculator and provider evidence. The combined suite now has **233 passing tests**, including 59 budget tests; Ruff lint/format and the offline lock check passed. See [current verification](provider/VERIFICATION.md), [provider evidence](PROVIDER_FEASIBILITY.md), [budget guide](BUDGET_PLANNING.md) and [conditional prompt byte bound](PROMPT_BYTE_BOUND.md). The original 174-test report below remains a historical milestone record. No complete readiness gate is closed by the calculator or byte bound.

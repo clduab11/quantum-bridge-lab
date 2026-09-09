@@ -1,0 +1,128 @@
+{
+  "admission_limit": 272000,
+  "builder_sha256": "f45043d9a63542c5dae85fa887d98881c3e353ea4a486744a0a7c27063fabb9f",
+  "count_fee_verified": false,
+  "counted_input_tokens": null,
+  "deadline_seconds": 7400,
+  "execution_authorized": false,
+  "fixture_order": [
+    "F1_short",
+    "F2_maximal_renderer",
+    "F3_repeat_of_F2",
+    "F4_correction_no_valid_vectors"
+  ],
+  "fixtures": [
+    {
+      "batch": 1,
+      "combined_text_bytes": 4609,
+      "files": {
+        "count": {
+          "bytes": 4854,
+          "path": "F1_short.count.json",
+          "sha256": "751142f6baa44caa83d26c691a8a5d9549aa689c571a998722859d332cb7b868"
+        },
+        "generation": {
+          "bytes": 4976,
+          "path": "F1_short.generation.json",
+          "sha256": "3c256227ecd71d1fa6c0612fcd9592f26092dd45df6f5c984c4f546cb0e62685"
+        }
+      },
+      "fixture": "F1_short",
+      "history_rows": 10,
+      "system_bytes": 1258,
+      "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+      "user_bytes": 3351,
+      "user_sha256": "da2c0216a17d25c5e71a12cf0966a333ea664d3869dc60b2f3a238ffff290097"
+    },
+    {
+      "batch": 19,
+      "combined_text_bytes": 103146,
+      "files": {
+        "count": {
+          "bytes": 103571,
+          "path": "F2_maximal_renderer.count.json",
+          "sha256": "d71cd4794d8c56317c9bc329ade5f490e7f9e5a8ca3ebac581e57da60e9611c4"
+        },
+        "generation": {
+          "bytes": 103693,
+          "path": "F2_maximal_renderer.generation.json",
+          "sha256": "4b2ca00dab4ac94f48c1b3c939c6a52817f9149d51e8b03b58d94adeff1cdf6d"
+        }
+      },
+      "fixture": "F2_maximal_renderer",
+      "history_rows": 190,
+      "system_bytes": 1258,
+      "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+      "user_bytes": 101888,
+      "user_sha256": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c"
+    },
+    {
+      "batch": 19,
+      "combined_text_bytes": 103146,
+      "files": {
+        "count": {
+          "bytes": 103571,
+          "path": "F3_repeat_of_F2.count.json",
+          "sha256": "d71cd4794d8c56317c9bc329ade5f490e7f9e5a8ca3ebac581e57da60e9611c4"
+        },
+        "generation": {
+          "bytes": 103693,
+          "path": "F3_repeat_of_F2.generation.json",
+          "sha256": "4b2ca00dab4ac94f48c1b3c939c6a52817f9149d51e8b03b58d94adeff1cdf6d"
+        }
+      },
+      "fixture": "F3_repeat_of_F2",
+      "history_rows": 190,
+      "system_bytes": 1258,
+      "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+      "user_bytes": 101888,
+      "user_sha256": "e06032d2e160c1ff31baad92d2da8da02698315216d6f838a3a746b9d4e0318c"
+    },
+    {
+      "batch": 19,
+      "combined_text_bytes": 103242,
+      "files": {
+        "count": {
+          "bytes": 103668,
+          "path": "F4_correction_no_valid_vectors.count.json",
+          "sha256": "e4b9269d707b6d9ef6904310ca77931b9b3c84880868ae4351e2ad1470f4fecf"
+        },
+        "generation": {
+          "bytes": 103790,
+          "path": "F4_correction_no_valid_vectors.generation.json",
+          "sha256": "cfe7b7e37ef9a8aea950d26f7eb2720bc613b01c52bb6c108ad91b530be5e450"
+        }
+      },
+      "fixture": "F4_correction_no_valid_vectors",
+      "history_rows": 190,
+      "system_bytes": 1258,
+      "system_sha256": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+      "user_bytes": 101984,
+      "user_sha256": "52c2d206cdd286a8ff8ceb230647beccc8ddccfc1780c0a31985e2523c01bf1a"
+    }
+  ],
+  "limitations": [
+    "Byte length is not a token count or universal context-fit proof.",
+    "No model compliance, cache behavior, identity or cost was measured.",
+    "F2/F3 repeat timing must be observed during a separately authorized E9.",
+    "The correction reason is fixed to no_valid_vectors before observations.",
+    "The monotonic deadline may expire before every allowed attempt fits."
+  ],
+  "max_count_attempts": 12,
+  "max_generation_attempts": 12,
+  "max_output_tokens": 8192,
+  "model": "gpt-5.6-sol",
+  "protocol_adopted": false,
+  "provider_count_calls": 0,
+  "provider_generation_calls": 0,
+  "reasoning_effort": "medium",
+  "source_sha256": {
+    "research/counted-admission/claude-science/counted_responses_reference.py": "9804ad049dcb9cc2e367e7734bced79b377945a00350b2af0b8c4cab2670d0f4",
+    "research/execution-preparation/claude-science/qbridge_ext/e9_fixtures.py": "16c89cc2cb8f86b7443e8648c9ed80457427b02e91e86c83d1533df18d4c06d5",
+    "src/qbridge/prompts/system_v0.3.txt": "5165cfc31f62b008e0cb7f88c24ea72b286da75f43cc5d6e4e3f36e7d6397f7e",
+    "src/qbridge/prompts/user_template_v0.3.txt": "80aa634b5511134e9a741614f60d341422f38143e05136da3f3f2e159bf44ba1",
+    "src/qbridge/proposals.py": "2129c2f167f7cee3289c7fc5129fe7f3b6565203e07bc8e37d89d26732cd2254"
+  },
+  "status": "prospective_offline_inputs_only",
+  "study_objective_candidate_evaluations": 0
+}

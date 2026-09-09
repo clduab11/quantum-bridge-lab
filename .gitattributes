@@ -1,2 +1,9 @@
 # Unified diffs use one space for empty context lines. Preserve this hashed artifact.
 research/counted-admission/claude-science/v0.4_to_v0.5_CANDIDATE_A1.diff whitespace=-blank-at-eol,-blank-at-eof
+research/counted-admission/provider-candidate/reference_to_contract.diff whitespace=-blank-at-eol,-blank-at-eof
+# Preserve hashed pytest failure output, including traceback padding.
+research/counted-admission/provider-candidate/logs/pytest_provider_suite_sandbox.log whitespace=-blank-at-eol
+research/counted-admission/provider-candidate/logs/pytest_reference_aliased_to_contract.log whitespace=-blank-at-eol
+research/counted-admission/regression-evidence/nonfinite-timeout-before-fix.log whitespace=-blank-at-eol
+research/counted-admission/regression-evidence/provider-before-core-fix.log whitespace=-blank-at-eol
+research/counted-admission/regression-evidence/worker-exit-before-fix.log whitespace=-blank-at-eol

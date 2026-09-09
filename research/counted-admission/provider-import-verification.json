@@ -1,0 +1,120 @@
+{
+  "verified_utc": "2026-09-09T01:03:20.927836+00:00",
+  "source_frame": "bbd403c9-9e28-4efd-8513-54cf83e57833",
+  "source_title": "Single-attempt Responses Provider Implementation",
+  "source_commit": "1129a6037a20e1935a34cc210e61431eb3b5f99b",
+  "source_manifest_sha256": "c528feab1f7cc5601fdd6f542ea036495334aa7683544757d3f662888478e174",
+  "declared_files_verified_and_copied": 23,
+  "immutable_source_inputs_verified": 14,
+  "python_changes_since_independent_snapshot": {
+    "docstring_only": [
+      "counted_responses_provider/contract.py",
+      "tests/test_fork_and_crash.py"
+    ],
+    "review": "Direct unified-diff inspection; no executable logic or assertions changed."
+  },
+  "copied_files": {
+    "COMPATIBILITY_AND_LIMITATIONS.md": {
+      "bytes": 21588,
+      "sha256": "c8e485b166c95e7c91e6a96063014a2bdb6a0d486a3f397eeb9ce59c6b0e698a"
+    },
+    "README.md": {
+      "bytes": 2047,
+      "sha256": "77f126ed8d926656e090851b415453eb42b815ab536406e4e3d09807dc181b2a"
+    },
+    "counted_responses_provider/__init__.py": {
+      "bytes": 743,
+      "sha256": "53c61b154a48cf98b4f145f6a3c42383f2b4ee15b0a00e7758ea042a4f3066d0"
+    },
+    "counted_responses_provider/authority.py": {
+      "bytes": 9587,
+      "sha256": "86015546c9a93926349f66414e23015e5e69446b7941d478bb152af4d7b75e9a"
+    },
+    "counted_responses_provider/contract.py": {
+      "bytes": 41098,
+      "sha256": "e9695a55099f89d42ae73780303fd87ac9596a415c57951c72bccc8785fb2cc8"
+    },
+    "counted_responses_provider/ledger.py": {
+      "bytes": 10123,
+      "sha256": "a710f6ab6582e676f94343caee0317c7f15633480f0fc055ecaf7d0b770dc760"
+    },
+    "counted_responses_provider/provider.py": {
+      "bytes": 50606,
+      "sha256": "057af7f4baf6ae7ad6eab6ca2a2d271905b8446ed83f28fbb0b81b5830f30022"
+    },
+    "counted_responses_provider/transport.py": {
+      "bytes": 7876,
+      "sha256": "ca6cab9408dd117ca662ecfc83f5d21bacf7b71f233720b01de097ed4272cefd"
+    },
+    "logs/alias_shim_counted_responses_reference.py": {
+      "bytes": 330,
+      "sha256": "e75f8bcc8c91d077f8bf334316043ba98fb0d04c8ddca5973c32d5ed36fbc06d"
+    },
+    "logs/environment_versions.txt": {
+      "bytes": 34,
+      "sha256": "bc9f82734b687cd16d5fb081bd4cb95b16f5953abd68b36a9a0cef4e9ee894a8"
+    },
+    "logs/pytest_provider_suite_sandbox.log": {
+      "bytes": 3863,
+      "sha256": "7b6d5c68e65a1335ec81866dd25e5917a6da104864ace61bf8afc81698cdd1e9"
+    },
+    "logs/pytest_reference_aliased_to_contract.log": {
+      "bytes": 1576,
+      "sha256": "26830759b2c05941826a4d4efa5b05015253c9b93e647f3ef203fbd73c0edcac"
+    },
+    "logs/pytest_reference_preserved_152.log": {
+      "bytes": 260,
+      "sha256": "a744e111d36e7bd60b1b8bc7aa2b39fece28da63025f6e0e04aa41b1d3c26ade"
+    },
+    "logs/pytest_repo_core_sandbox.log": {
+      "bytes": 861,
+      "sha256": "73b06fd25109cc9c144cebf0ec62e98c3b580726cb46f6749de9ec917b198ebe"
+    },
+    "logs/ruff_check.log": {
+      "bytes": 19,
+      "sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    "logs/ruff_format_check.log": {
+      "bytes": 26,
+      "sha256": "2ce9758b9f8abd876ec3e76c589e099e8b05377b1e7ea2331e81ee80f07bdff8"
+    },
+    "reference_preserved/counted_responses_reference.py": {
+      "bytes": 37281,
+      "sha256": "9804ad049dcb9cc2e367e7734bced79b377945a00350b2af0b8c4cab2670d0f4"
+    },
+    "reference_preserved/test_counted_responses_reference.py": {
+      "bytes": 38238,
+      "sha256": "f3a3d3901e2910fa95b82f9272e4c2b01b7f1973c2acb074491066b21b8eb4e3"
+    },
+    "reference_to_contract.diff": {
+      "bytes": 20699,
+      "sha256": "37eb7146604e431a7db24b38ca1dd281f27b59b7bd8ad0810a07d7025311530a"
+    },
+    "tests/support.py": {
+      "bytes": 6774,
+      "sha256": "e5435b7d18b5f1ef573d3598f7715ee97bf54b5a299d21a75c4ff917b172c853"
+    },
+    "tests/test_contract_fixes_and_authority.py": {
+      "bytes": 16031,
+      "sha256": "a8ea50d0ad7b4faa0b0d81b494251c05c117bcb74839897d5061fbac07055925"
+    },
+    "tests/test_fork_and_crash.py": {
+      "bytes": 9079,
+      "sha256": "b04f66ec244320af547cc08bf513c3a78345dde5b23f42e8a75928426ae4dc3a"
+    },
+    "tests/test_provider.py": {
+      "bytes": 38941,
+      "sha256": "7f0069a9590ee1777804a09c31afa87af14fcf4ca8179a98b0dc93e8006898f2"
+    },
+    "HASH_MANIFEST.json": {
+      "bytes": 6422,
+      "sha256": "c528feab1f7cc5601fdd6f542ea036495334aa7683544757d3f662888478e174"
+    }
+  },
+  "author_bytes_preserved": true,
+  "historical_logs": "Author logs retain the original strict worker-crash failure and two tuple/list compatibility assertions. Final integrated validation is recorded separately.",
+  "experimental_requests": 0,
+  "study_objective_evaluations": 0,
+  "protocol_adopted": false,
+  "manifest_frozen": false
+}

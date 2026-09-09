@@ -1,5 +1,9 @@
 # Execution preparation: reviewed, live work still gated
 
+**Current continuation:** The later [counted-admission status](../counted-admission/STATUS.md) and [integrated verification](../counted-admission/VERIFICATION.md) cover the reviewed Responses-provider candidate, core corrections and fixed prospective E9 inputs. The 286-test Chat-candidate milestone below is preserved as history, including its unresolved contract conclusions. No live preflight, amendment adoption or freeze has occurred.
+
+## Historical Chat-candidate milestone
+
 Codex and Claude Science completed a candidate provider adapter, schedule/accounting component, fixed synthetic preflight inputs, conditional budgets, and a gate-by-gate record. Codex reproduced **286 passing tests** (233 core + 53 candidate) in a fresh Python 3.11.15 environment from a separate lockfile. Ruff passed. A dependency audit found no known vulnerabilities among the checked packages; the local project is not published on PyPI and was not assessed by that database. See [verification](verification/verification.json).
 
 The user authorized continued work through the three-step sequence. This phase performed the available engineering and research work; it did **not** complete the live preflight, freeze or study. An actual OpenAI credential, a technically supportable billing/admission contract, a numerical spending decision and the complete execution assembly are still absent. No API generation, token-count request or experimental objective evaluation occurred. The protocol and its 27 previously verified source files are unchanged.

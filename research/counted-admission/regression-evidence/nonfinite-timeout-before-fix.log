@@ -1,0 +1,56 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_process_executor_requires_finite_timeout[nan] ______________
+
+timeout = nan
+
+    @pytest.mark.parametrize("timeout", [float("nan"), float("inf"), -float("inf")])
+    def test_process_executor_requires_finite_timeout(timeout):
+        _, runner = modules()
+>       with pytest.raises(ValueError, match="finite"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_runner.py:575: Failed
+______________ test_process_executor_requires_finite_timeout[inf] ______________
+
+timeout = inf
+
+    @pytest.mark.parametrize("timeout", [float("nan"), float("inf"), -float("inf")])
+    def test_process_executor_requires_finite_timeout(timeout):
+        _, runner = modules()
+>       with pytest.raises(ValueError, match="finite"):
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_runner.py:575: Failed
+_____________ test_process_executor_requires_finite_timeout[-inf] ______________
+
+timeout = -inf
+
+    @pytest.mark.parametrize("timeout", [float("nan"), float("inf"), -float("inf")])
+    def test_process_executor_requires_finite_timeout(timeout):
+        _, runner = modules()
+        with pytest.raises(ValueError, match="finite"):
+>           runner.ProcessExecutor().call(lambda: None, timeout=timeout)
+
+tests/test_runner.py:576: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/qbridge/runner.py:110: in call
+    return self._run(work, timeout=timeout, guard=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <qbridge.runner.ProcessExecutor object at 0x106d48a10>
+work = <function test_process_executor_requires_finite_timeout.<locals>.<lambda> at 0x106ed0f40>
+timeout = -inf, guard = False
+
+    def _run(self, work, *, timeout, guard):
+        if timeout <= 0:
+>           raise TimeoutError("deadline expired")
+E           TimeoutError: deadline expired
+
+src/qbridge/runner.py:117: TimeoutError
+=========================== short test summary info ============================
+FAILED tests/test_runner.py::test_process_executor_requires_finite_timeout[nan]
+FAILED tests/test_runner.py::test_process_executor_requires_finite_timeout[inf]
+FAILED tests/test_runner.py::test_process_executor_requires_finite_timeout[-inf]
+3 failed, 31 deselected in 0.14s

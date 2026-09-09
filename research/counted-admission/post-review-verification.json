@@ -1,0 +1,33 @@
+{
+  "command": "PYTHONPATH=src:research/execution-preparation/claude-science:research/counted-admission/claude-science python -m pytest -q tests research/execution-preparation/claude-science/qbridge_ext/tests research/counted-admission/claude-science/test_counted_responses_reference.py",
+  "core_tests": 283,
+  "counted_reference_tests": 152,
+  "earlier_chat_candidate_tests": 53,
+  "elapsed_seconds": 140.97,
+  "freeze_performed": false,
+  "log_sha256": "52624d724201d385f1755c14221c70fc8ae7784a9ca47e9aed9a1d95dd71ef79",
+  "protocol_adopted": false,
+  "provider_count_calls": 0,
+  "provider_generation_calls": 0,
+  "python_version": "3.11.15",
+  "regression_evidence": {
+    "after_fix": "18 counted-runner tests passed, including three added regressions.",
+    "before_fix": "Two real-worker cases failed: the runner returned good text despite saved IVF or compatibility halt."
+  },
+  "review_change": "Stricter durable halts override a returned accounting-only exception; subsequent validity failures remain visible across blocks.",
+  "scope_limit": "Does not include the new single-attempt Responses provider currently being implemented in Claude Science.",
+  "source_sha256": {
+    "research/execution-preparation/claude-science/uv.lock": "c952932a0052c9deda40709665995155ea5054dc9a98286804f3d32d9ed01bcc",
+    "specification/ai_quantum_control_protocol_v0.4.md": "0df9242fd2d0ad5d30b75ea91f498842ac68fe0df9616afd4c9c04518233eda5",
+    "src/qbridge/counted_runner.py": "6d9cb22d4131a0b9f6ed2d8ee3171aa8e197d58774a3633f394c2fee3c3e5b75",
+    "src/qbridge/journal.py": "4381e014a53bb3c3a7e432c1e84626560621dcfbba33ee32f8417d062f0338e4",
+    "src/qbridge/request_records.py": "ce1b7fb4bbbbfe7d1511408c59f24b87ffc999eeed88cfbd649e613456b36f9f",
+    "tests/test_counted_runner.py": "80ac8c53221d3ba40e551453be919413fa642d79abe22cde87856c54caf2cb25"
+  },
+  "status": "passed_offline_only",
+  "study_objective_candidate_evaluations": 0,
+  "test_count": 488,
+  "warnings": [
+    "Optional CMA plotting unavailable; matplotlib is not required."
+  ]
+}

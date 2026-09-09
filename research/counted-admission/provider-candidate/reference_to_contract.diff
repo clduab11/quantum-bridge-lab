@@ -1,0 +1,449 @@
+--- reference_preserved/counted_responses_reference.py	2026-09-08 19:16:51
++++ counted_responses_provider/contract.py	2026-09-08 19:44:12
+@@ -1,18 +1,14 @@
+-"""Reference (non-integrated) functions for the PROPOSED counted-Responses
+-admission contract, revision 2 (after Codex technical review, 2026-09-08).
++"""OPERATIONAL COPY (2026-09-09) of counted_responses_reference.py rev 4
++(SHA-256 9804ad04...) for the single-attempt Responses provider.
+ 
+-Status: draft for review; never sent a request; not part of qbridge or
+-qbridge_ext; does not select a provider, close a gate, authorize spending,
+-freeze anything, or claim integration with the existing components.
+-
+-Documentation basis (retrieved 2026-09-08, hashes in
+-documentation_sources_2026-09-08.json): POST /v1/responses/input_tokens
+-"accepts the same input format as the Responses API" and "returns the exact
+-count the model will receive"; its response carries only `object` and
+-`input_tokens` (SDK 3.9.0 InputTokenCountResponse) - no model field.
+-openai-python 3.9.0 InputTokenCountParams keys = {conversation, input,
+-instructions, model, parallel_tool_calls, personality, previous_response_id,
+-reasoning, text, tool_choice, tools, truncation}.
++The preserved reference and its 152 tests are unchanged in
++reference_preserved/. This copy applies the defect fixes F1-F8 listed in
++COMPATIBILITY_AND_LIMITATIONS.md; every other line is identical to the reference
++apart from those hunks (see reference_to_contract.diff). F7 changes the identity
++tag representation from tuples to JSON-stable lists, which is the only
++interface difference visible to the reference tests (2 of 152).
++Status: offline; never sent a request; selects no provider, closes no gate,
++authorizes no spending and freezes nothing.
+ """
+ 
+ from __future__ import annotations
+@@ -21,8 +17,9 @@
+ import hashlib
+ import json
+ import math
++import re
+ from datetime import datetime, timezone
+-from decimal import Decimal, InvalidOperation, localcontext
++from decimal import Decimal
+ from email.utils import parsedate_to_datetime
+ from fractions import Fraction
+ 
+@@ -37,9 +34,7 @@
+ SUPPORTED_EFFORTS = ("none", "low", "medium", "high", "xhigh", "max")
+ ATTEMPT_TIMEOUT_S = 300
+ FIXED_BACKOFF_S = {1: 5, 2: 20}  # after attempt 1, after attempt 2
+-DISPATCH_MARGIN_S = (
+-    1  # fixed by the amendment (§7.2): wait + 1 s must fit the remaining deadline
+-)
++DISPATCH_MARGIN_S = 1  # fixed by the amendment (§7.2): wait + 1 s must fit the remaining deadline
+ 
+ COUNT_SCHEMA_KEYS = frozenset(
+     {
+@@ -77,8 +72,9 @@
+ 
+ 
+ def canonical_bytes(body) -> bytes:
++    # F1: allow_nan=False -> a NaN/Infinity float can never become "canonical" text.
+     return json.dumps(
+-        body, sort_keys=True, separators=(",", ":"), ensure_ascii=True
++        body, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False
+     ).encode("ascii")
+ 
+ 
+@@ -95,28 +91,36 @@
+     return d
+ 
+ 
++def _reject_constant(name):
++    raise ValueError(f"non-finite JSON constant: {name}")
++
++
+ def parse_json_strict(raw: bytes):
+     """Parse provider bytes; duplicate keys at any depth are an anomaly, never accepted.
++    F2: the non-standard literals NaN/Infinity/-Infinity are rejected as well.
+     Returns (obj, None) or (None, reason)."""
+     try:
+         return json.loads(
+-            raw.decode("utf-8"), object_pairs_hook=_no_duplicate_keys
++            raw.decode("utf-8"),
++            object_pairs_hook=_no_duplicate_keys,
++            parse_constant=_reject_constant,
+         ), None
+-    except (UnicodeDecodeError, ValueError) as e:
++    except (UnicodeDecodeError, ValueError, RecursionError) as e:
+         return None, f"malformed_json:{type(e).__name__}"
+ 
+ 
+ # ----------------------------------------------------------- request bodies
+-def build_generation_body(
+-    system_text: str, user_text: str, *, reasoning_effort: str
+-) -> dict:
++def build_generation_body(system_text: str, user_text: str, *, reasoning_effort: str) -> dict:
+     """Literal translation of the runner request into the PROPOSED Responses body."""
+     if reasoning_effort not in SUPPORTED_EFFORTS:
+         raise ContractViolation("reasoning effort must be one documented Sol value")
+     for name, text in (("system", system_text), ("user", user_text)):
+         if not isinstance(text, str) or not text:
+             raise ContractViolation(f"{name} text must be a nonempty str")
+-        text.encode("ascii")
++        try:
++            text.encode("ascii")
++        except UnicodeEncodeError as e:  # F3: uniform violation type
++            raise ContractViolation(f"{name} text must be ASCII") from e
+     return {
+         "model": MODEL,
+         "input": [
+@@ -140,9 +144,7 @@
+         raise ContractViolation("generation body must be a dict")
+     expected_keys = COUNT_PROJECTION_KEYS | GENERATION_ONLY_ALLOWED
+     if set(g) != expected_keys:
+-        raise ContractViolation(
+-            f"generation body keys must be exactly {sorted(expected_keys)}"
+-        )
++        raise ContractViolation(f"generation body keys must be exactly {sorted(expected_keys)}")
+     if reasoning_effort not in SUPPORTED_EFFORTS:
+         raise ContractViolation("reasoning effort must be one documented Sol value")
+     if g["model"] != MODEL:
+@@ -170,10 +172,7 @@
+         raise ContractViolation("text must be exactly {'verbosity': 'medium'}")
+     if g["truncation"] != "disabled":
+         raise ContractViolation("truncation must be 'disabled'")
+-    if not (
+-        _strict_int(g["max_output_tokens"])
+-        and g["max_output_tokens"] == MAX_OUTPUT_TOKENS
+-    ):
++    if not (_strict_int(g["max_output_tokens"]) and g["max_output_tokens"] == MAX_OUTPUT_TOKENS):
+         raise ContractViolation("max_output_tokens must be the int 8192")
+     if not (_strict_bool(g["store"]) and g["store"] is False):
+         raise ContractViolation("store must be the bool False")
+@@ -182,9 +181,7 @@
+     if g["service_tier"] != "default":
+         raise ContractViolation("service_tier must be 'default'")
+     if g["prompt_cache_options"] != {"mode": "explicit"}:
+-        raise ContractViolation(
+-            "prompt_cache_options must be exactly {'mode': 'explicit'}"
+-        )
++        raise ContractViolation("prompt_cache_options must be exactly {'mode': 'explicit'}")
+ 
+ 
+ def project_count_body(g: dict, *, reasoning_effort: str) -> dict:
+@@ -193,9 +190,7 @@
+     validate_generation_body(g, reasoning_effort=reasoning_effort)
+     c = {k: copy.deepcopy(g[k]) for k in sorted(g) if k in COUNT_SCHEMA_KEYS}
+     if set(c) != COUNT_PROJECTION_KEYS:
+-        raise ContractViolation(
+-            "count projection must be exactly the five input-affecting keys"
+-        )
++        raise ContractViolation("count projection must be exactly the five input-affecting keys")
+     return c
+ 
+ 
+@@ -217,14 +212,10 @@
+     """Count-to-send identity with full value validation (not key presence only)."""
+     validate_generation_body(g, reasoning_effort=reasoning_effort)
+     if not isinstance(c, dict) or set(c) != COUNT_PROJECTION_KEYS:
+-        raise ContractViolation(
+-            "count body keys must be exactly the five input-affecting keys"
+-        )
++        raise ContractViolation("count body keys must be exactly the five input-affecting keys")
+     expected = project_count_body(g, reasoning_effort=reasoning_effort)
+     if canonical_bytes(c) != canonical_bytes(expected):
+-        raise ContractViolation(
+-            "count body is not the exact projection of the generation body"
+-        )
++        raise ContractViolation("count body is not the exact projection of the generation body")
+ 
+ 
+ def verify_sent_bytes(sent: bytes, bound: bytes, url: str, expected_url: str) -> None:
+@@ -241,12 +232,8 @@
+     if not _strict_int(counted_input_tokens) or counted_input_tokens < 0:
+         raise ContractViolation("counted input_tokens must be a non-negative int")
+     if not _strict_int(admission_limit) or admission_limit <= 0:
+-        raise ContractViolation(
+-            "admission limit must be a positive int fixed before exposure"
+-        )
+-    return (
+-        "admitted" if counted_input_tokens <= admission_limit else "admission_rejected"
+-    )
++        raise ContractViolation("admission limit must be a positive int fixed before exposure")
++    return "admitted" if counted_input_tokens <= admission_limit else "admission_rejected"
+ 
+ 
+ def validate_count_payload(payload) -> tuple[int | None, list[str]]:
+@@ -306,9 +293,7 @@
+         return "count_terminal", False
+     if b == "ok":
+         it, _findings = validate_count_payload(payload)
+-        return (
+-            ("count_ok", False) if it is not None else ("count_contract_anomaly", False)
+-        )
++        return ("count_ok", False) if it is not None else ("count_contract_anomaly", False)
+     return "count_contract_anomaly", False
+ 
+ 
+@@ -351,7 +336,9 @@
+     if value is None:
+         return None, None
+     s = str(value).strip()
+-    if s.isdigit():
++    # F4: str.isdigit() accepts non-ASCII digits and unbounded lengths; the HTTP
++    # grammar is ASCII delta-seconds. Bound the length so the value stays finite.
++    if re.fullmatch(r"[0-9]{1,15}", s):
+         return int(s), None
+     try:
+         when = parsedate_to_datetime(s)
+@@ -372,7 +359,9 @@
+     delta = (when - ref).total_seconds()
+     if delta < 0:
+         return 0, "retry_after_date_in_past"
+-    return int(delta + 0.999999), None
++    if delta > 10**15:  # F4: keep the wait finite/bounded
++        return None, "retry_after_malformed"
++    return math.ceil(delta), None
+ 
+ 
+ def retry_decision(
+@@ -390,9 +379,7 @@
+     Bool/non-int attempt numbers and non-int waits are contract violations."""
+     if not _strict_int(attempt_no) or attempt_no < 1:
+         raise ContractViolation("attempt_no must be a positive int (not bool)")
+-    if retry_after_s is not None and (
+-        not _strict_int(retry_after_s) or retry_after_s < 0
+-    ):
++    if retry_after_s is not None and (not _strict_int(retry_after_s) or retry_after_s < 0):
+         raise ContractViolation("retry_after_s must be None or a non-negative int")
+     if attempt_no not in FIXED_BACKOFF_S:
+         return False, None, "attempts_exhausted"
+@@ -438,9 +425,7 @@
+ OPTIONAL_FREE = ("temperature", "top_p")
+ # Whole frozen objects compared canonically so that new nested fields cannot escape drift checks.
+ FROZEN_OBJECTS = ("reasoning", "text", "prompt_cache_options")
+-IDENTITY_KEYS = (
+-    tuple(REQUIRED_ECHO) + tuple(OPTIONAL_SAFE) + OPTIONAL_FREE + FROZEN_OBJECTS
+-)
++IDENTITY_KEYS = tuple(REQUIRED_ECHO) + tuple(OPTIONAL_SAFE) + OPTIONAL_FREE + FROZEN_OBJECTS
+ 
+ _ABSENT = object()
+ 
+@@ -455,12 +440,42 @@
+ 
+ 
+ def _tag(v):
+-    """Presence-tagged canonical value: ('absent',) or ('present', canonical-json-string)."""
++    """Presence-tagged canonical value as a JSON-stable LIST: ["absent"] or
++    ["present", canonical-json-string]. F7: the reference used tuples, which a
++    journal JSON round trip turns into lists, so every stored baseline compared
++    unequal to a fresh vector. Lists survive json.dumps/json.loads unchanged."""
+     if v is _ABSENT:
+-        return ("absent",)
+-    return ("present", canonical_bytes(v).decode("ascii"))
++        return ["absent"]
++    return ["present", canonical_bytes(v).decode("ascii")]
++
++
++def normalize_tag(tag):
++    """Accept list or tuple tags (either representation) and return the list form,
++    or raise ContractViolation for anything that is not a presence tag."""
++    if isinstance(tag, tuple):
++        tag = list(tag)
++    if (
++        not isinstance(tag, list)
++        or not tag
++        or tag[0] not in ("absent", "present")
++        or (tag[0] == "absent" and len(tag) != 1)
++        or (tag[0] == "present" and (len(tag) != 2 or not isinstance(tag[1], str)))
++    ):
++        raise ContractViolation("identity tag must be ['absent'] or ['present', canonical-json]")
++    if tag[0] == "present":
++        parsed, error = parse_json_strict(tag[1].encode("ascii", "strict"))
++        if error is not None or canonical_bytes(parsed).decode("ascii") != tag[1]:
++            raise ContractViolation("present tag value is not canonical JSON")
++    return tag
+ 
+ 
++def validate_identity_vector(vector) -> dict:
++    """A complete vector over exactly IDENTITY_KEYS with normalized tags."""
++    if not isinstance(vector, dict) or set(vector) != set(IDENTITY_KEYS):
++        raise ContractViolation("identity vector must cover exactly the identity keys")
++    return {k: normalize_tag(vector[k]) for k in IDENTITY_KEYS}
++
++
+ def identity_vector(payload: dict) -> dict:
+     """Presence-tagged canonical identity vector over top-level fields and whole frozen
+     objects. Not a validation; see validate_expected_profile."""
+@@ -508,18 +523,26 @@
+ 
+ def compare_identity(vector: dict, baseline: dict) -> list[str]:
+     """Step 2 (study): any change, appearance or disappearance vs the validated baseline,
+-    over every identity key (a key missing from either side is itself a change)."""
++    over every identity key (a key missing from either side is itself a change).
++    F7: both sides are normalized to the list representation first, so a baseline
++    read back from JSON compares equal to a fresh vector of the same response."""
++
++    def norm(side):
++        return {
++            k: (normalize_tag(v) if isinstance(v, (list, tuple)) else v) for k, v in side.items()
++        }
++
++    vector, baseline = norm(vector), norm(baseline)
+     keys = set(vector) | set(baseline)
+-    return sorted(
+-        f"identity_change:{k}" for k in keys if vector.get(k) != baseline.get(k)
+-    )
++    return sorted(f"identity_change:{k}" for k in keys if vector.get(k) != baseline.get(k))
+ 
+ 
+ # ------------------------------------------------------------------ money
+ RATE_NAMES = ("input", "cached_input", "cache_write", "output")
+-MAX_RATE_USD_PER_TOKEN = Fraction(
+-    1, 1
+-)  # bounded grammar: no rate may reach 1 USD per token
++# F5: plain decimal, at most 20 integer and 20 fractional digits, no sign/exponent.
++MONEY_STRING_GRAMMAR = r"[0-9]{1,20}(\.[0-9]{1,20})?"
++MAX_MONEY_DIGITS = 40  # F8: coefficient digits / exponent bound for Decimal inputs
++MAX_RATE_USD_PER_TOKEN = Fraction(1, 1)  # bounded grammar: no rate may reach 1 USD per token
+ POLICIES = frozenset({"e9", "study"})
+ 
+ 
+@@ -527,28 +550,40 @@
+     """Exact conversion independent of ambient Decimal context. Accepts Fraction, int
+     (not bool), Decimal, or a decimal string; rejects floats, NaN, infinities."""
+     if isinstance(v, (bool, float)):
+-        raise ContractViolation(
+-            f"{name}: floats and bools are not an exact money grammar"
+-        )
++        raise ContractViolation(f"{name}: floats and bools are not an exact money grammar")
+     if isinstance(v, Fraction):
++        if v.denominator > 10**40 or abs(v.numerator) > 10**60:  # F5
++            raise ContractViolation(f"{name}: Fraction outside the bounded grammar")
+         return v
+     if isinstance(v, int):
++        if abs(v) > 10**20:  # F5
++            raise ContractViolation(f"{name}: integer outside the bounded grammar")
+         return Fraction(v)
+     if isinstance(v, Decimal):
+         if not v.is_finite():
+             raise ContractViolation(f"{name}: non-finite Decimal")
+-        return Fraction(v)
++        # F8: bound the COEFFICIENT length and the RAW exponent (adjusted() alone lets
++        # Decimal("1." + "0"*100 + "1") through with a 10**101 denominator), then convert
++        # with integer arithmetic only - no Decimal context is consulted.
++        sign, digits, exponent = v.as_tuple()
++        if len(digits) > MAX_MONEY_DIGITS or not -MAX_MONEY_DIGITS <= exponent <= MAX_MONEY_DIGITS:
++            raise ContractViolation(f"{name}: Decimal outside the bounded grammar")
++        coefficient = int("".join(map(str, digits)) or "0")
++        value = (
++            Fraction(coefficient * 10**exponent)
++            if exponent >= 0
++            else Fraction(coefficient, 10 ** (-exponent))
++        )
++        return -value if sign else value
+     if isinstance(v, str):
+-        try:
+-            with localcontext() as ctx:
+-                ctx.prec = 60
+-                ctx.traps[InvalidOperation] = True
+-                d = Decimal(v.strip())
+-        except (InvalidOperation, ValueError) as e:
+-            raise ContractViolation(f"{name}: not a decimal string") from e
+-        if not d.is_finite():
+-            raise ContractViolation(f"{name}: non-finite value")
+-        return Fraction(d)
++        # F5: bounded finite grammar. Exponents, signs, NaN/Infinity and long digit
++        # strings are refused BEFORE Decimal/Fraction conversion (Decimal('1e999999999')
++        # is finite but Fraction() of it must materialize 10**999999999).
++        if not re.fullmatch(MONEY_STRING_GRAMMAR, v):
++            raise ContractViolation(f"{name}: not a bounded plain decimal string")
++        # F8: integer arithmetic only; the ambient Decimal context is never consulted.
++        whole, _, fractional = v.partition(".")
++        return Fraction(int(whole + fractional), 10 ** len(fractional))
+     raise ContractViolation(f"{name}: unsupported money type {type(v).__name__}")
+ 
+ 
+@@ -586,14 +621,22 @@
+     Raises if the value does not terminate within `places` (no silent rounding)."""
+     if not isinstance(f, Fraction):
+         raise ContractViolation("money_str expects a Fraction")
++    if not _strict_int(places) or places < 0:
++        raise ContractViolation("places must be a non-negative int")
+     scaled = f * (10**places)
+     if scaled.denominator != 1:
+         raise ContractViolation(
+             "value does not terminate at the requested places; do not round silently"
+         )
+-    with localcontext() as ctx:
+-        ctx.prec = 60
+-        return str(Decimal(scaled.numerator).scaleb(-places))
++    # F8: fixed-point rendering by integer arithmetic. The reference used
++    # localcontext(), which inherits the ambient Emax/Emin/traps and can raise
++    # Overflow/Inexact under a hostile ambient context; nothing here touches Decimal.
++    magnitude = abs(scaled.numerator)
++    sign = "-" if scaled.numerator < 0 else ""
++    if places == 0:
++        return f"{sign}{magnitude}"
++    text = str(magnitude).rjust(places + 1, "0")
++    return f"{sign}{text[:-places]}.{text[-places:]}"
+ 
+ 
+ def charge_from_usage(usage, rates) -> Fraction | None:
+@@ -627,10 +670,7 @@
+     r = validate_rates(rates)
+     if not _strict_int(counted_input_tokens) or counted_input_tokens < 0:
+         raise ContractViolation("counted input tokens must be a non-negative int")
+-    return (
+-        Fraction(counted_input_tokens) * r["input"]
+-        + Fraction(MAX_OUTPUT_TOKENS) * r["output"]
+-    )
++    return Fraction(counted_input_tokens) * r["input"] + Fraction(MAX_OUTPUT_TOKENS) * r["output"]
+ 
+ 
+ def _validate_reservation(reservation):
+@@ -697,22 +737,14 @@
+                 findings.append(f"cache_activity:{k}={v}")
+         c, w = details.get("cached_tokens"), details.get("cache_write_tokens")
+         if _nonneg_int(it) and _nonneg_int(c) and _nonneg_int(w) and c + w > it:
+-            findings.append(
+-                f"cache_categories_exceed_input:cached={c},written={w},input={it}"
+-            )
++            findings.append(f"cache_categories_exceed_input:cached={c},written={w},input={it}")
+     od = usage.get("output_tokens_details")
+     if isinstance(od, dict):
+         rt = od.get("reasoning_tokens")
+         if rt is not None and (not _nonneg_int(rt) or (_nonneg_int(ot) and rt > ot)):
+             findings.append("reasoning_tokens_informational_inconsistent")
+-    if (
+-        _nonneg_int(it)
+-        and _strict_int(counted_input_tokens)
+-        and it != counted_input_tokens
+-    ):
+-        findings.append(
+-            f"count_usage_mismatch:counted={counted_input_tokens},usage={it}"
+-        )
++    if _nonneg_int(it) and _strict_int(counted_input_tokens) and it != counted_input_tokens:
++        findings.append(f"count_usage_mismatch:counted={counted_input_tokens},usage={it}")
+     return findings
+ 
+ 
+@@ -805,9 +837,7 @@
+             record["profile_findings"] = validate_expected_profile(
+                 payload, reasoning_effort=reasoning_effort
+             )
+-    record["classification"] = classify_generation_outcome(
+-        http_status, payload, transport_error
+-    )
++    record["classification"] = classify_generation_outcome(http_status, payload, transport_error)
+     if record["settlement"] is not None and record["settlement"]["halt"] is not None:
+         # a settlement halt overrides any retry: nothing further is dispatched
+         cat, _ = record["classification"]

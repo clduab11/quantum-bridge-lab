@@ -167,10 +167,24 @@ class CountedArmRunner(ArmRunner):
         super().__init__(*args, **kwargs)
 
     def _halted(self):
-        return next((e for e in self.journal.read_events() if e["kind"] == "provider_halted"), None)
+        halts = [e for e in self.journal.read_events() if e["kind"] == "provider_halted"]
+        # The accounting exception may preserve already-received text only
+        # when no stricter failure was durably recorded by the worker.
+        return next(
+            (e for e in halts if e.get("inferential_failure")),
+            next(
+                (e for e in halts if e.get("reason") != "accounting_halt"),
+                halts[0] if halts else None,
+            ),
+        )
 
     def _halt(self, reason, *, ivf=False):
-        if self._halted() is None:
+        existing = self._halted()
+        if (
+            existing is None
+            or (ivf and not existing.get("inferential_failure"))
+            or (reason != "accounting_halt" and existing["reason"] == "accounting_halt")
+        ):
             self._event("provider_halted", reason=reason, inferential_failure=ivf)
         if ivf:
             self._flag("ivf", reason)
@@ -265,7 +279,16 @@ class CountedArmRunner(ArmRunner):
                 )
             if result.halt_reason:
                 self._halt(result.halt_reason, ivf=result.ivf)
-                if result.accept_received_on_halt and self._live():
+                halted = self._halted()
+                self._last_failure = halted["reason"]
+                if halted.get("inferential_failure") and not result.ivf:
+                    self._flag("ivf", halted["reason"])
+                if (
+                    result.accept_received_on_halt
+                    and halted["reason"] == "accounting_halt"
+                    and not halted.get("inferential_failure")
+                    and self._live()
+                ):
                     return result, context
                 return None
             if "halt_credential" in result.category or "contract_anomaly" in result.category:

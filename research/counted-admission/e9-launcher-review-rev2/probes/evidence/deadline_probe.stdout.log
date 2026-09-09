@@ -1,0 +1,19 @@
+{
+  "partial_resume_after_original_deadline_expired": {
+    "acceptance": true,
+    "deadline_seconds": 7400,
+    "f2_f3_gap_seconds": 9950.0,
+    "monotonic_resume": 10000,
+    "new_budget_seconds": 7300.0,
+    "new_counts": 2,
+    "new_generations": 2,
+    "prior_consumed_seconds": 100.0
+  },
+  "streaming_response_body_evades_guard": {
+    "deadline_seconds": 2,
+    "elapsed_seconds": 2.5144876670092344,
+    "first_outcome": "completed",
+    "remaining_seconds": -0.5148219999973662,
+    "wall_clock_events": []
+  }
+}

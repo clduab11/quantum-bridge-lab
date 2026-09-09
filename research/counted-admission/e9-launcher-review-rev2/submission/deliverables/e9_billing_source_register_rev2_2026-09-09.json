@@ -1,0 +1,197 @@
+{
+  "kind": "e9_billing_source_register",
+  "revision": 2,
+  "supersedes": "e9_billing_source_register_2026-09-09.json (revision 1, preserved unchanged)",
+  "generated_at_utc": "2026-09-09T05:30:00Z",
+  "status": "Evidence register for a proposal under review. No credits purchased, no billing setting changed, no spending authority issued, no API request made.",
+  "provenance_classes": {
+    "hashed_local_copy": "Fetched over HTTPS into this workspace, retained, and hashed. A future reader can verify the bytes.",
+    "web_search_extract": "Recorded from the web search tool because direct fetch is refused by the host. Attributed, dated, NOT hashed, and weaker.",
+    "search_result_metadata_only": "A web search returned the page's title, URL and date but no text. Establishes that the page exists; establishes NOTHING about its contents."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://developers.openai.com/api/docs/guides/spend-limits.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "spend-limits.md",
+      "establishes": [
+        "Spend alerts notify only; a hard spend limit stops traffic at organization or project level.",
+        "At an enforced hard limit, affected requests return HTTP 429 with organization_spend_limit_exceeded or project_spend_limit_exceeded.",
+        "Enforcement is explicitly not instantaneous, so recorded spend can slightly exceed the configured amount."
+      ],
+      "does_not_establish": [
+        "Whether any limit is currently configured on this account.",
+        "Any per-request fee for the token-count endpoint.",
+        "That a project limit is per-run: it is monthly and covers all traffic in the project."
+      ],
+      "sha256": "c390d663cfc85416270be1804ab1fd52f731bbaa7d2d789ea037156426b5343c",
+      "bytes": 4489
+    },
+    {
+      "id": "S2",
+      "url": "https://developers.openai.com/api/docs/models/gpt-5.6-sol.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "model-gpt-5.6-sol.md",
+      "establishes": [
+        "gpt-5.6-sol text rates: input $4, cached input $0.4, output $20 per 1M tokens.",
+        "Prompts with more than 272K input tokens are priced at 2x input and 1.5x output for the full request.",
+        "Cache writes are billed at 1.25x the uncached input token rate.",
+        "Promotional pricing stated as available at least through November 21, 2026.",
+        "Context window 1,050,000; maximum input tokens 922,000; 128,000 max output tokens."
+      ],
+      "does_not_establish": [
+        "Whether the token-count endpoint is billed.",
+        "Whether failed or rejected requests are billed.",
+        "That the promotional rates will still apply at dispatch time."
+      ],
+      "sha256": "6aaf0b7116c48f427f3bbcd1d3f908d140ae3bfa44ea060bec3d007678b9c5df",
+      "bytes": 3945
+    },
+    {
+      "id": "S3",
+      "url": "https://developers.openai.com/api/docs/pricing.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "pricing.md",
+      "establishes": [
+        "Short-context and long-context column groups for gpt-5.6-sol: $4/$0.40/$5.00/$20.00 and $8/$0.80/$10.00/$30.00 per 1M.",
+        "The cache-write column ($5.00) is the replacement input price, i.e. 1.25x uncached input, not an additive surcharge.",
+        "The Responses API family is not priced separately; tokens are billed at model rates."
+      ],
+      "does_not_establish": [
+        "Whether tokens submitted to the /v1/responses/input_tokens subresource are billed tokens. This is the blocking unknown.",
+        "Any per-call fee for the count subresource."
+      ],
+      "sha256": "244b537c06fb94e4d7214ba7f076f2bd18cace4ad165d30ad5da77cbaaad36c6",
+      "bytes": 21646
+    },
+    {
+      "id": "S4",
+      "url": "https://developers.openai.com/api/docs/guides/error-codes.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "error-codes.md",
+      "establishes": [
+        "HTTP 429 carries organization_spend_limit_exceeded, project_spend_limit_exceeded, organization_usage_limit_exceeded and credit_balance_exhausted as distinct billing/spend codes.",
+        "Retrying a billing, spend or quota error will not restore access; error.type may still read insufficient_quota.",
+        "Genuine throughput 429s (rate_limit_error / slow_down) should follow Retry-After.",
+        "The OpenAI-assigned monthly usage limit is separate from configured spend limits."
+      ],
+      "does_not_establish": [
+        "Which of these conditions currently applies to this account."
+      ],
+      "sha256": "ca56d0600fdfd00b2c48011233317c3eb7a8e8e5e6aeb958bb2777ea8a042982",
+      "bytes": 32170
+    },
+    {
+      "id": "S5",
+      "url": "https://developers.openai.com/api/docs/guides/token-counting.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "token-counting.md",
+      "establishes": [
+        "The input token count endpoint accepts the same payload as responses.create and returns the count the model will receive.",
+        "It is presented as a way to estimate costs before calling the API."
+      ],
+      "does_not_establish": [
+        "Whether calling it is itself billed. The guide is silent on the charge for the count call.",
+        "Whether a rejected count call is billed."
+      ],
+      "sha256": "c60315cf603d0cdd6ec1e7dd27ff00fb1196c180db90c3a052a02d3afb5ecd05",
+      "bytes": 22604
+    },
+    {
+      "id": "S6",
+      "url": "https://developers.openai.com/api/docs/guides/rate-limits.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "rate-limits.md",
+      "establishes": [
+        "Usage tiers 1-5 with qualification thresholds and assigned monthly usage limits ($100 to $200,000)."
+      ],
+      "does_not_establish": [
+        "This account's tier or assigned limit."
+      ],
+      "sha256": "4a10e75768a5c246a1f9ea942b7547d0e72e8d555e36d8997ddb8282107c4f35",
+      "bytes": 20170
+    },
+    {
+      "id": "S7",
+      "url": "https://developers.openai.com/api/docs/guides/prompt-caching.md",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "prompt-caching.md",
+      "establishes": [
+        "Cache eligibility and reusable-prefix behaviour are model-specific and must be measured per model."
+      ],
+      "does_not_establish": [
+        "Any cache lifetime applicable to gpt-5.6-sol on the reviewed Responses route.",
+        "That a zero-cache E9 demonstrates a cache window."
+      ],
+      "sha256": "116afe3d8639c788318605d870229b178bdb8f4d7369062e13fcfc7d457d1837",
+      "bytes": 45072
+    },
+    {
+      "id": "S8",
+      "url": "https://developers.openai.com/llms.txt",
+      "retrieval": "direct HTTPS fetch, retained locally and hashed",
+      "retrieved_at_utc": "2026-09-09T02:21:59Z",
+      "file": "llms.txt",
+      "establishes": [
+        "The documentation index, and that any docs page has a markdown form at the same URL plus .md."
+      ],
+      "does_not_establish": [
+        "Any billing fact."
+      ],
+      "sha256": "d62a1e8e62eef9098fe2a120bf1b0413b7b014b2f1fa3e0109e63f32140bd5be",
+      "bytes": 5853
+    },
+    {
+      "id": "S9",
+      "url": "https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing",
+      "title": "Setting up and managing prepaid API billing",
+      "retrieval": "web search tool, 2026-09-09. The search returned this article's TITLE, URL and a page age of July 30, 2026. It did NOT return the article's text: the persisted result contains result metadata only, with no page content. Direct HTTPS fetch of help.openai.com returns HTTP 403 to automated clients (refusal page retained as prepaid_help_403_refusal.html).",
+      "retrieved_at_utc": "2026-09-09T05:20:00Z",
+      "establishes": [
+        "An article titled 'Setting up and managing prepaid API billing' exists at this URL.",
+        "Its page age was reported as July 30, 2026, so the work order's URL is live and current.",
+        "Three adjacent help-centre pages exist: 8264778 'What is prepaid billing?', a redirect-titled 8264644 variant, and the collection 3943089 'Account, login and billing'."
+      ],
+      "does_not_establish": [
+        "ANY statement of the article's contents. The text was not retrieved and nothing about prepaid billing mechanics is asserted from it: not credit expiry, not refundability, not the order in which credit types are consumed, not what happens when a balance is depleted, not whether any automatic replenishment feature exists or how it behaves, and not any billing-mode default.",
+        "This account's billing mode.",
+        "When money leaves this account.",
+        "Any tax treatment."
+      ],
+      "provenance_class": "search_result_metadata_only"
+    }
+  ],
+  "unretrievable_by_direct_fetch": [
+    {
+      "url": "https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing",
+      "direct_fetch_status": 403,
+      "retained_refusal_page": "prepaid_help_403_refusal.html",
+      "retained_refusal_sha256": "89cc4d415ba4ecd9c04456a7467860a7230d3f3a534f38820980265a63e1c3f3",
+      "resolution": "Its EXISTENCE and currency were confirmed by web search (source S9, search_result_metadata_only). Its CONTENTS remain unretrieved: direct fetch is refused with 403 and the search returned no page text. Revision 1 recorded the contents as unavailable; that is still the correct record."
+    }
+  ],
+  "explicitly_unresolved": [
+    "Whether a request to /v1/responses/input_tokens is billed at all. No source states it. This is the blocking unknown.",
+    "Whether failed, retried or rejected requests of either class are billed, and on what basis.",
+    "There is no established maximum for a single count attempt. The 1.088 USD figure used in the arithmetic is an ASSUMPTION (272,000 x $4/1M). L* = 272,000 is checked AFTER a count returns, so it cannot bound the billable size of a count request that is itself rejected as too large.",
+    "The mechanics of prepaid API billing. The only retrieved statements are that prepaid credits exist for an organization and that credit_balance_exhausted means the prepaid balance is depleted (source S4, hashed). Credit expiry, refundability, consumption order, depletion behaviour, any automatic replenishment feature, and any monthly/arrears alternative are NOT established by any source retrieved here.",
+    "WHEN money leaves this account. This follows from the billing mode and its mechanics, none of which is established. The user's question is recorded as unanswered rather than answered.",
+    "This account's billing mode, credit balance, usage tier, assigned monthly usage limit, configured hard spend limits, month-to-date spend, other traffic in the E9 project, whether any automatic credit replenishment is configured, tax treatment and contracting entity.",
+    "Whether the stated promotional rates will still apply at dispatch time."
+  ],
+  "what_a_successful_e9_would_establish": "The charges for the specific count and generation calls that ran, as they appear in that account's usage records. It would NOT establish a per-call fee schedule, would NOT establish the treatment of failed or rejected calls, and would NOT license the study's arithmetic.",
+  "no_probe_authorized": "This register does not propose, request or authorize a minimal paid probe. Resolving the count-charging question by making a paid request is a separate decision that is not sought here.",
+  "correction_note": {
+    "issue": "Revision 2 as first written recorded nine specific prepaid-billing facts against S9 (credit expiry after one year, non-refundability, free credits consumed first, non-instantaneous stop with a negative balance carried to the next purchase, an auto-recharge feature and an inconsistent default, payment-failure behaviour). Those statements were not in any retrieved source. The web search returned result metadata only; the facts came from the author's own recollection and were written as if sourced.",
+    "action": "All nine were removed from this register, from e9_financial_proposal_rev2_2026-09-09.md and from e9_review_response_rev2.md before these artifacts were saved. S9 now records only what the retrieval established. The prepaid mechanics and the timing of payment are listed as unresolved.",
+    "detected_by": "independent verification pass, 2026-09-09"
+  }
+}

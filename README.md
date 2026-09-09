@@ -2,7 +2,7 @@
 
 Quantum Bridge Lab tests whether a language model can find better control settings for a simulated qubit than a numerical optimizer given the same trial allowance. A qubit is the basic unit of a quantum computer; this experiment models one in Python.
 
-The experiment has not run. The software passed [607 offline tests](research/counted-admission/VERIFICATION.md), using analytic identities, fabricated data and mock API responses. An independent [review of the proposed model-preflight launcher](research/counted-admission/e9-launcher-review/README.md) found deadline, storage, input-verification and spending-control defects that need correction before a paid test. The final execution plan is still under review.
+The experiment has not run. The software passed [607 offline tests](research/counted-admission/VERIFICATION.md), using analytic identities, fabricated data and mock API responses. A [second independent launcher review](research/counted-admission/e9-launcher-review-rev2/README.md) confirms several repairs but finds remaining problems with deadlines, restarts and expiring approvals. We have [allocated $32 for the model preflight](research/counted-admission/E9_BUDGET_DECISION.md), including mandatory charges. Spending waits for those repairs and verified billing terms.
 
 ## How it works
 
@@ -75,7 +75,7 @@ The process executor requires a single-threaded POSIX caller; callbacks must not
 ## Next steps
 
 1. Correct and retest the bounded model-preflight launcher using the [fixed fabricated inputs](research/counted-admission/e9-inputs/README.md), and record the amendment decision.
-2. Verify billing and approve a numeric preflight budget. Run the model preflight, complete the study launcher and freeze the full execution plan after the remaining checks pass.
+2. Verify billing and release the approved $32 allocation only if the complete preflight fits. Run the model preflight, complete the study launcher and freeze the full execution plan after the remaining checks pass.
 3. Run both study stages and publish the analysis, failures and costs.
 
 The complete experiment has no launch command yet. [Protected storage and automated custody roles](research/execution-preparation/operational-setup.json) are recorded, but independent evaluator blinding is not established. [Budget calculations](research/counted-admission/BUDGET.md) leave the total unknown while counting fees remain unverified. Model metadata can reveal some provider changes; changes that leave it unchanged may go undetected.

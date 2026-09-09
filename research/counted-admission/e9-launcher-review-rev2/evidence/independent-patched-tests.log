@@ -1,0 +1,8 @@
+........................................................................ [ 27%]
+..............s...............................................ssss...... [ 54%]
+........................................................................ [ 82%]
+...............................................                          [100%]
+=========================== short test summary info ============================
+SKIPPED [1] ../../../../../../../../var/folders/x0/97s7n8xd1c5fhlztcsrxh2kc0000gp/T/qbridge-e9rev2-review-0gjn6lvx/e9rev2/e9tests/test_money.py:130: 0002 is applied; the unpatched pair member
+SKIPPED [4] ../../../../../../../../var/folders/x0/97s7n8xd1c5fhlztcsrxh2kc0000gp/T/qbridge-e9rev2-review-0gjn6lvx/e9rev2/e9tests/test_spend_limit.py:134: the minimal patch has been applied upstream
+258 passed, 5 skipped in 74.32s (0:01:14)

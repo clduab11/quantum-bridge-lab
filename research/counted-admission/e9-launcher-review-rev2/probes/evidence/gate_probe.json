@@ -1,0 +1,68 @@
+{
+  "approval_expiry_during_run": {
+    "accepted": true,
+    "fabricated_dispatches": [
+      {
+        "after_approval_expiry": false,
+        "class": "count",
+        "wall": 1788955200.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "generation",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "count",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "generation",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "count",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "generation",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "count",
+        "wall": 1788955202.0
+      },
+      {
+        "after_approval_expiry": true,
+        "class": "generation",
+        "wall": 1788955202.0
+      }
+    ],
+    "gate_initially_passed": true,
+    "stop_reason": null
+  },
+  "bare_cli_exit": 2,
+  "bare_cli_stderr": "usage: qbridge_e9.cli [-h] {verify-fixtures,gate,dry-run,live} ...\nrefused: a subcommand is required (verify-fixtures | gate | dry-run | live). There is no implicit default; the offline dry run must be asked for.",
+  "baseline_checks": 88,
+  "dry_run_fabricated": true,
+  "dry_run_key_reads": 0,
+  "experimental_requests": 0,
+  "gate_with_absent_inputs": {
+    "exit_code": 0,
+    "failed": [],
+    "may_dispatch_live": true,
+    "passed": 20
+  },
+  "invalid_timestamp_refused": true,
+  "linked_marker_refused": true,
+  "mutated_manifest_refused": "pinned reviewed manifest digest: manifest.json sha256=679a4e585834f320df47027565da07900ccc3fc98a3e5318aa3ee522dd5758c6 equals the pinned f6c1cafce927cde8617b72dd2b404b698a891b2f907b20520d58ff72def9bf63",
+  "network_blocked": true,
+  "normal_git_refused": true,
+  "private_probe_directory": "/var/folders/x0/97s7n8xd1c5fhlztcsrxh2kc0000gp/T/qbridge-e9-rev2-probes-gp4563m6/scratch/qbridge-rev2-gates-ofpemzp5",
+  "symlink_into_git_refused": true
+}

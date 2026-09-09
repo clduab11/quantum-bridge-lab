@@ -1,12 +1,12 @@
 # Preflight and study costs
 
-Prepared 2026-09-08 local date / 2026-09-09 UTC. This is a planning note, not spending authority. No billing account was inspected or changed for this note.
+Updated 2026-09-09. Codex Astra has [approved a $32 all-in allocation for one E9](E9_BUDGET_DECISION.md) under Chris's delegation. The API account, count-request fee bound and mandatory charges remain unverified, so live spending release is pending. No billing settings have been changed.
 
 ## Who receives payment?
 
 The proposed experimental model is OpenAI's `gpt-5.6-sol`, accessed through the API. Charges would go to the OpenAI organization whose project credentials the launcher uses. API billing is separate from a ChatGPT subscription. See [OpenAI's billing guidance](https://help.openai.com/en/articles/9039756-billing-settings-in-chatgpt-vs-platform).
 
-Claude Opus 5 is the requested research and implementation assistant in Claude Science. Selecting it for that conversation does not replace the experimental model. Claude Science's own subscription or metered usage is a separate development expense; its payment arrangement has not been checked here.
+Claude Opus 5 is the research and implementation assistant in Claude Science. Its existing Max plan and local compute were observed. They support engineering work, but no reviewed payment arrangement covers the selected OpenAI API calls through that allowance. Private account details are excluded from this research record.
 
 The qubit simulation and classical optimizers run locally in the planned study. There is no quantum-hardware provider to pay and no planned cloud-compute rental. Local electricity and storage still have costs. Optional hosted execution, research tools or additional subscriptions would need separate estimates.
 
@@ -29,11 +29,13 @@ These are conditional maxima for the specified paths, not forecasts. The schedul
 
 The exact combined generation-only maximum is $5,723.41248 including E9. Counting fees, any applicable account charges and taxes remain outside that amount. Unknown fees prevent a verified numeric total. The [original calculations](BUDGET.md) and scenarios remain unchanged. Cache activity is a validity failure under the proposed profile, but any resulting charge still has to be recorded; halting later requests cannot undo a charge already incurred.
 
-## Proposed decision
+## Current preflight allocation
 
-Use **$25 USD for E9 only as a proposed client spending limit**, pending a complete calculation, Codex review and Chris's explicit approval. This amount is neither approved nor demonstrated sufficient. Claude must show whether verified generation costs, count fees and applicable extras fit within it. If they do not, return a revised proposal; do not alter fixtures or invent zero fees. Leave the full-study budget unapproved until E9 evidence and both-stage costs can be reviewed.
+The initial $25 proposal was never approved. The current allocation is **$32 total incremental cost**, including taxes and mandatory fees, for the four fixed E9 fixtures and their existing retry allowance. It excludes a full study, automatic rerun or subscription purchase. [The allocation record](e9-budget-allocation.json) is deliberately distinct from executable provider authority. It approves an amount without claiming the current launcher or unresolved billing terms are ready.
 
-Claude subsequently proposed **$32**, but the [independent launcher review](e9-launcher-review/README.md) found that it still assumes an unverified $1.088 maximum per count attempt. Under that assumption and the documented cache-write rate, 12 attempts of each class total $31.34208, or $31.35 rounded upward. This is a conditional scenario, not evidence that $32 covers all charges. The count limit is checked after the count request, and two successful billing observations cannot establish failure or rejection fees. Neither amount is approved. The provider's generation reservation also needs a correction before it covers the applicable cache-write category.
+Conservative reservations cover the highest applicable input category, including a possible cache write even though cache activity would fail E9. At the recorded rates, that is $1.523840 per generation attempt and $18.286080 for 12. If the maximum per count attempt were $1.088, the full allowance would total $31.342080, or $31.35 rounded upward, leaving just $0.65792 for mandatory extras. The count fee remains unverified. The [revision 2 review](e9-launcher-review-rev2/README.md) confirms the new arithmetic but requires the provider reservation correction on every retry.
+
+The count limit is checked after the count request, and successful billing observations cannot establish failure or rejection fees. With no extras or taxes, the full allowance fits $32 only if the verified count-attempt maximum is at most $1.142826666…; applicable charges reduce that headroom. An insufficient full-allowance budget is rejected before the current CLI dispatches, rather than beginning a knowingly underfunded run. The earlier generation-only study calculations above remain conditional; they are not a conservative all-category spending authorization.
 
 A client limit bounds further reservations under the verified billing assumptions. It is not an unconditional guarantee about a provider's final invoice. The provider records known overruns without clipping them and halts subsequent calls; unresolved charges keep their reservations.
 
@@ -45,4 +47,4 @@ Current [spend-limit documentation](https://developers.openai.com/api/docs/guide
 
 Project limits are monthly and cover all traffic in that project; launcher authority is per run. Existing and concurrent project usage must be included when choosing the account limit.
 
-The [Claude handoff](../../docs/handoffs/2026-09-08-claude-opus5-e9-launcher.md) requests working offline code and a billing proposal. It authorizes no credit purchase, payment-setting change or experimental API request. Chris will return the completed package for Codex review.
+The [original Claude handoff](../../docs/handoffs/2026-09-08-claude-opus5-e9-launcher.md) remains historical. The newer delegation permits Codex to resolve billing and approve the preflight budget; the [allocation decision](E9_BUDGET_DECISION.md) records what has been completed and what still prevents spending. Claude is correcting the launcher offline. The chosen OpenAI organization must be accessible before its account terms can be checked.

@@ -1,0 +1,33 @@
+{
+  "record_type": "budget_allocation_not_provider_authority",
+  "schema_version": 1,
+  "decision_date": "2026-09-09",
+  "allocation_status": "approved",
+  "approved_by": "Codex Astra acting under Chris Dukes's explicit delegation",
+  "authority_basis": "User requested independent review of the corrected package, billing resolution and approval of the finalized preflight budget, with $32 of compute identified as available in scope.",
+  "currency": "USD",
+  "maximum_total_incremental_cost": "32.00",
+  "includes_taxes_and_mandatory_fees": true,
+  "scope": "one bounded E9 preflight using the four existing fixed fixtures",
+  "model": "gpt-5.6-sol",
+  "count_attempt_cap": 12,
+  "generation_attempt_cap": 12,
+  "automatic_reruns_authorized": false,
+  "full_study_authorized": false,
+  "subscription_or_cloud_purchase_authorized": false,
+  "live_spending_release": "pending",
+  "provider_authority_issued": false,
+  "account_billing_verified": false,
+  "count_fee_bound_verified": false,
+  "mandatory_charges_verified": false,
+  "launcher_approved_for_live_execution": false,
+  "release_conditions": [
+    "Independently verify remaining execution corrections and conservative per-attempt reservations",
+    "Inspect the paying API organization and project account evidence",
+    "Verify applicable model and count fees, including failed and rejected count attempts",
+    "Verify taxes and mandatory charges and demonstrate the all-in maximum fits USD 32.00",
+    "Complete prospective adoption and issue a run-specific, expiring provider authority"
+  ],
+  "decision_document": "E9_BUDGET_DECISION.md",
+  "review_document": "e9-launcher-review-rev2/README.md"
+}

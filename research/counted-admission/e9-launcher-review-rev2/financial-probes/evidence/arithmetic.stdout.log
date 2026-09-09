@@ -1,0 +1,8 @@
+{
+  "all_activity_offline": true,
+  "arithmetic_checks": 48,
+  "generation_allowance_usd": "18.286080",
+  "max_count_fee_if_32_has_zero_extras_and_taxes_exact": "10714/9375",
+  "rates_are_arithmetic_inputs_not_billing_evidence": true,
+  "short_generation_usd": "1.523840"
+}

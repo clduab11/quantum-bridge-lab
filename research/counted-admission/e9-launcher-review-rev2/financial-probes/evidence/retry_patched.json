@@ -1,0 +1,10 @@
+{
+  "all_activity_offline": true,
+  "ceiling_usd": "2.60368",
+  "committed_usd": "1.523840",
+  "outcome0": "generation_failed",
+  "patched2": true,
+  "scope": "Direct synthetic orchestrator; the CLI gate rejects this low full-allowance authority before dispatch.",
+  "stop": "monetary_ceiling_reached",
+  "wire_generations": 1
+}

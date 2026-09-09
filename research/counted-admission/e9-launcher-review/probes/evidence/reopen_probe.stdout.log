@@ -1,0 +1,34 @@
+{
+  "billing_stop_forgotten_on_reopen": {
+    "after": [
+      4,
+      3
+    ],
+    "before": [
+      1,
+      0
+    ],
+    "first_stop": "spend_limit_halt:project_spend_limit_exceeded",
+    "second_outcomes": [
+      "skipped",
+      "completed",
+      "completed",
+      "completed"
+    ],
+    "second_stop": null
+  },
+  "successful_journal_reread_loses_acceptance": {
+    "dispatches": [
+      4,
+      4
+    ],
+    "first_accepted": true,
+    "second_accepted": false,
+    "second_failed": [
+      "fixtures.all_four_completed"
+    ],
+    "second_not_demonstrated": [
+      "a1.timing.f2_f3_recorded"
+    ]
+  }
+}

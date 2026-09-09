@@ -1,0 +1,11 @@
+{
+  "default_invocation": {
+    "exception": "AttributeError",
+    "message": "'Namespace' object has no attribute 'work_dir'"
+  },
+  "dry_run": {
+    "accepted": true,
+    "fabricated": true,
+    "key_get_count": 1
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "changed_committed_fixture": {
+    "accepted_mutated_manifest_sha256": "3e987b734bea9ea12e7a55bd5b15c4ae6fd2cfdeac7011982e8f23d6cad73bb9",
+    "checks_failed": 0,
+    "checks_passed": 76,
+    "original_manifest_sha256": "f6c1cafce927cde8617b72dd2b404b698a891b2f907b20520d58ff72def9bf63",
+    "user_text": "Review probe changed this committed F1 user prompt."
+  },
+  "empty_source_hash_set_accepted": true,
+  "git_records_gate": {
+    "layout": "new temporary Git repository; git init only",
+    "may_dispatch_live": true,
+    "records_writer_accepts": true,
+    "requirement": {
+      "detail": "path=/var/folders/x0/97s7n8xd1c5fhlztcsrxh2kc0000gp/T/qbridge-e9-probes-suhs19e6/scratch/gate-probe-sym_2t44/worktree-layout/out/raw, mode=0o700, inside_git_worktree=False",
+      "key": "records.private",
+      "requirement": "raw records are stored privately outside Git",
+      "status": "pass"
+    }
+  },
+  "invalid_approval_timestamp": {
+    "may_dispatch_live": true,
+    "requirement": {
+      "detail": "approved=True, scope='e9', e9_usd_limit='25', matches_authority_ceiling=True, proposal markers=[]",
+      "key": "authorization.explicit_e9",
+      "requirement": "an explicit numeric E9-only authority exists",
+      "status": "pass"
+    }
+  }
+}

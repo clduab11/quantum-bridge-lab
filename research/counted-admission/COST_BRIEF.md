@@ -33,6 +33,8 @@ The exact combined generation-only maximum is $5,723.41248 including E9. Countin
 
 Use **$25 USD for E9 only as a proposed client spending limit**, pending a complete calculation, Codex review and Chris's explicit approval. This amount is neither approved nor demonstrated sufficient. Claude must show whether verified generation costs, count fees and applicable extras fit within it. If they do not, return a revised proposal; do not alter fixtures or invent zero fees. Leave the full-study budget unapproved until E9 evidence and both-stage costs can be reviewed.
 
+Claude subsequently proposed **$32**, but the [independent launcher review](e9-launcher-review/README.md) found that it still assumes an unverified $1.088 maximum per count attempt. Under that assumption and the documented cache-write rate, 12 attempts of each class total $31.34208, or $31.35 rounded upward. This is a conditional scenario, not evidence that $32 covers all charges. The count limit is checked after the count request, and two successful billing observations cannot establish failure or rejection fees. Neither amount is approved. The provider's generation reservation also needs a correction before it covers the applicable cache-write category.
+
 A client limit bounds further reservations under the verified billing assumptions. It is not an unconditional guarantee about a provider's final invoice. The provider records known overruns without clipping them and halts subsequent calls; unresolved charges keep their reservations.
 
 ## Funding and controls
@@ -40,5 +42,7 @@ A client limit bounds further reservations under the verified billing assumption
 For a prepaid API account, money leaves the payment method when credits are purchased; usage then consumes that balance. Monthly billing follows the account's terms. Current prepaid guidance lists a $5 minimum purchase, enables auto-reload by default during setup, and warns that exhaustion is not an instantaneous cutoff. Purchased credits expire after a year and are non-refundable. An approved experiment budget and a credit purchase are separate decisions. See [prepaid billing](https://help.openai.com/en/articles/8264644-how-can-i-set-up-prepaid-billing).
 
 Current [spend-limit documentation](https://developers.openai.com/api/docs/guides/spend-limits) supports both alerts and enforced organization/project limits. Alerts alone do not stop requests. Hard-limit enforcement can lag, so it supplements the launcher's pre-dispatch reservations. Check the actual project configuration; do not assume an older soft-budget control is enforced. Prefer a dedicated experiment project and explicit limits, with automatic recharges off for a bounded preflight unless separately approved.
+
+Project limits are monthly and cover all traffic in that project; launcher authority is per run. Existing and concurrent project usage must be included when choosing the account limit.
 
 The [Claude handoff](../../docs/handoffs/2026-09-08-claude-opus5-e9-launcher.md) requests working offline code and a billing proposal. It authorizes no credit purchase, payment-setting change or experimental API request. Chris will return the completed package for Codex review.

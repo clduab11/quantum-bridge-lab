@@ -7,3 +7,5 @@ research/counted-admission/provider-candidate/logs/pytest_reference_aliased_to_c
 research/counted-admission/regression-evidence/nonfinite-timeout-before-fix.log whitespace=-blank-at-eol
 research/counted-admission/regression-evidence/provider-before-core-fix.log whitespace=-blank-at-eol
 research/counted-admission/regression-evidence/worker-exit-before-fix.log whitespace=-blank-at-eol
+# Keep the reviewed author's patch bytes, including blank context lines.
+research/counted-admission/e9-launcher-review/submission/patches/0001-spend-limit-not-retryable.diff whitespace=-blank-at-eol,-blank-at-eof
